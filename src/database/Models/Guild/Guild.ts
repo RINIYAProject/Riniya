@@ -6,91 +6,80 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 07:19:49 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 08:20:12 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 01:24:30 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseModel from "../../BaseModel";
-import { Callback, Schema } from "mongoose";
+import mongoose from "mongoose";
 
-export interface IGuild extends Document {
-    guildId: String;
-    ownerId: String;
-    config?: guildConfig;
+export interface Guild {
+    guildId?: string;
+    ownerId?: string;
+
+    premium?: boolean;
+    premiumTier?: string;
+    premiumHash?: string;
+
+    mainGuild?: boolean;
+
+    blacklist?: boolean;
+    blacklistReason?: string;
+    blacklistCase?: string;
+    blacklistIssuer?: string;
+
+    logging?: boolean;
+    loggingChannel?: string;
+    loggingModeration?: string;
+    loggingUpdate?: string;
+
+    level?: boolean;
+    levelAlertChannel?: string;
+    levelBoost?: number;
+
+    roleEnabled?: boolean;
+    roleUnverified?: string;
+    roleVerified?: string;
+    roleRule?: string;
+
+    verification?: boolean;
+    verificationChannel?: string;
+    verificationLogChannel?: string;
+
+    interaction?: boolean;
 }
 
-export declare type guildConfig = {};
+export default mongoose.model<Guild & mongoose.Document>("Guild", new mongoose.Schema<Guild & mongoose.Document>({
+    guildId: { type: String },
+    ownerId: { type: String },
 
-export class GuildSchema extends Schema {
-    public constructor() {
-        super({
-            guildId: { type: String },
-            ownerId: { type: String },
-            config: { type: Object, default: {} }
-        });
-    }
-}
+    premium: { type: Boolean },
+    premiumTier: { type: String },
+    premiumHash: { type: String },
 
-export default class Guild extends BaseModel<IGuild, GuildSchema> {
-    public constructor() {
-        super("Guild");
-    }
+    mainGuild: { type: Boolean },
 
-    public schematic(): Schema {
-        return new GuildSchema();
-    }
+    blacklist: { type: Boolean },
+    blacklistReason: { type: String },
+    blacklistCase: { type: String },
+    blacklistIssuer: { type: String },
 
-    public fetchGuild(guildId: string): IGuild {
-        return this.findOne({ guildId: guildId }).toConstructor();
-    }
+    logging: { type: Boolean },
+    loggingChannel: { type: String },
+    loggingModeration: { type: String },
+    loggingUpdate: { type: String },
 
-    public isExist(guildId: string): Boolean {
-        return this.findOne({ guildId: guildId }).toConstructor();
-    }
+    level: { type: Boolean },
+    levelAlertChannel: { type: String },
+    levelBoost: { type: Number },
 
-    public createGuild(guildId: string, ownerId: string): void {
-        this.model.insertMany({
-            guildId: guildId,
-            ownerId: ownerId,
-            config: {
-                logging: {
-                    moderation: null,
-                    update: null,
-                    enabled: false
-                },
-                level: {
-                    alertChannel: null,
-                    rewards: [],
-                    enabled: false
-                },
-                verification: {
-                    config: {
-                        verifyChannel: null,
-                        logChannel: null,
-                        password: null,
-                    },
-                    enabled: false
-                },
-                online: {
-                    displayServer: false,
-                    displayMembers: false,
-                    allowJoining: false,
-                    metadata: []
-                },
-                blacklisted: {
-                    issuer: null,
-                    caseId: null,
-                    reasons: null,
-                    enabled: false
-                }
-            }
-        });
-    }
+    roleEnabled: { type: Boolean },
+    roleUnverified: { type: String },
+    roleVerified: { type: String },
+    roleRule: { type: String },
 
-    public updateGuild(guildId: string, update: any, callback: Callback<IGuild>): void {
-        this.model.updateOne({ guildId: guildId }, update, { upsert: true }, callback);
-    }
-    public deleteGuild(guildId: string): void {
-        this.model.deleteOne({ guildId: guildId });
-    }
-}
+    verification: { type: Boolean },
+    verificationChannel: { type: String },
+    verificationLogChannel: { type: String },
+
+    interaction: { type: Boolean }
+}));

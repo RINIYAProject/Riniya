@@ -6,7 +6,7 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:13 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 09:04:53 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 00:27:21 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ import {
     SlashCommandSubcommandGroupBuilder,
     SlashCommandSubcommandsOnlyBuilder,
     SlashCommandUserOption,
-    ApplicationCommandOptionBase
 } from '@discordjs/builders'
 import OptionMap from "../utils/OptionMap";
 import { PermissionFlagsBits } from "discord-api-types/v9";

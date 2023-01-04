@@ -6,7 +6,7 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:24 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 08:21:26 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 05:06:29 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ import Logger from "./utils/Logger"
 import CommandManager from "./components/commands/CommandManager"
 import EventManager from "./events/EventManager"
 import ButtonManager from "./components/buttons/ButtonManager"
-import Database from "./database/Database"
 
 export default class Ghidorah extends Client {
     public static instance: Ghidorah
@@ -35,8 +34,6 @@ export default class Ghidorah extends Client {
 
     public version: string = "7.0.5"
     public revision: string = "0F 2B A1"
-
-    public data: Database;
 
     public constructor() {
         super({
@@ -83,9 +80,6 @@ export default class Ghidorah extends Client {
 
     private load() {
         this.logger.info("Loading commands.");
-
-        this.data = new Database();
-        this.data.registerModels();
 
         this.manager = new CommandManager();
         this.manager.registerCommands();

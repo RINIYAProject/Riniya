@@ -6,7 +6,7 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:15 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 06:23:16 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/03 23:21:18 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ import { Collection } from "discord.js";
 
 /**
  * @name OptionMap
- * @description A array system for bases
+ * @description Fast map system
  * @author NebraskyTheWolf
  */
 
