@@ -6,7 +6,7 @@ export default class CommandReload extends BaseCommand {
     public constructor() {
         super("reload", "Reload the bot", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isProtected", true)
+            .add("isDeveloper", true)
         );
     }
 

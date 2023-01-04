@@ -1,6 +1,6 @@
 import BaseCommand from "../../../abstracts/BaseCommand";
 import OptionMap from "../../../utils/OptionMap";
-import { GuildMember, Guild, CommandInteraction, } from "discord.js";
+import { GuildMember, Guild, CommandInteraction, MessageButton, } from "discord.js";
 import { SlashCommandStringOption } from "@discordjs/builders";
 import BaseButton from "../../../abstracts/BaseButton";
 
@@ -8,7 +8,7 @@ export default class CommandSpawnButton extends BaseCommand {
     public constructor() {
         super("spawn", "Summoning a button.", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isProtected", true)
+            .add("isDeveloper", true)
         );
 
         this.addStringOption(
@@ -21,10 +21,15 @@ export default class CommandSpawnButton extends BaseCommand {
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const buttonId: string = inter.options.getString("buttonid") || null;
-        const handler: BaseButton = this.instance.buttonManager.getButton(buttonId);
+        const handler: BaseButton<unknown, unknown> = this.instance.buttonManager.getButton(buttonId);
+        if (!(handler instanceof BaseButton<MessageButton, unknown>))
+            inter.reply({
+                content: 'Failed to summon ' + buttonId + ', Because it\'s not a button.',
+                ephemeral: true
+            });
 
         if (!handler) {
-            inter.followUp({
+            inter.reply({
                 content: 'Failed to summon ' + buttonId,
                 ephemeral: true
             });
@@ -33,10 +38,10 @@ export default class CommandSpawnButton extends BaseCommand {
                 "components": [
                     {
                         "type": 1,
-                        "components": [handler.generate()]
+                        "components": [handler.generate() as MessageButton]
                     }
                 ],
-                ephemeral: true
+                embeds: [handler.message()]
             });
         }
     }

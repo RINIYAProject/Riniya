@@ -1,7 +1,6 @@
 import Logger from "../../utils/Logger";
 import BaseCommand from "../../abstracts/BaseCommand";
 import OptionMap from "../../utils/OptionMap";
-import { Base } from "discord.js";
 import { Collection } from "discord.js";
 
 import CommandBan from "./administrator/CommandBan";

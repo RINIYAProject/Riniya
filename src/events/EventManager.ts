@@ -6,7 +6,7 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:37 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 09:29:23 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 09:39:07 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ import OptionMap from "../utils/OptionMap";
 import DisconnectEvent from "./DisconnectEvent";
 import ErrorEvent from "./ErrorEvent";
 import GuildAddEvent from "./GuildAddEvent";
+import GuildDeleteEvent from "./GuildDeleteEvent";
 import InteractionEvent from "./InteractionEvent";
 import MemberJoin from "./MemberJoinEvent";
 import MemberLeave from "./MemberLeaveEvent";
@@ -37,6 +38,7 @@ export default class EventManager {
         this.registerEvent(new DisconnectEvent());
         this.registerEvent(new ErrorEvent());
         this.registerEvent(new GuildAddEvent());
+        this.registerEvent(new GuildDeleteEvent())
         this.registerEvent(new InteractionEvent());
         this.registerEvent(new MemberJoin());
         this.registerEvent(new MemberLeave());

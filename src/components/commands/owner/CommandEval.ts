@@ -6,7 +6,7 @@ export default class CommandEval extends BaseCommand {
     public constructor() {
         super("eval", "Start a code evaluation", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isProtected", true)
+            .add("isDeveloper", true)
         );
     }
 

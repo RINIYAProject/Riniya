@@ -6,7 +6,7 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:03 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 06:23:04 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 09:40:10 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ export default class Ready extends BaseEvent {
             const client: Ghidorah = this.instance;
 
             client.user.setStatus("online");
-            client.user.setActivity(`Lurking at cutie fluffies`, { type: "COMPETING" });
+            client.user.setActivity(`Lurk`, { type: "WATCHING" });
             client.user.system = true;
             client.user.verified = true;
 

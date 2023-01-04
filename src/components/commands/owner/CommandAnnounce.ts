@@ -6,7 +6,7 @@ export default class CommandAnnounce extends BaseCommand {
     public constructor() {
         super("announce", "Announce update", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isProtected", true)
+            .add("isDeveloper", true)
         );
     }
 

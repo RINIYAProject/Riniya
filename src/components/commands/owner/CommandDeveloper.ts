@@ -6,7 +6,7 @@ export default class CommandDeveloper extends BaseCommand {
     public constructor() {
         super("developer", "Add a developer access", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isProtected", false)
+            .add("isDeveloper", true)
         );
     }
 
