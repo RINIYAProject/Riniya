@@ -6,17 +6,18 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:23 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 08:05:27 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 20:02:28 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import OptionMap from "../../utils/OptionMap";
 import Logger from "../../utils/Logger";
 import BaseButton from "../../abstracts/BaseButton";
-import { Snowflake, Collection } from "discord.js";
+import { Snowflake, Collection, MessageButton } from "discord.js";
 import AcceptRules from "./rules/AcceptRules";
 import ButtonVerify from "./verification/ButtonVerify";
 import ModalVerifySubmit from "./verification/ModalVerify";
+import Fragment from "./Fragment";
 
 export default class ButtonManager {
     private BUTTONS: OptionMap<String, BaseButton<unknown, unknown>>;
@@ -59,6 +60,10 @@ export default class ButtonManager {
 
     public getDynamicButton(userId: Snowflake, customId: String): BaseButton<unknown, unknown> {
         return this.DYNAMIC_BUTTON.get(userId).get(customId);
+    }
+
+    public createLinkButton(label: string, link: string): MessageButton {
+        return new Fragment(label, link).generate();
     }
 
     public toMap(): Collection<String, BaseButton<unknown, unknown>> {

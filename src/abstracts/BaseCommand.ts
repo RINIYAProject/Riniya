@@ -6,7 +6,7 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:13 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 00:27:21 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 19:38:07 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ export default abstract class BaseCommand extends Base {
         this.command.setName(this.name);
         this.command.setDescription(this.description);
         this.command.setDMPermission(this.options.get("dmPermission"));
-        if (this.options.get("isProtected"))
-            this.command.setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
     }
 
     public execute(): void { }

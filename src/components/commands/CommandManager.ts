@@ -1,11 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandManager.ts                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
+/*   Updated: 2023/01/04 21:40:25 by NebraskyThe      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import Logger from "../../utils/Logger";
 import BaseCommand from "../../abstracts/BaseCommand";
 import OptionMap from "../../utils/OptionMap";
 import { Collection } from "discord.js";
 
 import CommandBan from "./administrator/CommandBan";
-import CommandCase from "./administrator/CommandCase";
-import CommandHistory from "./administrator/CommandHistory";
 import CommandKick from "./administrator/CommandKick";
 import CommandMute from "./administrator/CommandMute";
 import CommandWarn from "./administrator/CommandWarn";
@@ -29,7 +39,6 @@ import CommandRewards from "./level/CommandRewards";
 import CommandAbout from "./misc/CommandAbout";
 import CommandHelp from "./misc/CommandHelp";
 import CommandPing from "./misc/CommandPing";
-import CommandServer from "./misc/CommandServer";
 
 import CommandPause from "./music/CommandPause";
 import CommandPlay from "./music/CommandPlay";
@@ -74,8 +83,6 @@ export default class CommandManager {
 
     public registerCommands(): void {
         this.registerCommand(new CommandBan());
-        this.registerCommand(new CommandCase());
-        this.registerCommand(new CommandHistory());
         this.registerCommand(new CommandKick());
         this.registerCommand(new CommandMute());
         this.registerCommand(new CommandWarn());
@@ -107,7 +114,6 @@ export default class CommandManager {
         this.registerCommand(new CommandAbout());
         this.registerCommand(new CommandHelp());
         this.registerCommand(new CommandPing());
-        this.registerCommand(new CommandServer());
 
         /////////////
 

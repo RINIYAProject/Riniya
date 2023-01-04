@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ModalHelper.ts                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 21:43:21 by NebraskyThe       #+#    #+#             */
+/*   Updated: 2023/01/04 21:43:22 by NebraskyThe      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import { Modal, SelectMenuComponent, TextInputComponent, showModal } from "discord-modals";
 import { ButtonInteraction } from "discord.js";
 import Ghidorah from "../index";

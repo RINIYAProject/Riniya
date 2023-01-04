@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandAbout.ts                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 21:05:52 by NebraskyThe       #+#    #+#             */
+/*   Updated: 2023/01/04 21:05:53 by NebraskyThe      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import BaseCommand from "../../../abstracts/BaseCommand";
 import OptionMap from "../../../utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, MessageButton, MessageEmbed } from "discord.js";

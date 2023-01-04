@@ -6,19 +6,21 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:47 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 08:50:09 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 19:41:19 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "../abstracts/BaseCommand";
 import BaseEvent from "../abstracts/BaseEvent";
-import { ButtonInteraction, CommandInteraction, GuildMember, Interaction, MessageButton, TextChannel } from "discord.js";
+import { ButtonInteraction, CommandInteraction, GuildMember, Interaction, MessageButton, Permissions, TextChannel } from "discord.js";
 import BaseButton from "../abstracts/BaseButton";
 import Developer from "../database/Models/Security/Developer";
 
 export default class InteractionEvent extends BaseEvent {
     public constructor() {
         super("interactionCreate", async (interaction: Interaction<"cached">) => {
+            const developer = await Developer.findOne({ userId: interaction.member.id });
+
             try {
                 if (!this.instance.loaded) {
                     return ((interaction) as CommandInteraction).reply({
@@ -33,7 +35,6 @@ export default class InteractionEvent extends BaseEvent {
 
                     if (!handler) return;
 
-                    const developer = await Developer.findOne({ userId: interaction.member.id })
                     if (handler.options.get("isDeveloper"))
                         if (developer)
                             return handler.handler(interaction, interaction.member as GuildMember, interaction.guild);
@@ -50,6 +51,14 @@ export default class InteractionEvent extends BaseEvent {
                                 content: 'Sorry, this channel is not NSFW.',
                                 ephemeral: true
                             });
+                    else if (handler.options.get("isProtected"))
+                        if (interaction.member.permissions.has("MODERATE_MEMBERS"))
+                            return handler.handler(interaction, interaction.member as GuildMember, interaction.guild);
+                        else
+                            return ((interaction) as CommandInteraction).reply({
+                                content: 'Sorry, you need to be Moderator to execute this command',
+                                ephemeral: true
+                            });
                     else
                         return handler.handler(interaction, interaction.member as GuildMember, interaction.guild);
                 } else if (interaction.isButton()) {
@@ -60,6 +69,14 @@ export default class InteractionEvent extends BaseEvent {
 
                     if (handler.setting.get("isDynamic"))
                         if (handler.setting.get("ownerId") === interaction.member.id)
+                            return handler.handler(interaction);
+                        else
+                            return ((interaction) as ButtonInteraction).reply({
+                                content: 'You are not allowed to click on this button.',
+                                ephemeral: true
+                            });
+                    else if (handler.setting.get("isProtected"))
+                        if (developer)
                             return handler.handler(interaction);
                         else
                             return ((interaction) as ButtonInteraction).reply({

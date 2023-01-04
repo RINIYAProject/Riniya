@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandShow.ts                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/04 21:40:31 by NebraskyThe       #+#    #+#             */
+/*   Updated: 2023/01/04 21:40:32 by NebraskyThe      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import { SlashCommandUserOption } from "@discordjs/builders";
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
 
