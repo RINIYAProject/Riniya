@@ -3,12 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   index.ts                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:42:09 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:42:10 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:20:06 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 export * from './ButtonVerify';
-export * from './ModalVerify';

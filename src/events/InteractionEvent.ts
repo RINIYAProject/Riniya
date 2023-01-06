@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   InteractionEvent.ts                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:47 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 19:41:19 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 02:06:57 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ export default class InteractionEvent extends BaseEvent {
                         return handler.handler(interaction);
                 }
             } catch (err) {
+                this.instance.logger.error(`InteractionEvent:(${interaction.id}) | ${err}`);
                 return ((interaction) as CommandInteraction).reply({
                     content: 'Error occured while executing interaction.',
                     ephemeral: true

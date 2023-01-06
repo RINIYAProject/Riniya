@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ModalHelper.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:43:21 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:43:22 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:30:04 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import { Modal, SelectMenuComponent, TextInputComponent, showModal } from "discord-modals";
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction, Interaction } from "discord.js";
 import Ghidorah from "../index";
 
 export default class ModalHelper {
@@ -33,7 +33,7 @@ export default class ModalHelper {
         return this;
     }
 
-    public generate(inter: ButtonInteraction): Promise<Modal> {
+    public generate(inter: Interaction<"cached">): Promise<Modal> {
         return showModal(this.modal, {
             client: Ghidorah.instance,
             interaction: inter

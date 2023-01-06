@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AcceptRules.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:12 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 07:31:03 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 22:49:23 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@ import {
     ButtonInteraction,
     MessageButton,
     MessageEmbed,
-    Modal
+    Modal,
+    Role
 } from "discord.js";
 import BaseButton from "../../../abstracts/BaseButton";
-import { TextInputComponent, SelectMenuComponent } from "discord-modals";
-import ModalHelper from "../../../utils/ModalHelper";
-import { fetchGuild } from "../../../types";
 import GuildModel from "../../../database/Models/Guild/Guild"
 
 
@@ -37,10 +35,37 @@ export default class AcceptRules extends BaseButton<MessageButton, void> {
     public async handler(interaction: ButtonInteraction<"cached">): Promise<void> {
         const guild = await GuildModel.findOne({ guildId: interaction.guild.id });
         if (guild.roleEnabled) {
-            
+            const ruleRole: Role = interaction.guild.roles.cache.get(guild.roleRule);
+            if (interaction.member.roles.cache.has(ruleRole.id)) {
+                interaction.reply({
+                    embeds: [
+                        new MessageEmbed()
+                            .setTitle("Riniya - Error")
+                            .setDescription("You already agreed with our rules.")
+                            .setColor("#36393f")
+                    ],
+                    ephemeral: true
+                });
+            } else {
+                interaction.member.roles.add(ruleRole);
+                interaction.reply({
+                    embeds: [
+                        new MessageEmbed()
+                            .setTitle("Riniya - Rules")
+                            .setDescription("You agreed with our rules.")
+                            .setColor("#36393f")
+                    ],
+                    ephemeral: true
+                });
+            }
         } else {
             interaction.reply({
-                embeds: [],
+                embeds: [
+                    new MessageEmbed()
+                        .setTitle("Riniya - Error")
+                        .setDescription("This server is not configurated.")
+                        .setColor("#36393f")
+                ],
                 ephemeral: true
             });
         }
@@ -50,7 +75,8 @@ export default class AcceptRules extends BaseButton<MessageButton, void> {
         return new MessageButton()
             .setCustomId(this.customId)
             .setLabel(this.description)
-            .setStyle("SUCCESS")
+            .setStyle("SECONDARY")
+            .setEmoji("<:CatLurkHi:783810410997481512>")
             .setDisabled(false);
     }
 

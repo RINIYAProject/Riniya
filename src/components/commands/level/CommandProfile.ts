@@ -3,25 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   CommandProfile.ts                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:18:48 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:18:49 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:52:29 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import { SlashCommandUserOption } from "@discordjs/builders";
 import { GuildMember, Guild, CommandInteraction, User, MessageEmbed } from "discord.js";
-
 import BaseCommand from "../../../abstracts/BaseCommand";
-import OptionMap from "../../../utils/OptionMap"; 
 
 export default class CommandProfile extends BaseCommand {
     public constructor() {
-        super("profile", "Showing a user profile.", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
-            .add("isProtected", false)
-        );
+        super("profile", "Showing a user profile.");
 
         this.addUserOption(
             new SlashCommandUserOption()
@@ -31,7 +26,7 @@ export default class CommandProfile extends BaseCommand {
         );
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) { 
+    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const target: User = inter.options.getUser("user") || member.user;
 
         inter.reply({
@@ -46,6 +41,7 @@ export default class CommandProfile extends BaseCommand {
             embeds: [
                 new MessageEmbed()
                     .setTitle("Riniya - Profile")
+                    .setDescription("You can look at the profile on our website.")
                     .setColor("#36393f")
             ]
         });

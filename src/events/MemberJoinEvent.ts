@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   MemberJoinEvent.ts                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:51 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 09:38:19 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 02:40:16 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseEvent from "../abstracts/BaseEvent";
-import { GuildMember, TextChannel } from "discord.js";
+import { GuildMember, Role, TextChannel } from "discord.js";
 import Guild from "../database/Models/Guild/Guild";
 import Member from "../database/Models/Guild/Member";
 
@@ -23,6 +23,11 @@ export default class MemberJoin extends BaseEvent {
 
             const GuildData = await Guild.findOne({ guildId: member.guild.id });
             new Member({ guildId: member.guild.id, memberId: member.id }).save();
+
+            if (GuildData.roleEnabled) {
+                const defaultRole: Role = member.guild.roles.cache.get(GuildData.roleUnverified);
+                member.roles.add(defaultRole);
+            }
 
             if (GuildData.logging) {
                 const channel: TextChannel = this.instance.guilds.cache.get(GuildData.guildId).channels.cache.get(GuildData.loggingChannel) as TextChannel;

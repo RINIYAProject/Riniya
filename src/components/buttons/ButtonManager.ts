@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ButtonManager.ts                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:23 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 20:02:28 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:19:29 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ import BaseButton from "../../abstracts/BaseButton";
 import { Snowflake, Collection, MessageButton } from "discord.js";
 import AcceptRules from "./rules/AcceptRules";
 import ButtonVerify from "./verification/ButtonVerify";
-import ModalVerifySubmit from "./verification/ModalVerify";
 import Fragment from "./Fragment";
 
 export default class ButtonManager {
@@ -33,7 +32,6 @@ export default class ButtonManager {
     public registerButtons(): void {
         this.addButton(new AcceptRules());
         this.addButton(new ButtonVerify());
-        this.addButton(new ModalVerifySubmit());
     }
 
     public addButton(button: BaseButton<unknown, unknown>): void {
@@ -64,6 +62,13 @@ export default class ButtonManager {
 
     public createLinkButton(label: string, link: string): MessageButton {
         return new Fragment(label, link).generate();
+    }
+
+    public reload() {
+        this.BUTTONS.getMap().clear();
+        this.logger.warn("Button registry cleared.");
+        this.registerButtons();
+        this.logger.info("Button regitry reloaded.");
     }
 
     public toMap(): Collection<String, BaseButton<unknown, unknown>> {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandFuck.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:52 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:40:53 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:56:09 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ import OptionMap from "../../../utils/OptionMap";
 export default class CommandFuck extends BaseCommand {
     public constructor() {
         super("fuck", "Fuck someone", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
-            .add("isProtected", false)
             .add("isNSFW", true)
         );
 

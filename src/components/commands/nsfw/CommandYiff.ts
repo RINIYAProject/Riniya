@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandYiff.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:42 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:40:43 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:56:30 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ import { GuildMember, Guild, CommandInteraction } from "discord.js";
 export default class CommandYiff extends BaseCommand {
     public constructor() {
         super("yiff", "Get random yiffy image", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
-            .add("isProtected", false)
             .add("isNSFW", true)
         );
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandSpawnButton.ts                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:48 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:39:49 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:58:56 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ import BaseButton from "../../../abstracts/BaseButton";
 export default class CommandSpawnButton extends BaseCommand {
     public constructor() {
         super("spawn", "Summoning a button.", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
             .add("isDeveloper", true)
         );
 

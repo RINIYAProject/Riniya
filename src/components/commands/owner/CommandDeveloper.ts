@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandDeveloper.ts                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:10 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:39:11 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:06:29 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ import BaseCommand from "../../../abstracts/BaseCommand";
 import OptionMap from "../../../utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, User, MessageEmbed } from "discord.js";
 import { SlashCommandSubcommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
-import Developer from "database/Models/Security/Developer";
+import Developer from "../../../database/Models/Security/Developer";
 
 export default class CommandDeveloper extends BaseCommand {
     public constructor() {
@@ -59,23 +59,11 @@ export default class CommandDeveloper extends BaseCommand {
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const command: string = inter.options.getSubcommand() || 'default';
-        const user: User = inter.options.getUser("user", true);
-
-        if (user.id === member.id) {
-            return inter.reply({
-                embeds: [
-                    new MessageEmbed()
-                        .setTitle("Riniya - Developer")
-                        .setDescription("You can't execute this command on yourself.")
-                        .setColor("#36393f")
-                ],
-                ephemeral: true
-            });
-        }
-
+        const user: User = inter.options.getUser("user") || member.user;
+        
         switch (command) {
             case "check": {
-                if (Developer.findOne({ userId: user.id }))
+                if (Developer.exists({ userId: user.id }))
                     return inter.reply({
                         embeds: [
                             new MessageEmbed()
@@ -95,7 +83,7 @@ export default class CommandDeveloper extends BaseCommand {
                     });
             }
             case "add": {
-                new Developer({ userId: user.id });
+                new Developer({ userId: user.id }).save();
                 return inter.reply({
                     embeds: [
                         new MessageEmbed()

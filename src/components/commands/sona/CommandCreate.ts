@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandCreate.ts                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:28 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:40:29 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:59:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ import { GuildMember, Guild, CommandInteraction } from "discord.js";
 export default class CommandCreate extends BaseCommand {
     public constructor() {
         super("create", "Register your fursona.", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
             .add("isProtected", false)
         );
     }

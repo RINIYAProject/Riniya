@@ -3,35 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   BaseModal.ts                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:19 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 06:25:20 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:56:05 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Base, { BaseType } from "./Base";
-import { Modal, ModalSubmitInteraction, showModal } from "discord-modals";
-import { Interaction } from "discord.js";
+import { ModalSubmitInteraction } from "discord-modals";
 
 export default abstract class BaseModal extends Base {
-
-    private modal: Modal;
-
-    public constructor(name: string, description: string, modal: Modal) {
+    public constructor(name: string, description?: string) {
         super(name, description, BaseType.MODAL);
+    }
 
-        this.modal = modal;
-        this.modal.customId = this.name;
-        this.modal.title = this.description;
+    public execute(): void {
+        throw new Error("Illegal call.")
     }
 
     public abstract handler(interaction: ModalSubmitInteraction): void;
-
-    public show(inter: Interaction): Promise<Modal> {
-        return showModal(this.modal, {
-            client: this.instance,
-            interaction: inter
-        });
-    }
 }

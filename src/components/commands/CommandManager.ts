@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandManager.ts                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:40:25 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:43:12 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ import CommandCreate from "./sona/CommandCreate";
 import CommandShow from "./sona/CommandShow";
 import CommandUpdate from "./sona/CommandUpdate";
 import CommandSpawnButton from "./owner/CommandSpawnButton";
+import CommandDonate from "./misc/CommandDonate";
+import { removeApplicationCommands } from "../../utils/registerCommand";
 
 export default class CommandManager {
     private REGISTRY: OptionMap<String, BaseCommand>;
@@ -73,6 +75,9 @@ export default class CommandManager {
     }
 
     public registerCommand(base: BaseCommand): void {
+        if (this.REGISTRY.getMap().has(base.name)) {
+            throw new Error("You can't register the same command at once.");
+        }
         if (base.options.get("isDisabled")) {
             this.logger.warn(`${base.name} is disabled.`);
         } else {
@@ -114,6 +119,7 @@ export default class CommandManager {
         this.registerCommand(new CommandAbout());
         this.registerCommand(new CommandHelp());
         this.registerCommand(new CommandPing());
+        this.registerCommand(new CommandDonate());
 
         /////////////
 
@@ -154,6 +160,12 @@ export default class CommandManager {
     public removeCommand(name: string): Boolean {
         this.logger.warn(`The handler of ${name} is now deleted.`);
         return this.REGISTRY.remove(name);
+    }
+
+    public reload() {
+        this.REGISTRY.getMap().clear();
+        removeApplicationCommands();
+        this.registerCommands();
     }
 
     public toMap(): Collection<String, BaseCommand> {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BaseCommand.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:13 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 19:38:07 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 02:02:05 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,20 @@ import {
     SlashCommandUserOption,
 } from '@discordjs/builders'
 import OptionMap from "../utils/OptionMap";
-import { PermissionFlagsBits } from "discord-api-types/v9";
 import { CommandInteraction, Guild, GuildMember } from "discord.js";
 
 export default abstract class BaseCommand extends Base {
 
     private command: SlashCommandBuilder;
 
-    public constructor(name: string, description: string, options: OptionMap<string, boolean>) {
+    public constructor(name: string, description?: string, options?: OptionMap<string, boolean>) {
         super(name, description, BaseType.COMMAND);
-        this.setOptions(options);
+        this.setOptions(options || new OptionMap<string, boolean>());
 
         this.command = new SlashCommandBuilder();
         this.command.setName(this.name);
-        this.command.setDescription(this.description);
-        this.command.setDMPermission(this.options.get("dmPermission"));
+        this.command.setDescription(this.description || "");
+        this.command.setDMPermission(this.options.get("dmPermission") || false);
     }
 
     public execute(): void { }

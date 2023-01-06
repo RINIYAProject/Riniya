@@ -1,14 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Database.ts                                        :+:      :+:    :+:   */
+/*   index.ts                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/04 04:29:59 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 04:30:00 by NebraskyThe      ###   ########.fr       */
+/*   Created: 2023/01/06 07:27:45 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/06 07:27:46 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Guild from "database/Models/Guild/Guild";
-import mongoose from "mongoose";
+export * from './Middleware';
+export * from './Payload';

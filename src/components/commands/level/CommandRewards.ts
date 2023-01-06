@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandRewards.ts                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:18:52 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:18:52 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:52:15 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ import { GuildMember, Guild, CommandInteraction, MessageEmbed } from "discord.js
 
 export default class CommandRewards extends BaseCommand {
     public constructor() {
-        super("rewards", "Displaying the next reward.", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
-            .add("isProtected", false)
-        );
+        super("rewards", "Displaying the next reward.");
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
@@ -35,6 +32,7 @@ export default class CommandRewards extends BaseCommand {
             embeds: [
                 new MessageEmbed()
                     .setTitle("Riniya - Rewards")
+                    .setDescription("All the rewards available during this month.")
                     .setColor("#36393f")
             ]
         });

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MemberLeaveEvent.ts                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 09:12:37 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 02:42:00 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ import Guild from "../database/Models/Guild/Guild";
 
 export default class MemberLeave extends BaseEvent {
     public constructor() {
-        super("guildMemberLeave", async (member: GuildMember) => {
+        super("guildMemberRemove", async (member: GuildMember) => {
             if (member.user.bot) return;
             if (member.user.system) return;
 
@@ -31,8 +31,8 @@ export default class MemberLeave extends BaseEvent {
                     "embeds": [
                         {
                             "type": "rich",
-                            "title": `${member.user.username}`,
-                            "description": `left the server.`,
+                            "title": `${member.user.username} left the server.`,
+                            "description": ``,
                             "color": 0xff0080,
                             "thumbnail": {
                                 "url": `https://cdn.discordapp.com/avatars/${member.id}/${member.user.avatar}.jpeg`,

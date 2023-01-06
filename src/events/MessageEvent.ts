@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MessageEvent.ts                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:57 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 09:18:44 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 02:45:33 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ import MessageData from "../database/Models/Common/Message";
 
 export default class MessageEvent extends BaseEvent {
     public constructor() {
-        super("messageCreate", (message: Message) => {
+        super("message", (message: Message) => {
             if (message.author.bot) return;
             if (message.author.system) return;
 

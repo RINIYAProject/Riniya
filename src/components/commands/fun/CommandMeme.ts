@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   CommandMeme.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:41:32 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:41:33 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:53:24 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "../../../abstracts/BaseCommand";
-import OptionMap from "../../../utils/OptionMap"; 
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
 
 export default class CommandMeme extends BaseCommand {
     public constructor() {
-        super("meme", "Random meme", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
-            .add("isProtected", true)
-        );
+        super("meme", "Random meme");
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) { }

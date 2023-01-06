@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   CommandAbout.ts                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:05:52 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:05:53 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:54:38 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "../../../abstracts/BaseCommand";
-import OptionMap from "../../../utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, MessageButton, MessageEmbed } from "discord.js";
 
 export default class CommandAbout extends BaseCommand {
     public constructor() {
-        super("about", "Displaying the bot information", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
-            .add("isProtected", false)
-        );
+        super("about", "Displaying the bot information");
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {

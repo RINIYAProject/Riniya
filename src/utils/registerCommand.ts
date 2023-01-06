@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   registerCommand.ts                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:18 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 06:23:19 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:43:33 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { Client } from "discord.js";
 import CommandManager from "../components/commands/CommandManager";
+import Ghidorah from "../index";
+
+export async function removeApplicationCommands() {
+    Ghidorah.instance.application.commands.cache.forEach(command => {
+        Ghidorah.instance.application.commands.delete(command);
+    });
+}
 
 export async function registerCommands(
     client: Client,

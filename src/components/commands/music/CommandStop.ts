@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   CommandStop.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:41:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:41:09 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 01:55:48 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "../../../abstracts/BaseCommand";
-import OptionMap from "../../../utils/OptionMap"; 
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
 
 export default class CommandStop extends BaseCommand {
     public constructor() {
-        super("stop", "Stop the music.", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
-            .add("isProtected", true)
-        );
+        super("stop", "Stop the music.");
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) { }

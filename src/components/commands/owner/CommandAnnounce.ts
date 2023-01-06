@@ -3,24 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   CommandAnnounce.ts                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:00 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 21:40:01 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/06 03:58:28 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "../../../abstracts/BaseCommand";
-import OptionMap from "../../../utils/OptionMap"; 
+import OptionMap from "../../../utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
+import ModalHelper from "../../../utils/ModalHelper";
+import { TextInputComponent } from "discord-modals";
 
 export default class CommandAnnounce extends BaseCommand {
     public constructor() {
         super("announce", "Announce update", new OptionMap<string, boolean>()
-            .add("dmPermission", false)
             .add("isDeveloper", true)
         );
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) { }
+    handler(inter: CommandInteraction<"cached">, member: GuildMember, guild: Guild) {
+        return new ModalHelper("row_announce", "Create a announce.")
+            .addTextInput(
+                new TextInputComponent()
+                    .setCustomId("row_announce_title")
+                    .setPlaceholder("Put a swag title :D")
+                    .setLabel("TITLE")
+                    .setStyle("LONG")
+                    .setMaxLength(4000)
+            )
+            .addTextInput(
+                new TextInputComponent()
+                    .setCustomId("row_announce_topic")
+                    .setRequired(false)
+                    .setLabel("TOPIC")
+                    .setMaxLength(512)
+                    .setStyle("LONG")
+                    .setPlaceholder("Your announce here :)")
+            ).generate(inter);
+    }
 }

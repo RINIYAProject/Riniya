@@ -6,7 +6,7 @@
 /*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 20:01:21 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 20:01:48 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/04 21:53:11 by NebraskyThe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ export default class Fragment extends BaseButton<MessageButton, void> {
 
     public generate(): MessageButton {
         return new MessageButton()
-            .setCustomId(this.customId)
             .setLabel(this.description)
             .setStyle("LINK")
             .setURL(this.link);
