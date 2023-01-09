@@ -1,4 +1,4 @@
-import BaseModal from "../../abstracts/BaseModal";
+import BaseModal from "../../abstracts/components/BaseModal";
 import OptionMap from "../../utils/OptionMap";
 import ModalAnnounce from "./owner/ModalAnnounce";
 

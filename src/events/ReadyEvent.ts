@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ReadyEvent.ts                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:03 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 09:40:10 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/09 03:30:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Ghidorah from "../index";
-import BaseEvent from "../abstracts/BaseEvent";
+import BaseEvent from "../abstracts/components/BaseEvent";
 
 export default class Ready extends BaseEvent {
     public constructor() {

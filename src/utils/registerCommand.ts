@@ -6,11 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:18 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 03:43:33 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:28:20 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../abstracts/BaseCommand";
+import BaseCommand from "../abstracts/components/BaseCommand";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { Client } from "discord.js";

@@ -6,11 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 06:42:46 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 04:29:07 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 00:57:32 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseButton from "../../../abstracts/BaseButton";
+import BaseButton from "../../../abstracts/components/BaseButton";
 import { ButtonInteraction, MessageButton, MessageEmbed } from "discord.js";
 import OptionMap from "../../../utils/OptionMap";
 import GuildModel from "../../../database/Models/Guild/Guild";

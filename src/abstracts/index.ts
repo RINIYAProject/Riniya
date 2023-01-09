@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   index.ts                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 06:25:26 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 06:25:27 by NebraskyThe      ###   ########.fr       */
+/*   Created: 2023/01/09 03:52:25 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/09 03:52:26 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 export * from './Base';
-export * from './BaseButton';
-export * from './BaseCommand';
-export * from './BaseEvent';
-export * from './BaseModal';
-export * from './BaseTask';
+export * from './components';
+export * from './server';

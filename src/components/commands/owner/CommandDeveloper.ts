@@ -6,11 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:10 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 03:06:29 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:03:47 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../../../abstracts/BaseCommand";
+import BaseCommand from "../../../abstracts/components/BaseCommand";
 import OptionMap from "../../../utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, User, MessageEmbed } from "discord.js";
 import { SlashCommandSubcommandBuilder, SlashCommandUserOption } from "@discordjs/builders";

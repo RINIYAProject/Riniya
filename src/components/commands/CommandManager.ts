@@ -6,12 +6,12 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 03:43:12 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:53:27 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Logger from "../../utils/Logger";
-import BaseCommand from "../../abstracts/BaseCommand";
+import BaseCommand from "../../abstracts/components/BaseCommand";
 import OptionMap from "../../utils/OptionMap";
 import { Collection } from "discord.js";
 
@@ -21,10 +21,7 @@ import CommandMute from "./administrator/CommandMute";
 import CommandWarn from "./administrator/CommandWarn";
 
 import CommandBalance from "./economy/CommandBalance";
-import CommandBuy from "./economy/CommandBuy";
-import CommandCrate from "./economy/CommandCrate";
 import CommandInventory from "./economy/CommandInventory";
-import CommandSell from "./economy/CommandSell";
 import CommandWork from "./economy/CommandWork";
 
 import CommandFox from "./fun/CommandFox";
@@ -64,6 +61,7 @@ import CommandUpdate from "./sona/CommandUpdate";
 import CommandSpawnButton from "./owner/CommandSpawnButton";
 import CommandDonate from "./misc/CommandDonate";
 import { removeApplicationCommands } from "../../utils/registerCommand";
+import CommandRole from "./administrator/CommandRole";
 
 export default class CommandManager {
     private REGISTRY: OptionMap<String, BaseCommand>;
@@ -91,14 +89,12 @@ export default class CommandManager {
         this.registerCommand(new CommandKick());
         this.registerCommand(new CommandMute());
         this.registerCommand(new CommandWarn());
+        this.registerCommand(new CommandRole());
 
         /////////////
 
         this.registerCommand(new CommandBalance());
-        this.registerCommand(new CommandBuy());
-        this.registerCommand(new CommandCrate());
         this.registerCommand(new CommandInventory());
-        this.registerCommand(new CommandSell());
         this.registerCommand(new CommandWork());
 
         /////////////

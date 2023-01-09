@@ -6,11 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:41:32 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 01:53:24 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:06:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../../../abstracts/BaseCommand";
+import BaseCommand from "../../../abstracts/components/BaseCommand";
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
 
 export default class CommandMeme extends BaseCommand {

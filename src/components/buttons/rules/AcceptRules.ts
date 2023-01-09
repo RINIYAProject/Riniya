@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:12 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 22:49:23 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 00:57:32 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ import {
     Modal,
     Role
 } from "discord.js";
-import BaseButton from "../../../abstracts/BaseButton";
+import BaseButton from "../../../abstracts/components/BaseButton";
 import GuildModel from "../../../database/Models/Guild/Guild"
 
 

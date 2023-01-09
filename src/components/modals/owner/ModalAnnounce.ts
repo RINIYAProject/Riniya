@@ -6,11 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 04:03:19 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/06 04:13:01 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 01:43:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseModal from "../../../abstracts/BaseModal";
+import BaseModal from "../../../abstracts/components/BaseModal";
 import { ModalSubmitInteraction } from "discord-modals";
 import { Guild, MessageEmbed } from "discord.js";
 
@@ -35,8 +35,9 @@ export default class ModalAnnounce extends BaseModal {
             ],
             embeds: [
                 new MessageEmbed()
-                    .setTitle(title)
+                    .setTitle(`Announce - ${title}`)
                     .setDescription(topic)
+                    .addField("Author", interaction.member.user.username, true)
                     .setColor("ORANGE")
             ]
         };

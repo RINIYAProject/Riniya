@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:00 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 01:01:38 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 01:17:59 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ export default abstract class Base {
     public name: string;
     public description: string;
     public type: BaseType;
-    public options: OptionMap<string, boolean>;
-    public permissions: Array<any>;
+    public options?: OptionMap<string, boolean>;
 
     public constructor(name: string,
         description: string,
@@ -30,14 +29,8 @@ export default abstract class Base {
         this.type = type;
     }
 
-    abstract execute(): void;
-
     protected setOptions(options: OptionMap<string, boolean>): void {
         this.options = options;
-    }
-
-    protected setPermissions(permissions: Array<any>): void {
-        this.permissions = permissions;
     }
 
     protected getHandle(): Ghidorah {
@@ -54,5 +47,7 @@ export enum BaseType {
     COMMAND,
     MODAL,
     TASK,
-    EVENT
+    EVENT,
+    COMPONENT,
+    SERVER
 }

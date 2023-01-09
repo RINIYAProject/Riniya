@@ -6,11 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:13 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 02:02:05 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 01:39:14 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Base, { BaseType } from "./Base";
+import Base, { BaseType } from "../Base";
 import {
     SlashCommandBuilder,
     SlashCommandAttachmentOption,
@@ -26,7 +26,7 @@ import {
     SlashCommandSubcommandsOnlyBuilder,
     SlashCommandUserOption,
 } from '@discordjs/builders'
-import OptionMap from "../utils/OptionMap";
+import OptionMap from "../../utils/OptionMap";
 import { CommandInteraction, Guild, GuildMember } from "discord.js";
 
 export default abstract class BaseCommand extends Base {
@@ -42,8 +42,6 @@ export default abstract class BaseCommand extends Base {
         this.command.setDescription(this.description || "");
         this.command.setDMPermission(this.options.get("dmPermission") || false);
     }
-
-    public execute(): void { }
 
     public abstract handler(inter: CommandInteraction, member: GuildMember, guild: Guild): void;
 

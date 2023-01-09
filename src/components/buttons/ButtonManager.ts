@@ -6,25 +6,30 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:23 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 03:19:29 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 01:38:16 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import OptionMap from "../../utils/OptionMap";
 import Logger from "../../utils/Logger";
-import BaseButton from "../../abstracts/BaseButton";
-import { Snowflake, Collection, MessageButton } from "discord.js";
+import BaseButton from "../../abstracts/components/BaseButton";
+import { Snowflake, Collection, MessageButton, Interaction } from "discord.js";
 import AcceptRules from "./rules/AcceptRules";
 import ButtonVerify from "./verification/ButtonVerify";
 import Fragment from "./Fragment";
+import BaseComponent from "../../abstracts/components/BaseComponent";
+import ComponentSelectRole from "./roles/ComponentSelectRole";
+import ButtonSelectRole from "./roles/ButtonSelectRole";
 
 export default class ButtonManager {
     private BUTTONS: OptionMap<String, BaseButton<unknown, unknown>>;
+    private component: OptionMap<String, BaseComponent<Interaction<"cached">, unknown>>
     private DYNAMIC_BUTTON: OptionMap<Snowflake, OptionMap<String, BaseButton<unknown, unknown>>>;
     private logger: Logger;
 
     public constructor() {
         this.BUTTONS = new OptionMap<String, BaseButton<unknown, unknown>>();
+        this.component = new OptionMap<String, BaseComponent<Interaction<"cached">, unknown>>();
         this.DYNAMIC_BUTTON = new OptionMap<Snowflake, OptionMap<String, BaseButton<unknown, unknown>>>();
         this.logger = new Logger("ButtonRegistry");
     }
@@ -32,12 +37,23 @@ export default class ButtonManager {
     public registerButtons(): void {
         this.addButton(new AcceptRules());
         this.addButton(new ButtonVerify());
+        this.addButton(new ButtonSelectRole());
+
+        //COMPONENTS
     }
 
     public addButton(button: BaseButton<unknown, unknown>): void {
         button.setting.add("isDynamic", false);
         this.BUTTONS.add(button.customId, button);
         this.logger.info(`Component ${button.customId} registered.`);
+    }
+
+    public addComponent(handle: BaseComponent<Interaction<"cached">, unknown>): void {
+        this.component.add(handle.name, handle);
+    }
+
+    public getComponent(customId: string): BaseComponent<Interaction<"cached">, unknown> {
+        return this.component.get(customId);
     }
 
     public addDynamicButton(userId: Snowflake, button: BaseButton<unknown, unknown>): void {
@@ -53,7 +69,10 @@ export default class ButtonManager {
     }
 
     public getButton(customId: String): BaseButton<unknown, unknown> {
-        return this.BUTTONS.get(customId);
+        const button: BaseButton<unknown, unknown> = this.BUTTONS.get(customId);
+        if (button.setting.get("isRestricted"))
+            throw new Error("You can't call " + button.customId + " because it's restricted.");
+        return button;
     }
 
     public getDynamicButton(userId: Snowflake, customId: String): BaseButton<unknown, unknown> {
@@ -62,6 +81,10 @@ export default class ButtonManager {
 
     public createLinkButton(label: string, link: string): MessageButton {
         return new Fragment(label, link).generate();
+    }
+
+    public executeOnly(customId: string, inter: Interaction<"cached">): void {
+        this.BUTTONS.get(customId).handler(inter);
     }
 
     public reload() {

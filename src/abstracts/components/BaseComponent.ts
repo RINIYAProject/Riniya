@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BaseModal.ts                                       :+:      :+:    :+:   */
+/*   BaseComponent.ts                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 06:25:19 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 03:56:05 by alle.roy         ###   ########.fr       */
+/*   Created: 2023/01/06 09:02:28 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/09 01:37:55 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Base, { BaseType } from "./Base";
-import { ModalSubmitInteraction } from "discord-modals";
+import { Interaction } from "discord.js";
+import Base, { BaseType } from "../Base";
 
-export default abstract class BaseModal extends Base {
-    public constructor(name: string, description?: string) {
-        super(name, description, BaseType.MODAL);
+export default abstract class BaseComponent<T extends Interaction<"cached">, V> extends Base {
+
+    public constructor(customId: string) {
+        super(customId, "", BaseType.COMPONENT);
     }
 
-    public execute(): void {
-        throw new Error("Illegal call.")
-    }
-
-    public abstract handler(interaction: ModalSubmitInteraction): void;
+    public abstract handler(inter: T): V;
 }

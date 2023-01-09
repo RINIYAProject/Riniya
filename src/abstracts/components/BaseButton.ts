@@ -6,13 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:06 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 01:02:10 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 01:39:50 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Base, { BaseType } from "./Base";
-import OptionMap from "../utils/OptionMap";
-import { ButtonInteraction, MessageEmbed } from "discord.js";
+import Base, { BaseType } from "../Base";
+import OptionMap from "../../utils/OptionMap";
+import { Interaction, MessageEmbed } from "discord.js";
 
 export default abstract class BaseButton<T, V> extends Base {
     public customId: string;
@@ -24,11 +24,7 @@ export default abstract class BaseButton<T, V> extends Base {
         this.setting = setting || new OptionMap<string, unknown>();
     }
 
-    public execute(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    public abstract handler(interaction: ButtonInteraction<"cached">): Promise<V>;
+    public abstract handler(interaction: Interaction<"cached">): Promise<V>;
     public abstract message(): MessageEmbed;
     public abstract generate(): T;
 

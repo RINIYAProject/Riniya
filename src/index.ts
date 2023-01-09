@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:24 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 07:35:13 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:25:30 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ import EventManager from "./events/EventManager"
 import ButtonManager from "./components/buttons/ButtonManager"
 import ModalManager from "./components/modals/ModalManager"
 import discordModals from "discord-modals"
-import WebsocketServer from "./websocket/index"
+import ServerManager from "./api/index"
 
 export default class Ghidorah extends Client {
     public static instance: Ghidorah
@@ -34,9 +34,8 @@ export default class Ghidorah extends Client {
     public eventManager: EventManager
     public buttonManager: ButtonManager
     public modalManager: ModalManager
+    public serverManager: ServerManager
     public loaded: boolean = false
-
-    public websocket: WebsocketServer
 
     public version: string = "7.2.8"
     public revision: string = "0F 2B A1"
@@ -101,8 +100,9 @@ export default class Ghidorah extends Client {
         this.modalManager = new ModalManager();
         this.modalManager.registerModals();
 
-        this.websocket = new WebsocketServer();
-        this.websocket.load();
+        this.serverManager = new ServerManager();
+        this.serverManager.registerServers();
+        this.serverManager.initServers();
 
         this.login(process.env.TOKEN);
     }

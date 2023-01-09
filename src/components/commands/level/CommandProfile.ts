@@ -6,13 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:18:48 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 01:52:29 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 03:05:37 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import { SlashCommandUserOption } from "@discordjs/builders";
 import { GuildMember, Guild, CommandInteraction, User, MessageEmbed } from "discord.js";
-import BaseCommand from "../../../abstracts/BaseCommand";
+import BaseCommand from "../../../abstracts/components/BaseCommand";
 
 export default class CommandProfile extends BaseCommand {
     public constructor() {
