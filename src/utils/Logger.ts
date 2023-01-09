@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Logger.ts                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:12 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/03 09:22:36 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/01/09 11:35:30 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ export default class Logger {
     public constructor(prefix: string) {
         this.prefix = prefix;
         this.date = new Date();
-        fs.writeFile(`logs/${prefix}-${this.date}.log`, "------------ STARTING LOGGING SESSION ------------", (err) => { });
+        fs.writeFile(`logs/Riniya-${this.date}.log`, "------------ STARTING LOGGING SESSION ------------", (err) => { });
     }
 
     public info(message: string) {
@@ -36,7 +36,7 @@ export default class Logger {
 
     private log(type: string, message: string) {
         const prefix = `${new Date().toTimeString()} : ${this.prefix} . [${type}] - ${message}`;
-        fs.appendFileSync(`logs/${this.prefix}-${this.date}.log`, `${prefix}\n`);
+        fs.appendFileSync(`logs/Riniya-${this.date}.log`, `${prefix}\n`);
         console.log(prefix);
     }
 }

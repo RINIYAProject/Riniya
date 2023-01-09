@@ -1,3 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   index.ts                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/09 11:57:29 by alle.roy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+import 'module-alias/register';
+
 import { Client, Intents } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import mongoose from "mongoose";
@@ -105,3 +120,5 @@ export default class Riniya extends Client {
         return this.instance;
     }
 }
+
+export const riniya: Riniya = new Riniya();
