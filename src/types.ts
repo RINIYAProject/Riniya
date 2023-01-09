@@ -6,14 +6,14 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:57 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 05:32:09 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:22:37 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Sanction from "./database/Models/Moderation/Sanction";
+import Riniya from "@riniya.ts";
+import Sanction from "@riniya.ts/database/Moderation/Sanction";
+import GuildModel from "@riniya.ts/database/Guild/Guild";
 import { Guild, GuildMember, MessageEmbed, TextChannel } from "discord.js"
-import GuildModel from "./database/Models/Guild/Guild"
-import Ghidorah from "./index";
 
 export async function fetchGuild(guildId: string) {
     return await GuildModel.findOne({ guildId: guildId })
@@ -33,8 +33,8 @@ export function sanction(
                     {
                         type: 1,
                         components: [
-                            Ghidorah.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.com/server/${guild.id}/profile/${target.id}`),
-                            Ghidorah.instance.buttonManager.createLinkButton("Dashboard", "https://www.riniya.com/dashboard/" + guild.id)
+                            Riniya.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.com/server/${guild.id}/profile/${target.id}`),
+                            Riniya.instance.buttonManager.createLinkButton("Dashboard", "https://www.riniya.com/dashboard/" + guild.id)
                         ]
                     }
                 ],
@@ -92,8 +92,8 @@ export function sanction(
             {
                 type: 1,
                 components: [
-                    Ghidorah.instance.buttonManager.createLinkButton("Website", "https://www.riniya.com"),
-                    Ghidorah.instance.buttonManager.createLinkButton("Appeal", "https://www.riniya.com/server/" + guild.id + "/" + type + "/" + target.id + "/appeal")
+                    Riniya.instance.buttonManager.createLinkButton("Website", "https://www.riniya.com"),
+                    Riniya.instance.buttonManager.createLinkButton("Appeal", "https://www.riniya.com/server/" + guild.id + "/" + type + "/" + target.id + "/appeal")
                 ]
             }
         ],

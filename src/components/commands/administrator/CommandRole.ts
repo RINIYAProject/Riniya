@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandRole.ts                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/09 08:02:15 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/09 08:02:16 by alle.roy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
+import RoleModel from "@riniya.ts/database/Guild/Role";
+
 import { SlashCommandRoleOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
-import BaseCommand from "../../../abstracts/components/BaseCommand";
-import { CommandInteraction, CacheType, GuildMember, Guild, Role, MessageEmbed } from "discord.js";
-import OptionMap from "../../../utils/OptionMap";
-import RoleModel from "../../../database/Models/Guild/Role";
+import { CommandInteraction, CacheType, GuildMember, Guild, MessageEmbed } from "discord.js";
 
 export default class CommandRole extends BaseCommand {
 

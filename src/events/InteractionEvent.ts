@@ -6,15 +6,22 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:47 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:24:59 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 07:56:15 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../abstracts/components/BaseCommand";
-import BaseEvent from "../abstracts/components/BaseEvent";
-import { ButtonInteraction, CommandInteraction, GuildMember, Interaction, MessageButton, Permissions, TextChannel } from "discord.js";
-import BaseButton from "../abstracts/components/BaseButton";
-import Developer from "../database/Models/Security/Developer";
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+import BaseEvent from "@riniya.ts/components/BaseEvent";
+import BaseButton from "@riniya.ts/components/BaseButton";
+import Developer from "@riniya.ts/database/Security/Developer";
+
+import {
+    ButtonInteraction,
+    CommandInteraction,
+    GuildMember,
+    Interaction,
+    TextChannel
+} from "discord.js";
 
 export default class InteractionEvent extends BaseEvent {
     public constructor() {

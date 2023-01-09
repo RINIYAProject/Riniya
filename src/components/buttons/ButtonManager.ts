@@ -6,19 +6,18 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:23 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 01:38:16 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:13:40 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import OptionMap from "../../utils/OptionMap";
-import Logger from "../../utils/Logger";
-import BaseButton from "../../abstracts/components/BaseButton";
+import OptionMap from "@riniya.ts/utils/OptionMap";
+import Logger from "@riniya.ts/logger";
+import BaseButton from "@riniya.ts/components/BaseButton";
+import BaseComponent from "@riniya.ts/components/BaseComponent";
 import { Snowflake, Collection, MessageButton, Interaction } from "discord.js";
 import AcceptRules from "./rules/AcceptRules";
 import ButtonVerify from "./verification/ButtonVerify";
 import Fragment from "./Fragment";
-import BaseComponent from "../../abstracts/components/BaseComponent";
-import ComponentSelectRole from "./roles/ComponentSelectRole";
 import ButtonSelectRole from "./roles/ButtonSelectRole";
 
 export default class ButtonManager {

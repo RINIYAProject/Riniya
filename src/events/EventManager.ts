@@ -6,13 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:37 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:29:02 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 07:52:47 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseEvent from "../abstracts/components/BaseEvent";
-import Logger from "../utils/Logger";
-import OptionMap from "../utils/OptionMap";
+import BaseEvent from "@riniya.ts/components/BaseEvent";
+import Logger from "@riniya.ts/logger";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 
 import DisconnectEvent from "./DisconnectEvent";
 import ErrorEvent from "./ErrorEvent";

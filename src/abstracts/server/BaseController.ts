@@ -6,12 +6,12 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 01:06:54 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 03:47:48 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 07:43:15 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import { Request, Response } from "express";
-import RouteBuilder, { RouteMethod } from "../../utils/RouteBuilder";
+import RouteBuilder from "@riniya.ts/utils/RouteBuilder";
 
 export declare type APIError = 'NOT_FOUND' | 'MISSING_ARGS' | 'SERVER_ERROR' | 'RATE_LIMITED' | 'MISSING_ID' | 'PERMISSION_DENIED';
 

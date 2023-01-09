@@ -6,11 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:13 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 01:39:14 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:27:42 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Base, { BaseType } from "../Base";
+import Base from "../Base";
 import {
     SlashCommandBuilder,
     SlashCommandAttachmentOption,
@@ -26,7 +26,7 @@ import {
     SlashCommandSubcommandsOnlyBuilder,
     SlashCommandUserOption,
 } from '@discordjs/builders'
-import OptionMap from "../../utils/OptionMap";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 import { CommandInteraction, Guild, GuildMember } from "discord.js";
 
 export default abstract class BaseCommand extends Base {
@@ -34,7 +34,7 @@ export default abstract class BaseCommand extends Base {
     private command: SlashCommandBuilder;
 
     public constructor(name: string, description?: string, options?: OptionMap<string, boolean>) {
-        super(name, description, BaseType.COMMAND);
+        super(name, description, "COMMAND");
         this.setOptions(options || new OptionMap<string, boolean>());
 
         this.command = new SlashCommandBuilder();

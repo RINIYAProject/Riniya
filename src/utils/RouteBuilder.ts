@@ -6,17 +6,9 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 01:06:57 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 03:48:27 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 07:51:16 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-export declare enum RouteMethod {
-    GET = "get",
-    POST = "post",
-    PATCH = "patch",
-    DELETE = "delete",
-    PUT = "put"
-}
 
 export declare type APICors = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 

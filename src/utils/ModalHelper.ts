@@ -6,13 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:43:21 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/06 03:30:04 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:22:01 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import { Modal, SelectMenuComponent, TextInputComponent, showModal } from "discord-modals";
-import { ButtonInteraction, Interaction } from "discord.js";
-import Ghidorah from "../index";
+import { Interaction } from "discord.js";
+import Riniya from "@riniya.ts";
 
 export default class ModalHelper {
     private modal: Modal;
@@ -35,7 +35,8 @@ export default class ModalHelper {
 
     public generate(inter: Interaction<"cached">): Promise<Modal> {
         return showModal(this.modal, {
-            client: Ghidorah.instance,
+            client: Riniya
+        .instance,
             interaction: inter
         });
     }

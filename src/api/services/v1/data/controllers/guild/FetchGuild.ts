@@ -1,7 +1,7 @@
-import BaseController from "../../../../../../abstracts/server/BaseController";
-import Guild from "../../../../../../database/Models/Guild/Guild";
+import BaseController from "@riniya.ts/server/BaseController";
+import Guild from "@riniya.ts/database/Guild/Guild";
+import RouteBuilder from "@riniya.ts/utils/RouteBuilder";
 import { Request, Response } from "express";
-import RouteBuilder, { RouteMethod } from "../../../../../../utils/RouteBuilder";
 
 export default class FetchGuild extends BaseController {
 

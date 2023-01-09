@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandShop.ts                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/09 08:03:05 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/09 08:03:15 by alle.roy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+
 import { SlashCommandIntegerOption, SlashCommandStringOption, SlashCommandSubcommandBuilder } from "@discordjs/builders";
-import BaseCommand from "abstracts/components/BaseCommand";
-import { CommandInteraction, CacheType, GuildMember, Guild } from "discord.js";
+import { CommandInteraction, GuildMember, Guild } from "discord.js";
 
 export default class CommandShop extends BaseCommand {
 

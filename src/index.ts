@@ -1,44 +1,31 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   index.ts                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 06:23:24 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:25:30 by alle.roy         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+import { Client, Intents } from "discord.js";
+import { SlashCommandBuilder } from "@discordjs/builders";
+import mongoose from "mongoose";
+import Logger from "@riniya.ts/logger";
+import CommandManager from "./components/commands/CommandManager";
+import EventManager from "./events/EventManager";
+import ButtonManager from "./components/buttons/ButtonManager";
+import ModalManager from "./components/modals/ModalManager";
+import discordModals from "discord-modals";
+import ServerManager from "./api/index";
 
-import { Client, Intents } from "discord.js"
-import { SlashCommandBuilder } from "@discordjs/builders"
-import mongoose from "mongoose"
-
-import Logger from "./utils/Logger"
-import CommandManager from "./components/commands/CommandManager"
-import EventManager from "./events/EventManager"
-import ButtonManager from "./components/buttons/ButtonManager"
-import ModalManager from "./components/modals/ModalManager"
-import discordModals from "discord-modals"
-import ServerManager from "./api/index"
-
-export default class Ghidorah extends Client {
-    public static instance: Ghidorah
+export default class Riniya extends Client {
+    public static instance: Riniya;
 
     public database: mongoose.Mongoose;
 
-    public REGISTRY: SlashCommandBuilder
-    public logger: Logger
+    public REGISTRY: SlashCommandBuilder;
+    public logger: Logger;
 
-    public manager: CommandManager
-    public eventManager: EventManager
-    public buttonManager: ButtonManager
-    public modalManager: ModalManager
-    public serverManager: ServerManager
-    public loaded: boolean = false
+    public manager: CommandManager;
+    public eventManager: EventManager;
+    public buttonManager: ButtonManager;
+    public modalManager: ModalManager;
+    public serverManager: ServerManager;
+    public loaded: boolean = false;
 
-    public version: string = "7.2.8"
-    public revision: string = "0F 2B A1"
+    public version: string = "7.2.8";
+    public revision: string = "0F 2B A1";
 
     public constructor() {
         super({
@@ -61,7 +48,7 @@ export default class Ghidorah extends Client {
             ],
             ws: { properties: { $browser: "Discord iOS" } }
         });
-        Ghidorah.instance = this;
+        Riniya.instance = this;
 
         this.start();
     }
@@ -114,9 +101,7 @@ export default class Ghidorah extends Client {
         this.modalManager.reload();
     }
 
-    public static getInstance(): Ghidorah {
+    public static getInstance(): Riniya {
         return this.instance;
     }
 }
-
-export const client: Ghidorah = new Ghidorah();

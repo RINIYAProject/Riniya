@@ -13,11 +13,29 @@
     "baseUrl": "src/",
     "skipLibCheck": true,
     "paths": {
-      "@types": [
+      "@riniya.ts/types": [
         "types.ts"
       ],
-      "@utils/*": [
+      "@riniya.ts/logger": [
+        "utils/Logger.ts"
+      ],
+      "@riniya.ts": [
+        "index.ts"
+      ],
+      "@riniya.ts/utils/*": [
         "utils/*"
+      ],
+      "@riniya.ts/database/*": [
+        "database/Models/*"
+      ],
+      "@riniya.ts/components/*": [
+        "abstracts/components/*"
+      ],
+      "@riniya.ts/server/*": [
+        "abstracts/server/*"
+      ],
+      "@rinia.ts/controllers/*": [
+        "api/controllers/*"
       ]
     }
   },

@@ -1,8 +1,9 @@
-import BaseModal from "../../../abstracts/components/BaseModal";
-import Guild from "../../../database/Models/Guild/Guild";
+import Verification from "@riniya.ts/database/Guild/Verification";
+import BaseModal from "@riniya.ts/components/BaseModal";
+import Guild from "@riniya.ts/database/Guild/Guild";
+
+import { MessageEmbed } from "discord.js";
 import { ModalSubmitInteraction } from "discord-modals";
-import { MessageEmbed, TextChannel } from "discord.js";
-import Verification from "../../../database/Models/Guild/Verification";
 
 export default class ModalVerificationSubmit extends BaseModal {
     public constructor() {

@@ -6,13 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 01:53:49 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 02:45:19 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 07:48:10 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Tuple from "../../utils/Tuple";
-import ServerBuilder from "../../utils/ServerBuilder";
-import BaseController from "./BaseController";
+import Tuple from "@riniya.ts/utils/Tuple";
+import ServerBuilder from "@riniya.ts/utils/ServerBuilder";
+import BaseController from "@riniya.ts/server/BaseController";
 
 export default abstract class BaseServer {
     private readonly server: ServerBuilder

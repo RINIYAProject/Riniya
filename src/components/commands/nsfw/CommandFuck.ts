@@ -6,15 +6,15 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:52 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:04:23 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:05:15 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import { SlashCommandUserOption } from "@discordjs/builders";
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
 
-import BaseCommand from "../../../abstracts/components/BaseCommand";
-import OptionMap from "../../../utils/OptionMap"; 
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 
 export default class CommandFuck extends BaseCommand {
     public constructor() {

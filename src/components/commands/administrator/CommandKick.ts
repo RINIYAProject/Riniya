@@ -6,15 +6,16 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 20:49:03 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:02:34 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:01:26 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../../../abstracts/components/BaseCommand";
-import OptionMap from "../../../utils/OptionMap";
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
+import { sanction } from "@riniya.ts/types";
+
 import { GuildMember, Guild, CommandInteraction, MessageEmbed, User } from "discord.js";
 import { SlashCommandStringOption, SlashCommandUserOption } from "@discordjs/builders";
-import { sanction } from "../../../types";
 
 export default class CommandKick extends BaseCommand {
     public constructor() {

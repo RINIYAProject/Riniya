@@ -6,31 +6,33 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 03:46:22 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:24:40 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseServer from "../abstracts/server/BaseServer";
-import Tuple from "../utils/Tuple";
+import BaseController from "@riniya.ts/server/BaseController";
+import BaseServer from "@riniya.ts/server/BaseServer";
+import Tuple from "@riniya.ts/utils/Tuple";
+import Logger from "@riniya.ts/logger";
+import Riniya from "@riniya.ts";
+
 import express from "express";
 import https from "https";
-import Logger from "../utils/Logger";
-import Ghidorah from "../index";
-import BaseController from "abstracts/server/BaseController";
+
 import DataServer from "./services/v1/data/DataServer";
 const app = express();
 
 export default class ServerManager {
     private servers: Tuple<BaseServer>
     private server: https.Server
-    private logger: Logger = Ghidorah.instance.logger
+    private logger: Logger = Riniya.instance.logger
 
     public constructor() {
         this.servers = new Tuple<BaseServer>()
         app.get('/', (req, res) => {
             return res.status(200).json({
                 name: "RiniyaAPI",
-                version: Ghidorah.instance.version,
+                version: Riniya.instance.version,
                 authors: [
                     "NebraskyTheWolf"
                 ],

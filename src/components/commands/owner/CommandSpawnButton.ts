@@ -6,15 +6,16 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:48 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:04:05 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:07:30 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../../../abstracts/components/BaseCommand";
-import OptionMap from "../../../utils/OptionMap";
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+import BaseButton from "@riniya.ts/components/BaseButton";
+import OptionMap from "@riniya.ts/utils/OptionMap";
+
 import { GuildMember, Guild, CommandInteraction, MessageButton, } from "discord.js";
 import { SlashCommandStringOption } from "@discordjs/builders";
-import BaseButton from "../../../abstracts/components/BaseButton";
 
 export default class CommandSpawnButton extends BaseCommand {
     public constructor() {

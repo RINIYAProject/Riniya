@@ -1,5 +1,17 @@
-import BaseButton from "../../../abstracts/components/BaseButton";
-import Role from "../../../database/Models/Guild/Role";
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ButtonSelectRole.ts                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/09 08:10:47 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/09 08:10:48 by alle.roy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+import BaseButton from "@riniya.ts/components/BaseButton";
+import Role from "@riniya.ts/database/Guild/Role";
 import { ButtonInteraction, MessageActionRow, MessageButton, MessageEmbed, MessageSelectMenu } from "discord.js";
 
 export default class ButtonSelectRole extends BaseButton<MessageButton, void> {

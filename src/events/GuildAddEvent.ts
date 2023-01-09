@@ -6,15 +6,16 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:41 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:29:19 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 07:53:32 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseEvent from "../abstracts/components/BaseEvent";
-import { registerCommands } from "../utils/registerCommand";
+import BaseEvent from "@riniya.ts/components/BaseEvent";
+import { registerCommands } from "@riniya.ts/utils/registerCommand";
+import GuildModel from "@riniya.ts/database/Guild/Guild";
+
 import { Guild } from "discord.js";
 
-import GuildModel from "../database/Models/Guild/Guild";
 
 export default class GuildAddEvent extends BaseEvent {
     public constructor() {

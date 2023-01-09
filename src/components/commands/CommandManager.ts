@@ -6,13 +6,14 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:53:27 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:10:07 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Logger from "../../utils/Logger";
-import BaseCommand from "../../abstracts/components/BaseCommand";
-import OptionMap from "../../utils/OptionMap";
+import Logger from "@riniya.ts/logger";
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
+import { removeApplicationCommands } from "@riniya.ts/utils/registerCommand";
 import { Collection } from "discord.js";
 
 import CommandBan from "./administrator/CommandBan";
@@ -60,7 +61,6 @@ import CommandShow from "./sona/CommandShow";
 import CommandUpdate from "./sona/CommandUpdate";
 import CommandSpawnButton from "./owner/CommandSpawnButton";
 import CommandDonate from "./misc/CommandDonate";
-import { removeApplicationCommands } from "../../utils/registerCommand";
 import CommandRole from "./administrator/CommandRole";
 
 export default class CommandManager {

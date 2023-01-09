@@ -6,20 +6,20 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:18 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:28:20 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:22:17 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../abstracts/components/BaseCommand";
+import BaseCommand from "@riniya.ts/components/BaseCommand";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import { Client } from "discord.js";
 import CommandManager from "../components/commands/CommandManager";
-import Ghidorah from "../index";
+import Riniya from "@riniya.ts";
 
 export async function removeApplicationCommands() {
-    Ghidorah.instance.application.commands.cache.forEach(command => {
-        Ghidorah.instance.application.commands.delete(command);
+    Riniya.instance.application.commands.cache.forEach(command => {
+        Riniya.instance.application.commands.delete(command);
     });
 }
 

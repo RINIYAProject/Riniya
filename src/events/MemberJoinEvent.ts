@@ -6,14 +6,15 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:51 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:29:32 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 07:56:56 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseEvent from "../abstracts/components/BaseEvent";
+import BaseEvent from "@riniya.ts/components/BaseEvent";
+import Guild from "@riniya.ts/database/Guild/Guild";
+import Member from "@riniya.ts/database/Guild/Member";
+
 import { GuildMember, Role, TextChannel } from "discord.js";
-import Guild from "../database/Models/Guild/Guild";
-import Member from "../database/Models/Guild/Member";
 
 export default class MemberJoin extends BaseEvent {
     public constructor() {

@@ -6,14 +6,15 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:00 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:03:37 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:05:56 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../../../abstracts/components/BaseCommand";
-import OptionMap from "../../../utils/OptionMap";
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
+import ModalHelper from "@riniya.ts/utils/ModalHelper";
+
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
-import ModalHelper from "../../../utils/ModalHelper";
 import { TextInputComponent } from "discord-modals";
 
 export default class CommandAnnounce extends BaseCommand {

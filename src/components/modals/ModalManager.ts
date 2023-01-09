@@ -1,5 +1,5 @@
-import BaseModal from "../../abstracts/components/BaseModal";
-import OptionMap from "../../utils/OptionMap";
+import BaseModal from "@riniya.ts/components/BaseModal";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 import ModalAnnounce from "./owner/ModalAnnounce";
 
 export default class ModalManager {

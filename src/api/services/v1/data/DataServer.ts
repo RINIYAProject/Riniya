@@ -1,5 +1,5 @@
-import ServerBuilder from "../../../../utils/ServerBuilder";
-import BaseServer from "../../../../abstracts/server/BaseServer";
+import ServerBuilder from "@riniya.ts/utils/ServerBuilder";
+import BaseServer from "@riniya.ts/server/BaseServer";
 import FetchGuild from "./controllers/guild/FetchGuild";
 
 export default class DataServer extends BaseServer {

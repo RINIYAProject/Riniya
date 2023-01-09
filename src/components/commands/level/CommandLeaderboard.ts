@@ -6,11 +6,12 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:18:46 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 03:05:31 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 08:04:04 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseCommand from "../../../abstracts/components/BaseCommand";
+import BaseCommand from "@riniya.ts/components/BaseCommand";
+
 import { GuildMember, Guild, CommandInteraction, MessageEmbed } from "discord.js";
 
 export default class CommandLeaderboard extends BaseCommand {
