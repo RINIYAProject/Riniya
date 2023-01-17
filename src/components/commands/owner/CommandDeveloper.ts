@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:10 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:06:37 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:08:07 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,15 @@ export default class CommandDeveloper extends BaseCommand {
         )
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
+    async handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const command: string = inter.options.getSubcommand() || 'default';
         const user: User = inter.options.getUser("user") || member.user;
-        
+
+        const developer = await Developer.findOne({ userId: user.id })
+
         switch (command) {
             case "check": {
-                if (Developer.exists({ userId: user.id }))
+                if (developer && developer.userId)
                     return inter.reply({
                         embeds: [
                             new MessageEmbed()
@@ -95,7 +97,7 @@ export default class CommandDeveloper extends BaseCommand {
                 });
             }
             case "remove": {
-                Developer.deleteOne({ userId: user.id });
+                developer.deleteOne({ userId: user.id });
                 return inter.reply({
                     embeds: [
                         new MessageEmbed()

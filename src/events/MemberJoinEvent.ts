@@ -6,15 +6,16 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:51 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 07:56:56 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:05:27 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
 import Guild from "@riniya.ts/database/Guild/Guild";
 import Member from "@riniya.ts/database/Guild/Member";
+import { fetchBlacklist } from "@riniya.ts/types";
 
-import { GuildMember, Role, TextChannel } from "discord.js";
+import { GuildMember, MessageEmbed, Role, TextChannel } from "discord.js";
 
 export default class MemberJoin extends BaseEvent {
     public constructor() {
@@ -23,7 +24,24 @@ export default class MemberJoin extends BaseEvent {
             if (member.user.system) return;
 
             const GuildData = await Guild.findOne({ guildId: member.guild.id });
-            new Member({ guildId: member.guild.id, memberId: member.id }).save();
+            const channel: TextChannel = this.instance.guilds.cache.get(GuildData.guildId)
+                .channels.cache.get(GuildData.loggingModeration) as TextChannel;
+
+            await fetchBlacklist(member.id)
+                .then((result) => {
+                    if (result && result.issuedBy) {
+                        member.kick(`Blacklisted ${result.reason} | ${result.issuedBy}`).then(() => {
+                            channel.send({
+                                embeds: [
+                                    new MessageEmbed()
+                                        .setTitle(`${member.user.username} got kicked.`)
+                                        .setDescription(`This user has been blacklisted by ${result.issuedBy} as reason ${result.reason}.`)
+                                        .addField("Case Id", result._id, true)
+                                ]
+                            });
+                        });
+                    }
+                });
 
             if (GuildData.roleEnabled) {
                 const defaultRole: Role = member.guild.roles.cache.get(GuildData.roleUnverified);

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:12 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:11:44 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/14 14:09:53 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ import BaseButton from "@riniya.ts/components/BaseButton";
 import GuildModel from "@riniya.ts/database/Guild/Guild"
 
 export default class AcceptRules extends BaseButton<MessageButton, void> {
-
     public constructor() {
         super(
             "row_agree",

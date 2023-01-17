@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:12 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 11:35:30 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/09 12:11:45 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ export default class Logger {
     public constructor(prefix: string) {
         this.prefix = prefix;
         this.date = new Date();
-        fs.writeFile(`logs/Riniya-${this.date}.log`, "------------ STARTING LOGGING SESSION ------------", (err) => { });
+        fs.writeFile(`logs/Riniya-${this.date}.log`, "------------ STARTING LOGGING SESSION ------------\n", (err) => { });
     }
 
     public info(message: string) {

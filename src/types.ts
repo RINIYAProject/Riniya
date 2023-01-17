@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:57 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:22:37 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:35:41 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,19 @@ import Riniya from "@riniya.ts";
 import Sanction from "@riniya.ts/database/Moderation/Sanction";
 import GuildModel from "@riniya.ts/database/Guild/Guild";
 import { Guild, GuildMember, MessageEmbed, TextChannel } from "discord.js"
+import Member from "@riniya.ts/database/Guild/Member";
+import Blacklist from "@riniya.ts/database/Common/Blacklist";
 
 export async function fetchGuild(guildId: string) {
     return await GuildModel.findOne({ guildId: guildId })
+}
+
+export async function fetchMember(guildId: string, memberId: string): Promise<GuildMember> {
+    return Riniya.instance.guilds.cache.get(guildId).members.cache.get(memberId);
+}
+
+export async function fetchBlacklist(userId: string) {
+    return await Blacklist.findOne({ userId: userId })
 }
 
 export function sanction(
@@ -107,4 +117,3 @@ export function sanction(
         ]
     }
 }
-

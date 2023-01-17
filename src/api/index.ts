@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 08:24:40 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/15 13:53:30 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,18 @@ import express from "express";
 import https from "https";
 
 import DataServer from "./services/v1/data/DataServer";
+import FileHelper from "@riniya.ts/utils/FileHelper";
 const app = express();
 
 export default class ServerManager {
     private servers: Tuple<BaseServer>
     private server: https.Server
     private logger: Logger = Riniya.instance.logger
+    private fileHelper: FileHelper
 
     public constructor() {
         this.servers = new Tuple<BaseServer>()
+        this.fileHelper = new FileHelper()
         app.get('/', (req, res) => {
             return res.status(200).json({
                 name: "RiniyaAPI",
@@ -39,7 +42,10 @@ export default class ServerManager {
                 websocket: []
             })
         });
-        this.server = https.createServer({}, app);
+        this.server = https.createServer({
+            key: this.fileHelper.search(process.env.SERVER_KEY),
+            cert: this.fileHelper.search(process.env.SERVER_CERT)
+        }, app);
     }
 
     public initServers(): void {

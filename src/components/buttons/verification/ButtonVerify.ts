@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 06:42:46 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:12:52 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/14 14:21:07 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ import GuildModel from "@riniya.ts/database/Guild/Guild";
 import Verification from "@riniya.ts/database/Guild/Verification";
 import ModalHelper from "@riniya.ts/utils/ModalHelper";
 import {
-    SelectMenuComponent,
     TextInputComponent
 } from "discord-modals";
 
@@ -32,64 +31,38 @@ export default class ButtonVerify extends BaseButton<MessageButton, void> {
 
     public async handler(inter: ButtonInteraction<"cached">): Promise<void> {
         const GuildData = await GuildModel.findOne({ guildId: inter.guildId });
-        const User = await Verification.findOne({ guildId: inter.guildId, memberId: inter.member.id });
         if (GuildData.verification) {
-            if (User && User.status === 'verified' || User.status === 'pending') {
-                return inter.reply({
-                    content: "You are already verified.",
-                    ephemeral: true
-                });
-            } else {
-                new ModalHelper(
-                    "row_verification_submit",
-                    "Member manual verification."
-                ).addTextInput(
-                    new TextInputComponent()
-                        .setCustomId("row_verification_answer_find")
-                        .setStyle("LONG")
-                        .setLabel("HOW DID YOU FIND US?")
-                        .setMinLength(8)
-                        .setMaxLength(100)
-                        .setPlaceholder("Please be specific, answers like 'google' or 'website' will be declined")
-                        .setRequired(true)
-                ).addTextInput(
-                    new TextInputComponent()
-                        .setCustomId("row_verification_answer_age")
-                        .setStyle("SHORT")
-                        .setLabel("HOW OLD ARE YOU")
-                        .setMinLength(2)
-                        .setMaxLength(3)
-                        .setPlaceholder("Do not round up, and do not give us your \"sona's\" age.")
-                        .setRequired(true)
-                ).addTextInput(
-                    new TextInputComponent()
-                        .setCustomId("row_verification_answer_sona")
-                        .setStyle("LONG")
-                        .setLabel("DO YOU HAVE A FURSONA?")
-                        .setMinLength(30)
-                        .setMaxLength(260)
-                        .setPlaceholder("If so, could you describe them?")
-                        .setRequired(true)
-                ).addSelectMenu(
-                    new SelectMenuComponent()
-                        .setCustomId("row_verification_answer_rules")
-                        .setMinValues(1)
-                        .setMaxValues(1)
-                        .setPlaceholder("Have you read the rules?")
-                        .addOptions(
-                            {
-                                label: "Yes",
-                                value: "Y",
-                                default: false
-                            },
-                            {
-                                label: "No",
-                                value: "N",
-                                default: false
-                            }
-                        )
-                ).generate(inter);
-            }
+            new ModalHelper(
+                "row_verification_submit",
+                "Member manual verification."
+            ).addTextInput(
+                new TextInputComponent()
+                    .setCustomId("row_verification_answer_find")
+                    .setStyle("LONG")
+                    .setLabel("HOW DID YOU FIND US?")
+                    .setMinLength(8)
+                    .setMaxLength(100)
+                    .setPlaceholder("Please be specific, answers like 'google' or 'website' will be declined")
+                    .setRequired(true)
+            ).addTextInput(
+                new TextInputComponent()
+                    .setCustomId("row_verification_answer_age")
+                    .setStyle("SHORT")
+                    .setLabel("HOW OLD ARE YOU")
+                    .setMinLength(2)
+                    .setMaxLength(3)
+                    .setPlaceholder("Do not round up, and do not give us your \"sona's\" age.")
+                    .setRequired(true)
+            ).addTextInput(
+                new TextInputComponent()
+                    .setCustomId("row_verification_answer_sona")
+                    .setStyle("LONG")
+                    .setLabel("DO YOU HAVE A FURSONA?")
+                    .setMinLength(30)
+                    .setMaxLength(260)
+                    .setPlaceholder("If so, could you describe them?")
+                    .setRequired(true)
+            ).generate(inter);
         } else {
             return inter.reply({
                 content: "This server is not configurated, Please contact a administrator.",

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 11:57:29 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:24:53 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ import ModalManager from "./components/modals/ModalManager";
 import discordModals from "discord-modals";
 import ServerManager from "./api/index";
 
+import Levels from "discord-xp";
+
 export default class Riniya extends Client {
     public static instance: Riniya;
 
@@ -37,10 +39,11 @@ export default class Riniya extends Client {
     public buttonManager: ButtonManager;
     public modalManager: ModalManager;
     public serverManager: ServerManager;
+    public discordXp: Levels
     public loaded: boolean = false;
 
-    public version: string = "7.2.8";
-    public revision: string = "0F 2B A1";
+    public version: string = process.env.VERSION || "Unreferenced version.";
+    public revision: string = process.env.REVISION || "Unreferenced revision code.";
 
     public constructor() {
         super({
@@ -64,12 +67,24 @@ export default class Riniya extends Client {
             ws: { properties: { $browser: "Discord iOS" } }
         });
         Riniya.instance = this;
+        this.logger = new Logger("Riniya");
+
+        process.on('uncaughtException', function (error) {
+            Riniya.instance.logger.error("Error message: " + error.message);
+            Riniya.instance.logger.error("Error name: " + error.name);
+            Riniya.instance.logger.error("Stacktrace: " + error.stack);
+            Riniya.instance.logger.error("-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!- \n\n");
+        });
+
+        process.on('unhandledRejection', function (error) {
+            Riniya.instance.logger.error("Stacktrace: " + error);
+            Riniya.instance.logger.error("-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!- \n\n");
+        });
 
         this.start();
     }
 
     private start() {
-        this.logger = new Logger("Riniya");
         this.logger.info("Loading system...");
         this.logger.info(`Version: ${this.version}`);
         this.logger.info(`Revision: ${this.revision}`);
@@ -83,6 +98,7 @@ export default class Riniya extends Client {
         }).catch(err => {
             this.logger.warn("Failed to contact the database.");
         });
+        Levels.setURL(process.env.MONGODB);
 
         this.load();
     }
@@ -105,6 +121,8 @@ export default class Riniya extends Client {
         this.serverManager = new ServerManager();
         this.serverManager.registerServers();
         this.serverManager.initServers();
+
+        this.discordXp = Levels;
 
         this.login(process.env.TOKEN);
     }

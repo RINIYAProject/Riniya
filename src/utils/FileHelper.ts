@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   DisconnectEvent.ts                                 :+:      :+:    :+:   */
+/*   FileHelper.ts                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 06:22:31 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 12:13:29 by alle.roy         ###   ########.fr       */
+/*   Created: 2023/01/15 13:47:28 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/15 13:53:47 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseEvent from "@riniya.ts/components/BaseEvent";
+import fs from "node:fs"
+import Riniya from "@riniya.ts"
+import Logger from "./Logger"
 
-export default class DisconnectEvent extends BaseEvent {
+export default class FileHelper {
+    private logger: Logger
+
     public constructor() {
-        super("disconnect", () => {
-            this.instance.logger.error(`RTC suddenly disconnected.`);
-        });
+        this.logger = Riniya.instance.logger
+    }
+
+    public search(path: string): string {
+        this.logger.info("Reading path: " + path)
+        return fs.readFileSync(path, 'utf-8')
     }
 }
