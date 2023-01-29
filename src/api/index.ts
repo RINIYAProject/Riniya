@@ -6,12 +6,10 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/15 13:53:30 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/29 15:42:05 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import BaseController from "@riniya.ts/server/BaseController";
-import BaseServer from "@riniya.ts/server/BaseServer";
 import Tuple from "@riniya.ts/utils/Tuple";
 import Logger from "@riniya.ts/logger";
 import Riniya from "@riniya.ts";
@@ -19,65 +17,51 @@ import Riniya from "@riniya.ts";
 import express from "express";
 import https from "https";
 
-import DataServer from "./services/v1/data/DataServer";
 import FileHelper from "@riniya.ts/utils/FileHelper";
+import AbstractRoutes from "./AbstractRoutes";
+import ApiRoutes from "./routes/api-routes";
+import GuildRoutes from "./routes/guild-routes";
+import UserRoutes from "./routes/user-routes";
+import Authentication from "./middlewares/Authentication";
 const app = express();
 
 export default class ServerManager {
-    private servers: Tuple<BaseServer>
+    private routes: Tuple<AbstractRoutes>
     private server: https.Server
     private logger: Logger = Riniya.instance.logger
     private fileHelper: FileHelper
 
     public constructor() {
-        this.servers = new Tuple<BaseServer>()
+        this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
-        app.get('/', (req, res) => {
-            return res.status(200).json({
-                name: "RiniyaAPI",
-                version: Riniya.instance.version,
-                authors: [
-                    "NebraskyTheWolf"
-                ],
-                websocket: []
-            })
-        });
+
         this.server = https.createServer({
             key: this.fileHelper.search(process.env.SERVER_KEY),
             cert: this.fileHelper.search(process.env.SERVER_CERT)
-        }, app);
+        }, app)
     }
 
     public initServers(): void {
-        if (this.servers.getAll().size >= 1) {
-            this.servers.getAll().forEach((server: BaseServer, uuid: string) => {
-                this.logger.info("Loading api server " + uuid + "@" + server.getServer().getName() + ":" + server.getServer().getVersion() + "_" + server.getServer().getRevision());
-                this.logger.info("Loading routes...");
-                server.handler();
-                if (server.getRoutes().getAll().size >= 1) {
-                    server.getRoutes().getAll().forEach((route: BaseController, id: string) => {
-                        this.logger.info(`[${uuid}@${id}] loading route ${route.getRoute().getRoute()}/${route.getRoute().getMethod().toUpperCase()}`);
-                        app[route.getRoute().getMethod()](`/${server.getServer().getVersion()}/${server.getServer().getName()}/${route.getRoute().getRoute()}`, route.handler)
-                    });
-                } else {
-                    this.logger.info(`[${uuid}@${server.getServer().getName()}] No routes available.`);
-                }
-                this.logger.info(`[${uuid}@${server.getServer().getName()}] registered.`);
-            });
-        } else {
-            this.logger.info("No servers and routes available.");
-        }
-
+        const auth: Authentication = new Authentication();
+        
+        this.routes.getAll().forEach((route) => {
+            if (route.protected)
+                app.use('/api', auth.handle, route.register)
+            else
+                app.use('/api', route.register)
+        })
         this.server.listen(process.env.PORT || 3000, () => {
-            this.logger.info("The server is now listening.");
-        });
+            this.logger.info("The server is now listening.")
+        })
     }
 
     public registerServers(): void {
-        this.registerServer(new DataServer());
+        this.routes.add(new ApiRoutes(false))
+        this.routes.add(new GuildRoutes(true))
+        this.routes.add(new UserRoutes(true))
     }
 
-    public registerServer(server: BaseServer): void {
-        this.servers.add(server)
+    public registerServer(server: AbstractRoutes): void {
+        this.routes.add(server)
     }
 }

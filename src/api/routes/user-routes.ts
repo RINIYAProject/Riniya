@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BaseTask.ts                                        :+:      :+:    :+:   */
+/*   user-routes.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 06:25:23 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/29 15:45:02 by alle.roy         ###   ########.fr       */
+/*   Created: 2023/01/29 13:56:44 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/29 13:57:07 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Base from "../Base";
-import cron from "node-cron"
+import { Router } from "express";
+import AbstractRoutes from "../AbstractRoutes";
 
-export default abstract class BaseTask extends Base {
-
-    public task: cron.ScheduledTask;
-
-    public constructor(name: string, label: string, time: string, listener: Function) {
-        super(name, label, "TASK");
-
-        this.task = cron.schedule(time, () => listener);
+export default class UserRoutes extends AbstractRoutes {
+    public register(): Router {
+        return this.router
     }
 }

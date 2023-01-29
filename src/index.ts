@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/15 15:24:53 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:41:21 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,27 @@ import discordModals from "discord-modals";
 import ServerManager from "./api/index";
 
 import Levels from "discord-xp";
+import TasksManager from 'components/tasks/TasksManager';
 
 export default class Riniya extends Client {
-    public static instance: Riniya;
+    public static instance: Riniya
 
-    public database: mongoose.Mongoose;
+    public database: mongoose.Mongoose
 
-    public REGISTRY: SlashCommandBuilder;
-    public logger: Logger;
+    public REGISTRY: SlashCommandBuilder
+    public logger: Logger
 
-    public manager: CommandManager;
-    public eventManager: EventManager;
-    public buttonManager: ButtonManager;
-    public modalManager: ModalManager;
-    public serverManager: ServerManager;
+    public manager: CommandManager
+    public eventManager: EventManager
+    public buttonManager: ButtonManager
+    public modalManager: ModalManager
+    public serverManager: ServerManager
+    public taskManager: TasksManager
     public discordXp: Levels
-    public loaded: boolean = false;
+    public loaded: boolean = false
 
-    public version: string = process.env.VERSION || "Unreferenced version.";
-    public revision: string = process.env.REVISION || "Unreferenced revision code.";
+    public version: string = process.env.VERSION || "Unreferenced version."
+    public revision: string = process.env.REVISION || "Unreferenced revision code."
 
     public constructor() {
         super({
@@ -65,78 +67,76 @@ export default class Riniya extends Client {
                 Intents.FLAGS.DIRECT_MESSAGE_TYPING,
             ],
             ws: { properties: { $browser: "Discord iOS" } }
-        });
-        Riniya.instance = this;
-        this.logger = new Logger("Riniya");
+        })
+        Riniya.instance = this
+        this.logger = new Logger("Riniya")
 
         process.on('uncaughtException', function (error) {
-            Riniya.instance.logger.error("Error message: " + error.message);
-            Riniya.instance.logger.error("Error name: " + error.name);
-            Riniya.instance.logger.error("Stacktrace: " + error.stack);
-            Riniya.instance.logger.error("-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!- \n\n");
+            Riniya.instance.logger.error("Error message: " + error.message)
+            Riniya.instance.logger.error("\n");
         });
 
         process.on('unhandledRejection', function (error) {
-            Riniya.instance.logger.error("Stacktrace: " + error);
-            Riniya.instance.logger.error("-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!- \n\n");
-        });
+            Riniya.instance.logger.error("Stacktrace: " + error)
+            Riniya.instance.logger.error("\n")
+        })
 
-        this.start();
+        this.start()
     }
 
     private start() {
-        this.logger.info("Loading system...");
-        this.logger.info(`Version: ${this.version}`);
-        this.logger.info(`Revision: ${this.revision}`);
+        this.logger.info("Loading system...")
+        this.logger.info(`Version: ${this.version}`)
+        this.logger.info(`Revision: ${this.revision}`)
 
         discordModals(this);
 
-        this.logger.info("Connecting to MongoDB");
+        this.logger.info("Connecting to MongoDB")
         mongoose.connect(process.env.MONGODB, {}).then(db => {
             this.database = db;
-            this.logger.info("Connected to MongoDB.");
+            this.logger.info("Connected to MongoDB.")
         }).catch(err => {
-            this.logger.warn("Failed to contact the database.");
+            this.logger.warn("Failed to contact the database.")
         });
-        Levels.setURL(process.env.MONGODB);
+        Levels.setURL(process.env.MONGODB)
 
-        this.load();
+        this.load()
     }
 
     private load() {
-        this.logger.info("Loading commands.");
+        this.logger.info("Loading commands.")
 
-        this.manager = new CommandManager();
-        this.manager.registerCommands();
+        this.manager = new CommandManager()
+        this.manager.registerCommands()
 
-        this.eventManager = new EventManager();
-        this.eventManager.registerEvents();
+        this.eventManager = new EventManager()
+        this.eventManager.registerEvents()
 
-        this.buttonManager = new ButtonManager();
-        this.buttonManager.registerButtons();
+        this.buttonManager = new ButtonManager()
+        this.buttonManager.registerButtons()
 
-        this.modalManager = new ModalManager();
-        this.modalManager.registerModals();
+        this.modalManager = new ModalManager()
+        this.modalManager.registerModals()
 
-        this.serverManager = new ServerManager();
-        this.serverManager.registerServers();
-        this.serverManager.initServers();
+        this.serverManager = new ServerManager()
+        this.serverManager.registerServers()
+        this.serverManager.initServers()
 
-        this.discordXp = Levels;
+        this.discordXp = Levels
 
-        this.login(process.env.TOKEN);
+        this.login(process.env.TOKEN)
     }
 
     public reload() {
-        this.logger.info("Realoding components...");
-        this.manager.reload();
-        this.buttonManager.reload();
-        this.modalManager.reload();
+        this.logger.info("Realoding components...")
+        this.manager.reload()
+        this.buttonManager.reload()
+        this.modalManager.reload()
     }
 
     public static getInstance(): Riniya {
-        return this.instance;
+        return this.instance
     }
 }
 
-export const riniya: Riniya = new Riniya();
+export const riniya: Riniya = new Riniya()

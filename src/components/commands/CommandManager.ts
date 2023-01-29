@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:10:07 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:12:01 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,17 @@ export default class CommandManager {
 
     public toMap(): Collection<String, BaseCommand> {
         return this.REGISTRY.getMap();
+    }
+
+    public toList() {
+        const commandMap = this.REGISTRY.getMap().map((value: BaseCommand, key: String) => {
+            return {
+                name: value.name,
+                description: value.description || '',
+                type: value.type,
+                options: value.options || []
+            }
+        })
+        return {}
     }
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   MessageSelectRole.ts                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/29 16:46:23 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/29 16:46:24 by alle.roy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import { BaseMessageComponent, MessageComponentType } from "discord.js";
 
 export class MessageSelectRole extends BaseMessageComponent {
