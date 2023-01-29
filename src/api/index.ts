@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/29 15:42:05 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:54:25 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ export default class ServerManager {
 
     public initServers(): void {
         const auth: Authentication = new Authentication();
-        
+
         this.routes.getAll().forEach((route) => {
             if (route.protected)
                 app.use('/api', auth.handle, route.register)
