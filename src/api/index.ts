@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 01:06:15 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 01:11:18 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ export default class ServerManager {
         this.fileHelper = new FileHelper()
 
         app.get('/', async (req, res) => {
-            res.status(ErrorType.SUCCESS_CALLBACK).json({
+            res.status(200).json({
                 appName: 'Riniya',
                 appVersion: Riniya.instance.version,
                 appRevision: Riniya.instance.revision,

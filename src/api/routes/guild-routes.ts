@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:56:19 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 00:56:51 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 01:11:44 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ export default class GuildRoutes extends AbstractRoutes {
         })
         router.get('/servers/:guildId', async (req, res) => {
             if (req.params.guildId === undefined)
-                this.error(res, ErrorType.MISSING_ARGUMENTS)
+                this.error(res, 406)
             res.status(200).json({
                 status: true,
                 data: Riniya.instance.guilds.cache.get(req.params.guildId) || { }

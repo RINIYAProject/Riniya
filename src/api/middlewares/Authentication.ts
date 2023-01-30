@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/29 15:35:10 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 01:12:37 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ export default class Authentication {
                 this.handler.login(
                     username, password,
                     (cb: ICallback) => {
-                        response.status(ErrorType.SUCCESS_CALLBACK).json({
+                        response.status(200).json({
                             status: cb.status,
                             data: {
                                 session: cb.session
@@ -51,7 +51,7 @@ export default class Authentication {
                 this.handler.identify(
                     accessToken, clientToken,
                     (cb: ICallback) => {
-                        response.status(ErrorType.SUCCESS_CALLBACK).json({
+                        response.status(200).json({
                             status: cb.status,
                             data: {
                                 session: cb.session
@@ -65,7 +65,7 @@ export default class Authentication {
             }
                 break
             default:
-                response.status(ErrorType.MISSING_ARGUMENTS).json({
+                response.status(403).json({
                     status: false,
                     error: 'MISSING_SCOPE',
                     message: 'Available scope is login or identify. Please read the documentations.'
