@@ -6,16 +6,19 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:05:52 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:04:22 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:30:27 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, MessageButton, MessageEmbed } from "discord.js";
 
 export default class CommandAbout extends BaseCommand {
     public constructor() {
-        super("about", "Displaying the bot information");
+        super("about", "Displaying the bot information", new OptionMap<string, boolean>,
+            "MISC"
+        );
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:00 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:05:56 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:53:03 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ import { TextInputComponent } from "discord-modals";
 export default class CommandAnnounce extends BaseCommand {
     public constructor() {
         super("announce", "Announce update", new OptionMap<string, boolean>()
-            .add("isDeveloper", true)
+            .add("isDeveloper", true),
+            "OWNER"
         );
     }
 

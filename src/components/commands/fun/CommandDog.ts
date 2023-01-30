@@ -6,11 +6,12 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:41:24 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/29 23:46:14 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:11:54 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 
 import { GuildMember, Guild, CommandInteraction, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
@@ -18,7 +19,9 @@ import fetch from "node-fetch";
 
 export default class CommandDog extends BaseCommand {
     public constructor() {
-        super("dog", "Random funny dog picture");
+        super("dog", "Random funny dog picture", new OptionMap<string, boolean>,
+            "FUN"
+        );
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {

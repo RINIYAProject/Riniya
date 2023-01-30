@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/29 16:54:25 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 01:06:15 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ import express from "express";
 import https from "https";
 
 import FileHelper from "@riniya.ts/utils/FileHelper";
-import AbstractRoutes from "./AbstractRoutes";
+import AbstractRoutes, { ErrorType } from "./AbstractRoutes";
 import ApiRoutes from "./routes/api-routes";
 import GuildRoutes from "./routes/guild-routes";
 import UserRoutes from "./routes/user-routes";
@@ -34,6 +34,29 @@ export default class ServerManager {
     public constructor() {
         this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
+
+        app.get('/', async (req, res) => {
+            res.status(ErrorType.SUCCESS_CALLBACK).json({
+                appName: 'Riniya',
+                appVersion: Riniya.instance.version,
+                appRevision: Riniya.instance.revision,
+                appAuthors: ["NebraskyTheWolf <farfy.dev@gmail.com>"],
+                services: {
+                    redis: {
+                        status: false,
+                        ping: -1
+                    },
+                    minio: {
+                        status: false,
+                        ping: -1
+                    },
+                    mongodb: {
+                        status: Riniya.instance.database.STATES,
+                        ping: -1
+                    }
+                }
+            })
+        })
 
         this.server = https.createServer({
             key: this.fileHelper.search(process.env.SERVER_KEY),

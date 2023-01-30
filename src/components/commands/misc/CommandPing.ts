@@ -6,16 +6,19 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:05:58 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:04:30 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:31:02 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, MessageEmbed } from "discord.js";
 
 export default class CommandPing extends BaseCommand {
     public constructor() {
-        super("ping", "Get information about the bot latency");
+        super("ping", "Get information about the bot latency", new OptionMap<string, boolean>,
+            "MISC"
+        );
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {

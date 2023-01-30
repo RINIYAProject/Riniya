@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:18:48 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:04:12 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:29:25 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@ import { SlashCommandUserOption } from "@discordjs/builders";
 import { GuildMember, Guild, CommandInteraction, User, MessageEmbed } from "discord.js";
 
 import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 
 export default class CommandProfile extends BaseCommand {
     public constructor() {
-        super("profile", "Showing a user profile.");
+        super("profile", "Showing a user profile.", new OptionMap<string, boolean>,
+            "LEVEL"
+        );
 
         this.addUserOption(
             new SlashCommandUserOption()

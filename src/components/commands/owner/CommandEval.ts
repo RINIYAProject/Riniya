@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:06:52 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:53:21 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ import { TextInputComponent } from "discord-modals";
 export default class CommandEval extends BaseCommand {
     public constructor() {
         super("eval", "Start a code evaluation", new OptionMap<string, boolean>()
-            .add("isDeveloper", true)
+            .add("isDeveloper", true),
+            "OWNER"
         );
     }
 

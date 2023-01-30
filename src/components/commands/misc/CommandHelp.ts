@@ -6,16 +6,19 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:05:55 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:04:27 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:30:46 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, MessageEmbed } from "discord.js";
 
 export default class CommandHelp extends BaseCommand {
     public constructor() {
-        super("help", "Look at the command help.");
+        super("help", "Look at the command help.", new OptionMap<string, boolean>,
+            "MISC"
+        );
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {

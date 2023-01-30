@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 20:49:07 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:01:10 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:06:01 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ export default class CommandBan extends BaseCommand {
     public constructor() {
         super("ban", "Ban a user", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isProtected", true)
+            .add("isProtected", true),
+            "ADMINISTRATOR"
         );
 
         this.addUserOption(

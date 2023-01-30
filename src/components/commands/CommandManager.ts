@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/23 14:12:01 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:55:05 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ export default class CommandManager {
             return {
                 name: value.name,
                 description: value.description || '',
+                category: value.getCategory(),
                 type: value.type,
                 options: value.options || []
             }

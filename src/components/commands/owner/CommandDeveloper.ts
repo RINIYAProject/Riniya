@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:10 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/15 15:08:07 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:53:16 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ export default class CommandDeveloper extends BaseCommand {
     public constructor() {
         super("developer", "Developer access management", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isDeveloper", true)
+            .add("isDeveloper", true),
+            "OWNER"
         );
 
         this.addSubCommand(

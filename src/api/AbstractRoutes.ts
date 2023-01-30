@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:24 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/29 23:44:57 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:56:12 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@ export declare enum ErrorType {
 }
 
 export default abstract class AbstractRoutes extends Base {
-    protected router: Router
     public protected: boolean
 
     public constructor(isProtected: boolean) {
         super("routes", "", "SERVER")
-        this.router = Router()
         this.protected = isProtected
     }
 

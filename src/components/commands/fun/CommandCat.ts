@@ -6,18 +6,21 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:41:22 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:03:35 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:11:40 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseCommand from "@riniya.ts/components/BaseCommand";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 
 import { GuildMember, Guild, CommandInteraction, MessageEmbed } from "discord.js";
 import fetch from "node-fetch";
 
 export default class CommandCat extends BaseCommand {
     public constructor() {
-        super("cat", "Random cat image");
+        super("cat", "Random cat image", new OptionMap<string, boolean>,
+            "FUN"
+        );
     }
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {

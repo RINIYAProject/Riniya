@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 08:02:15 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 08:02:16 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:06:22 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ export default class CommandRole extends BaseCommand {
     public constructor() {
         super("roles", "Manage the self assignable role.",
             new OptionMap<string, boolean>()
-                .add("isProtected", true)
+                .add("isProtected", true),
+                "ADMINISTRATOR"
         )
 
         this.addSubCommand(

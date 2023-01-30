@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:13 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:27:42 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:10:05 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,28 @@ import {
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import { CommandInteraction, Guild, GuildMember } from "discord.js";
 
+export declare type Category =
+    'ADMINISTRATOR'
+    | 'ECONOMY'
+    | 'FUN'
+    | 'LEVEL'
+    | 'MISC'
+    | 'MUSIC'
+    | 'NSFW'
+    | 'OWNER'
+    | 'SONA'
+    | 'DEFAULT';
+
 export default abstract class BaseCommand extends Base {
 
-    private command: SlashCommandBuilder;
+    private command: SlashCommandBuilder
+    private category: Category
 
-    public constructor(name: string, description?: string, options?: OptionMap<string, boolean>) {
+    public constructor(name: string, description?: string, options?: OptionMap<string, boolean>, category?: Category) {
         super(name, description, "COMMAND");
+
         this.setOptions(options || new OptionMap<string, boolean>());
+        this.category = category || "DEFAULT";
 
         this.command = new SlashCommandBuilder();
         this.command.setName(this.name);
@@ -96,6 +111,10 @@ export default abstract class BaseCommand extends Base {
 
     protected addSubGroup(handle: SlashCommandSubcommandGroupBuilder): SlashCommandSubcommandsOnlyBuilder {
         return this.command.addSubcommandGroup(handle);
+    }
+
+    public getCategory(): string {
+        return this.category;
     }
 
     public getCommand(): SlashCommandBuilder {

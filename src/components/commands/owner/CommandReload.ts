@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:51 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:07:09 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:53:26 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ import { GuildMember, Guild, CommandInteraction } from "discord.js";
 export default class CommandReload extends BaseCommand {
     public constructor() {
         super("reload", "Reload the bot", new OptionMap<string, boolean>()
-            .add("isDeveloper", true)
+            .add("isDeveloper", true),
+            "OWNER"
         );
     }
 

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:52 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:05:15 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:33:27 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ import OptionMap from "@riniya.ts/utils/OptionMap";
 export default class CommandFuck extends BaseCommand {
     public constructor() {
         super("fuck", "Fuck someone", new OptionMap<string, boolean>()
-            .add("isNSFW", true)
+            .add("isNSFW", true),
+            "NSFW"
         );
 
         this.addUserOption(

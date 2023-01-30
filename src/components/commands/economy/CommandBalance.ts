@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:41:36 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:02:53 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:10:34 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@ import BaseCommand from "@riniya.ts/components/BaseCommand";
 
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
 import { SlashCommandSubcommandBuilder } from "@discordjs/builders";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 
 export default class CommandBalance extends BaseCommand {
     public constructor() {
-        super("balance", "Looking at your bank money.");
+        super("balance", "Looking at your bank money.",
+            new OptionMap<string, boolean>,
+            "ECONOMY"
+        );
 
         this.addSubCommand(
             new SlashCommandSubcommandBuilder()

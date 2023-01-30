@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:48 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:07:30 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:53:30 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ import { SlashCommandStringOption } from "@discordjs/builders";
 export default class CommandSpawnButton extends BaseCommand {
     public constructor() {
         super("spawn", "Summoning a button.", new OptionMap<string, boolean>()
-            .add("isDeveloper", true)
+            .add("isDeveloper", true),
+            "OWNER"
         );
 
         this.addStringOption(

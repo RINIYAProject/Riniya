@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 20:49:10 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:01:36 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:06:18 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ import { SlashCommandStringOption, SlashCommandUserOption } from "@discordjs/bui
 export default class CommandMute extends BaseCommand {
     public constructor() {
         super("mute", "Mute a user", new OptionMap<string, boolean>()
-            .add("isProtected", true)
+            .add("isProtected", true),
+            "ADMINISTRATOR"
         );
 
         this.addUserOption(

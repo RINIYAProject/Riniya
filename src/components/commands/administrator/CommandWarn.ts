@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 20:49:14 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:02:37 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 00:06:25 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ export default class CommandWarn extends BaseCommand {
     public constructor() {
         super("warn", "Warn a user", new OptionMap<string, boolean>()
             .add("dmPermission", false)
-            .add("isProtected", true)
+            .add("isProtected", true),
+            "ADMINISTRATOR"
         );
 
         this.addUserOption(
