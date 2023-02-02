@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 16:46:49 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 06:28:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ export default class Authentication extends BaseMiddleware {
     }
 
     public handle(request: Request, response: Response, next): void {
+
+        // API Header don't need authentication.
+        if (request.originalUrl === '/')
+            next()
+
         const scope: string = request.header['X-API-SCOPE'] || 'invalid_scope'
 
         switch (scope) {

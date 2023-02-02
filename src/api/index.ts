@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 06:21:12 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 06:26:10 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ export default class ServerManager {
         this.requestLog = new RequestLogging()
 
         // DEBUG
-        app.use((req, res, next) => this.requestLog.handle(req, res, next));
+        app.use((req, res, next) => this.authClient.handle(req, res, next))
+        app.use((req, res, next) => this.requestLog.handle(req, res, next))
 
         app.get('/', async (req, res) => {
             res.status(200).json({
@@ -84,10 +85,7 @@ export default class ServerManager {
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            if (route.protected)
-                app.use('/api', this.authClient.handle, route.routing())
-            else
-                app.use('/api', route.routing())
+            app.use('/api', route.routing())
         })
 
         this.websocket = new Websocket(this.wsServer)
