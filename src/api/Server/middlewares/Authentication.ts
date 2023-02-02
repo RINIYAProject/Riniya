@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 07:24:12 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 07:40:17 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ export default class Authentication extends BaseMiddleware {
         this.handler = new AuthHelper()
     }
 
-    public handle(request: Request, response: Response, next): void {
+    public handle(request: Request, response: Response, next: Function): void {
         const scope: string = request.get('X-API-SCOPE') || 'identify'
 
         switch (scope) {
@@ -35,34 +35,21 @@ export default class Authentication extends BaseMiddleware {
                     username, password,
                     (cb: ICallback) => {
                         if (cb.status) {
-                            response.cookie("accessToken", cb.session.accessToken, {
-                                maxAge: cb.session.sessionExpiry,
-                                httpOnly: true,
-                                signed: true
-                            })
-                            response.cookie("clientToken", cb.session.clientToken, {
-                                maxAge: cb.session.sessionExpiry,
-                                httpOnly: true,
-                                signed: true
-                            })
-                            response.setHeader("Set-Cookie", [
-                                `accessToken=${cb.session.accessToken}; HttpOnly; Path=/; Max-Age=${cb.session.sessionExpiry}; Secure=True;`,
-                                `clientToken=${cb.session.clientToken}; HttpOnly; Path=/; Max-Age=${cb.session.sessionExpiry}; Secure=True;`
-                            ])
-                            next();
-                        } else {
-                            response.status(403).json({
-                                status: cb.status,
-                                error: cb.error
-                            }).end();
+                            response.setHeader('accessToken', cb.session.accessToken)
+                            response.setHeader('clientToken', cb.session.clientToken)
                         }
+                        response.status((cb.error ? 403 : 200)).json({
+                            status: cb.status,
+                            data: cb.session,
+                            error: cb.error
+                        }).end();
                     }
                 )
             }
                 break
             case 'identify': {
-                const accessToken: string = request.get('X-API-TOKEN') || request.cookies['accessToken']
-                const clientToken: string = request.get('X-API-CLIENT') || request.cookies['clientToken']
+                const accessToken: string = request.get('accessToken')
+                const clientToken: string = request.get('clientToken')
 
                 this.handler.identify(
                     accessToken, clientToken,
