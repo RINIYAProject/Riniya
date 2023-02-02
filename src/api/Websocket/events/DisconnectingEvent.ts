@@ -4,7 +4,7 @@ import { Socket } from "socket.io";
 
 export default class DisconnectingEvent extends BaseWSEvent {
     public constructor() {
-        super("disconnecting", (instance: Riniya, socket: Socket) => {
+        super("disconnecting", "/payloads", (instance: Riniya, socket: Socket) => {
             this.getLogger().info(`Socket ${socket.id} is closing connection.`)
         })
     }

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 02:44:41 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 05:37:58 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ import GuildRoutes from "./Server/routes/guild-routes";
 import UserRoutes from "./Server/routes/user-routes";
 import Authentication from "./Server/middlewares/Authentication";
 import RequestLogging from "./Server/middlewares/RequestLogging";
-import Websocket from "./Websocket";
+import Websocket from "./Websocket/index";
 
 const app = express();
 
@@ -70,7 +70,8 @@ export default class ServerManager {
                     },
                     websocket: {
                         status: true,
-                        counts: (await this.websocket.io.local.allSockets()).size
+                        host: 'https://api.ghidorah.uk:2052/',
+                        nsp: this.websocket.io._nsps.values() || []
                     }
                 }
             })
@@ -87,7 +88,6 @@ export default class ServerManager {
         })
         this.websocket = new Websocket(this.wsServer)
         this.websocket.init()
-        this.wsServer.listen(3300)
     }
 
     public initServers(): void {
@@ -100,6 +100,7 @@ export default class ServerManager {
         this.server.listen(process.env.PORT || 3000, () => {
             this.logger.info("The server is now listening.")
         })
+        this.wsServer.listen(2052)
     }
 
     public registerServers(): void {
