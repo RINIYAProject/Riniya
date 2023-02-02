@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 03:15:56 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 07:09:02 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 07:12:57 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ export default class AuthHelper {
     private async createSession(userId: string): Promise<ISession> {
         const accessToken: string = v4()
         const clientToken: string = v4()
-        const sessionExpiry: number = new Date().setMonth(6, Date.now())
+        const sessionExpiry: number = 1000 * 60 * 30
 
         new Session({
             userId: userId,
