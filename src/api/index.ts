@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 08:15:28 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 08:39:00 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ export default class ServerManager {
         this.websocket.init()
         //
         this.server.listen(443)
-        this.wsServer.listen(2052)
+        this.wsServer.listen(8443)
     }
 
     public registerServers(): void {
