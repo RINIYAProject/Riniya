@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 07:53:43 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 08:15:28 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ import AbstractRoutes from "./Server/AbstractRoutes";
 import ApiRoutes from "./Server/routes/api-routes";
 import GuildRoutes from "./Server/routes/guild-routes";
 import UserRoutes from "./Server/routes/user-routes";
-import Authentication from "./Server/middlewares/Authentication";
 import RequestLogging from "./Server/middlewares/RequestLogging";
 import Websocket from "./Websocket/index";
 
 import session from "express-session"
 import { v4 } from "uuid";
+import AuthHelper, { ICallback } from "@riniya.ts/utils/AuthHelper";
 
 const app = express();
 
@@ -36,7 +36,7 @@ export default class ServerManager {
     private wsServer: https.Server
     private fileHelper: FileHelper
 
-    private authClient: Authentication
+    private handler: AuthHelper
     private requestLog: RequestLogging
 
     public websocket: Websocket
@@ -44,8 +44,8 @@ export default class ServerManager {
     public constructor() {
         this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
-        this.authClient = new Authentication()
         this.requestLog = new RequestLogging()
+        this.handler = new AuthHelper()
 
         // DEBUG
         app.set('trust proxy', 1) // trust first proxy
@@ -55,7 +55,61 @@ export default class ServerManager {
             saveUninitialized: true,
             cookie: { secure: true }
         }))
-        app.use((req, res, next) => this.authClient.handle(req, res, next))
+        app.use((request, response, next) => {
+            const scope: string = request.get('X-API-SCOPE') || 'identify'
+
+            if (request.originalUrl.match('/'))
+                next()
+
+            switch (scope) {
+                case 'login': {
+                    const username: string = request.get('X-API-USERNAME') || ""
+                    const password: string = request.get('X-API-PASSWORD') || ""
+
+                    this.handler.login(
+                        username, password,
+                        (cb: ICallback) => {
+                            if (cb.status) {
+                                response.setHeader('accessToken', cb.session.accessToken)
+                                response.setHeader('clientToken', cb.session.clientToken)
+                            }
+                            response.status((cb.error ? 403 : 200)).json({
+                                status: cb.status,
+                                data: cb.session,
+                                error: cb.error
+                            }).end();
+                        }
+                    )
+                }
+                    break
+                case 'identify': {
+                    const accessToken: string = request.get('accessToken')
+                    const clientToken: string = request.get('clientToken')
+
+                    this.handler.identify(
+                        accessToken, clientToken,
+                        (cb: ICallback) => {
+                            if (cb.status) {
+                                next()
+                            } else {
+                                response.status(403).json({
+                                    status: cb.status,
+                                    error: cb.error
+                                })
+                            }
+                        }
+                    )
+                }
+                    break
+                default:
+                    response.status(403).json({
+                        status: false,
+                        error: 'MISSING_SCOPE',
+                        message: 'Available scope is login or identify. Please read the documentations.'
+                    }).end()
+                    break
+            }
+        })
         app.use((req, res, next) => this.requestLog.handle(req, res, next))
 
         app.get('/', async (req, res) => {
