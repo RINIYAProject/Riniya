@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/30 00:55:05 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 08:27:36 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ export default class CommandManager {
     }
 
     public toList() {
-        const commandMap = this.REGISTRY.getMap().map((value: BaseCommand, key: String) => {
+        const commandMap = this.REGISTRY.getMap().map((value: BaseCommand) => {
             return {
                 name: value.name,
                 description: value.description || '',
@@ -178,6 +178,7 @@ export default class CommandManager {
                 options: value.options || []
             }
         })
-        return {}
+
+        return commandMap
     }
 }
