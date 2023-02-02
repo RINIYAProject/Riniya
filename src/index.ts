@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 03:12:36 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 06:00:22 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ export default class Riniya extends Client {
         this.checker = new InitChecker()
 
         process.on('uncaughtException', function (error) {
-            Riniya.instance.logger.error("Error message: " + error.message)
+            Riniya.instance.logger.error("Stacktrace: " + error.stack)
             Riniya.instance.logger.error("\n");
         });
 
