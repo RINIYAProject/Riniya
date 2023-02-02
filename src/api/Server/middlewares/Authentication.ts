@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 06:51:48 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 07:10:33 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ export default class Authentication extends BaseMiddleware {
                     username, password,
                     (cb: ICallback) => {
                         if (cb.status) {
-                            response.cookie("session", cb.session, { maxAge: 64448 })
+                            response.cookie("session", cb.session, {})
                             next();
                         } else {
                             response.status(403).json({
