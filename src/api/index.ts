@@ -6,12 +6,11 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 07:27:19 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 07:53:43 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Tuple from "@riniya.ts/utils/Tuple";
-import Logger from "@riniya.ts/logger";
 import Riniya from "@riniya.ts";
 
 import express from "express";
@@ -26,7 +25,7 @@ import Authentication from "./Server/middlewares/Authentication";
 import RequestLogging from "./Server/middlewares/RequestLogging";
 import Websocket from "./Websocket/index";
 
-import cookieParser from "cookie-parser";
+import session from "express-session"
 import { v4 } from "uuid";
 
 const app = express();
@@ -49,7 +48,13 @@ export default class ServerManager {
         this.requestLog = new RequestLogging()
 
         // DEBUG
-        app.use(cookieParser(v4()))
+        app.set('trust proxy', 1) // trust first proxy
+        app.use(session({
+            secret: v4(),
+            resave: false,
+            saveUninitialized: true,
+            cookie: { secure: true }
+        }))
         app.use((req, res, next) => this.authClient.handle(req, res, next))
         app.use((req, res, next) => this.requestLog.handle(req, res, next))
 

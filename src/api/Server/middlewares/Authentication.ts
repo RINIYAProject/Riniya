@@ -6,13 +6,26 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 07:40:17 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 08:07:56 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import AuthHelper, { ICallback } from "@riniya.ts/utils/AuthHelper";
 import BaseMiddleware from "../BaseMiddleware";
 import { Request, Response } from "express";
+
+class User {
+    id: string = '';
+    accessToken: string = '';
+    clientToken: string = '';
+}
+
+declare module 'express-session' {
+    interface SessionData {
+        user: User;
+    }
+}
+
 
 export default class Authentication extends BaseMiddleware {
 
@@ -54,17 +67,11 @@ export default class Authentication extends BaseMiddleware {
                 this.handler.identify(
                     accessToken, clientToken,
                     (cb: ICallback) => {
-                        if (cb.status) {
-                            next()
-                        } else {
-                            response.status(403).json({
-                                status: cb.status,
-                                data: {
-                                    session: cb.session || {}
-                                },
-                                error: cb.error
-                            }).end()
-                        }
+                        response.status(403).json({
+                            status: cb.status,
+                            session: cb.session || {},
+                            error: cb.error
+                        })
                     }
                 )
             }
