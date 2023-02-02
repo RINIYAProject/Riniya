@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 06:06:15 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 06:09:03 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ export default class ServerManager {
             else
                 app.use('/api', route.routing())
         })
-        
+
         this.websocket = new Websocket(this.wsServer)
         this.websocket.init()
 
