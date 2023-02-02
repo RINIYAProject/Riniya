@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 05:37:58 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 05:44:10 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ export default class ServerManager {
                     mongodb: {
                         status: Riniya.instance.database.connection.readyState,
                         ping: -1
-                    },
-                    websocket: {
-                        status: true,
-                        host: 'https://api.ghidorah.uk:2052/',
-                        nsp: this.websocket.io._nsps.values() || []
                     }
                 }
             })
@@ -86,6 +81,7 @@ export default class ServerManager {
             key: this.fileHelper.search(process.env.SERVER_KEY),
             cert: this.fileHelper.search(process.env.SERVER_CERT)
         })
+
         this.websocket = new Websocket(this.wsServer)
         this.websocket.init()
     }
