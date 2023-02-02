@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 06:28:08 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 06:34:22 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,12 @@ export default class Authentication extends BaseMiddleware {
     }
 
     public handle(request: Request, response: Response, next): void {
-
-        // API Header don't need authentication.
-        if (request.originalUrl === '/')
-            next()
-
-        const scope: string = request.header['X-API-SCOPE'] || 'invalid_scope'
+        const scope: string = request.get('X-API-SCOPE') || 'invalid_scope'
 
         switch (scope) {
             case 'login': {
-                const username: string = request.header['X-API-USERNAME'] || ""
-                const password: string = request.header['X-API-PASSWORD'] || ""
+                const username: string = request.get('X-API-USERNAME') || ""
+                const password: string = request.get('X-API-PASSWORD') || ""
 
                 this.handler.login(
                     username, password,
@@ -51,8 +46,8 @@ export default class Authentication extends BaseMiddleware {
             }
                 break
             case 'identify': {
-                const accessToken: string = request.header['X-API-TOKEN'] || ""
-                const clientToken: string = request.header['X-API-CLIENT'] || ""
+                const accessToken: string = request.get('X-API-TOKEN') || ""
+                const clientToken: string = request.get('X-API-CLIENT') || ""
 
                 this.handler.identify(
                     accessToken, clientToken,
