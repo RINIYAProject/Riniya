@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 05:44:10 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 05:55:31 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,26 @@ import Websocket from "./Websocket/index";
 const app = express();
 
 export default class ServerManager {
-    private routes: Tuple<AbstractRoutes>
-    private server: https.Server
-    private wsServer: https.Server
+    private routes: Tuple<AbstractRoutes> = new Tuple<AbstractRoutes>()
     private logger: Logger = Riniya.instance.logger
-    private fileHelper: FileHelper
+    private fileHelper: FileHelper = new FileHelper()
 
-    private authClient: Authentication
-    private requestLog: RequestLogging
+    private authClient: Authentication = new Authentication()
+    private requestLog: RequestLogging = new RequestLogging()
 
-    public readonly websocket: Websocket
+    private server: https.Server = https.createServer({
+        key: this.fileHelper.search(process.env.SERVER_KEY),
+        cert: this.fileHelper.search(process.env.SERVER_CERT)
+    }, app)
+
+    private wsServer: https.Server = https.createServer({
+        key: this.fileHelper.search(process.env.SERVER_KEY),
+        cert: this.fileHelper.search(process.env.SERVER_CERT)
+    })
+
+    public readonly websocket: Websocket = new Websocket(this.wsServer)
 
     public constructor() {
-        this.routes = new Tuple<AbstractRoutes>()
-        this.fileHelper = new FileHelper()
-        this.authClient = new Authentication()
-        this.requestLog = new RequestLogging()
-
         // DEBUG
         app.use(this.requestLog.handle);
 
@@ -71,18 +74,6 @@ export default class ServerManager {
                 }
             })
         })
-
-        this.server = https.createServer({
-            key: this.fileHelper.search(process.env.SERVER_KEY),
-            cert: this.fileHelper.search(process.env.SERVER_CERT)
-        }, app)
-
-        this.wsServer = https.createServer({
-            key: this.fileHelper.search(process.env.SERVER_KEY),
-            cert: this.fileHelper.search(process.env.SERVER_CERT)
-        })
-
-        this.websocket = new Websocket(this.wsServer)
         this.websocket.init()
     }
 
@@ -96,7 +87,9 @@ export default class ServerManager {
         this.server.listen(process.env.PORT || 3000, () => {
             this.logger.info("The server is now listening.")
         })
-        this.wsServer.listen(2052)
+        this.wsServer.listen(2052, () => {
+            this.logger.info("The Websocket is now listening.")
+        })
     }
 
     public registerServers(): void {
