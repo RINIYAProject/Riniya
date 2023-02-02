@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   AuthHelper.ts                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/02 03:15:56 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/02/02 03:15:57 by alle.roy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import History from "@riniya.ts/database/Security/History";
 import Session from "@riniya.ts/database/Security/Session";
 import User from "@riniya.ts/database/Security/User";

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:06 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:27:19 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:34:43 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@ import OptionMap from "@riniya.ts/utils/OptionMap";
 import { Interaction, MessageEmbed } from "discord.js";
 
 export default abstract class BaseButton<T, V> extends Base {
-    public customId: string;
-    public setting: OptionMap<string, unknown>;
+    public readonly customId: string;
+    public readonly setting: OptionMap<string, unknown>;
 
     public constructor(name: string, label: string, setting?: OptionMap<string, unknown>) {
         super(name, label, "BUTTON");

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   InitChecker.ts                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/02 03:15:50 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/02/02 03:15:51 by alle.roy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import Riniya from "@riniya.ts";
 
 export default class InitChecker {
@@ -10,11 +22,13 @@ export default class InitChecker {
             return this.print("SERVER_KEY")
         else if (this.unset("SERVER_CERT"))
             return this.print("SERVER_CERT")
+        else if (this.unset("REDIS_PASSWORD"))
+            return this.print("REDIS_PASSWORD")
         return false
     }
 
     private unset(key: string): boolean {
-        return process.env[key].length < 1
+        return process.env[key] === undefined
     }
 
     private print(type: string): boolean {

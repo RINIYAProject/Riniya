@@ -1,20 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Permissions.ts                                     :+:      :+:    :+:   */
+/*   user-routes.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 03:16:00 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 03:16:01 by alle.roy         ###   ########.fr       */
+/*   Created: 2023/01/29 13:56:44 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/30 16:47:23 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-export declare enum Permissions {
-    GET = 0x000000000001,
-    POST = 0x000000000001,
-    PUT = 0x000000000100,
-    PATCH = 0x000000000100,
-    DELETE = 0x000000100000,
-    ADMINISTRATOR = 0x100000000000
+import AbstractRoutes from "../../Server/AbstractRoutes";
+
+export default class UserRoutes extends AbstractRoutes {
+    public register() { }
 }

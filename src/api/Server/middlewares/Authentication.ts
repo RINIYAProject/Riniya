@@ -6,19 +6,20 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 01:12:37 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 16:46:49 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import AuthHelper, { ICallback } from "@riniya.ts/utils/AuthHelper";
-import { ErrorType } from "../AbstractRoutes";
+import BaseMiddleware from "../BaseMiddleware";
 import { Request, Response } from "express";
 
-export default class Authentication {
+export default class Authentication extends BaseMiddleware {
 
     private handler: AuthHelper
 
     public constructor() {
+        super("Authentication", "Auth Client for the API.")
         this.handler = new AuthHelper()
     }
 

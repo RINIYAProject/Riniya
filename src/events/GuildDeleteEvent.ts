@@ -6,19 +6,18 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:41 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/16 09:38:46 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 02:59:31 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
-import GuildModel from "@riniya.ts/database/Guild/Guild";
 
 import { Guild } from "discord.js";
 
 export default class GuildDeleteEvent extends BaseEvent {
     public constructor() {
         super("guildDelete", async (guild: Guild) => {
-            
+
         });
     }
 }

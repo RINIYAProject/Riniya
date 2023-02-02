@@ -6,13 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/29 16:41:21 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 03:12:36 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 import 'module-alias/register';
-
+import { createClient } from 'redis';
 import { Client, Intents } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import mongoose from "mongoose";
@@ -26,14 +26,21 @@ import ServerManager from "./api/index";
 
 import Levels from "discord-xp";
 import TasksManager from 'components/tasks/TasksManager';
+import InitChecker from './utils/InitChecker';
+
+const redisClient = createClient({
+    url: 'redis://127.0.0.1:6379',
+    password: process.env.REDIS_PASSWORD
+})
 
 export default class Riniya extends Client {
     public static instance: Riniya
 
     public database: mongoose.Mongoose
 
-    public REGISTRY: SlashCommandBuilder
-    public logger: Logger
+    public readonly REGISTRY: SlashCommandBuilder
+    public readonly logger: Logger
+    public readonly checker: InitChecker
 
     public manager: CommandManager
     public eventManager: EventManager
@@ -44,8 +51,8 @@ export default class Riniya extends Client {
     public discordXp: Levels
     public loaded: boolean = false
 
-    public version: string = process.env.VERSION || "Unreferenced version."
-    public revision: string = process.env.REVISION || "Unreferenced revision code."
+    public readonly version: string = process.env.VERSION || "Unreferenced version."
+    public readonly revision: string = process.env.REVISION || "Unreferenced revision code."
 
     public constructor() {
         super({
@@ -70,6 +77,7 @@ export default class Riniya extends Client {
         })
         Riniya.instance = this
         this.logger = new Logger("Riniya")
+        this.checker = new InitChecker()
 
         process.on('uncaughtException', function (error) {
             Riniya.instance.logger.error("Error message: " + error.message)
@@ -81,7 +89,10 @@ export default class Riniya extends Client {
             Riniya.instance.logger.error("\n")
         })
 
-        this.start()
+        if (this.checker.init())
+            this.logger.error('  -> Process aborted.')
+        else
+            this.start()
     }
 
     private start() {

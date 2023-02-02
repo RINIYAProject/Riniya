@@ -6,12 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:24 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 00:56:12 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:02:36 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import Base from "../abstracts/Base";
+import Base from "../../abstracts/Base";
 import { Router, Response } from "express";
+import express from "express";
 
 export declare enum ErrorType {
     SUCCESS_CALLBACK = 200,
@@ -24,13 +25,17 @@ export declare enum ErrorType {
 
 export default abstract class AbstractRoutes extends Base {
     public protected: boolean
+    protected router: Router
 
     public constructor(isProtected: boolean) {
         super("routes", "", "SERVER")
         this.protected = isProtected
+        this.router = router;
+
+        this.register(); // SELF REGISTERING.
     }
 
-    public abstract register(): Router
+    public abstract register(): void
 
     protected error(res: Response, type: ErrorType): void {
         res.status(type.valueOf()).json({
@@ -38,4 +43,10 @@ export default abstract class AbstractRoutes extends Base {
             error: type.toString()
         }).end()
     }
+
+    public routing(): Router {
+        return router;
+    }
 }
+
+export const router = express.Router()

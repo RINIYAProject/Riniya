@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-routes.ts                                     :+:      :+:    :+:   */
+/*   Handshake.ts                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/29 13:56:44 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 00:57:07 by alle.roy         ###   ########.fr       */
+/*   Created: 2023/01/30 19:38:38 by alle.roy          #+#    #+#             */
+/*   Updated: 2023/01/30 19:38:39 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import { Router } from "express";
-import AbstractRoutes from "../AbstractRoutes";
+import Packet from "../Packet";
 
-const router = Router();
+export default class Handshake extends Packet<"CLIENT"> {
 
-export default class UserRoutes extends AbstractRoutes {
-    public register(): Router {
-        return router
+    public constructor() {
+        super("Handshake", 0x0)
     }
+
+    public handle(data: String): void { }
 }

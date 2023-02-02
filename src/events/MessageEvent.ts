@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:57 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/15 15:35:20 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 02:55:28 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ export default class MessageEvent extends BaseEvent {
             new MessageData({
                 guildId: message.guildId,
                 memberId: message.author.id,
-                content: message.content,
+                content: message.content || 'No content.',
                 registeredAt: message.createdTimestamp
             }).save();
 
