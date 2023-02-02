@@ -9,23 +9,20 @@ export default class RequestLogging extends BaseMiddleware {
 
     public handle(request: Request, response: Response, next): void {
         if (process.env.REQUEST_LOGGING === "ON") {
-            this.formatLog(request)
+            this.instance.logger.info('===================================')
+            this.instance.logger.info('=             API DEBUG           =')
+            this.instance.logger.info('===================================')
+            this.instance.logger.info(`Return code     : ${request.statusCode || 0}`)
+            this.instance.logger.info(`Route           : ${request.originalUrl || 'Unknown'}`)
+            this.instance.logger.info(`Headers         : ${request.headers || []}`)
+            this.instance.logger.info('===================================')
+            this.instance.logger.info('=             BUILD INFO          =')
+            this.instance.logger.info('===================================')
+            this.instance.logger.info(`Version         : ${this.instance.version}`)
+            this.instance.logger.info(`Revision        : ${this.instance.revision}`)
+            this.instance.logger.info(`IsReady         : ${this.instance.loaded}`)
+            this.instance.logger.info('===================================')
+            next()
         }
-    }
-
-    private formatLog(request: Request): void {
-        this.instance.logger.info('===================================')
-        this.instance.logger.info('=             API DEBUG           =')
-        this.instance.logger.info('===================================')
-        this.instance.logger.info(`Return code     : ${request.statusCode}`)
-        this.instance.logger.info(`Route           : ${request.originalUrl}`)
-        this.instance.logger.info(`Headers         : ${request.headers}`)
-        this.instance.logger.info('===================================')
-        this.instance.logger.info('=             BUILD INFO          =')
-        this.instance.logger.info('===================================')
-        this.instance.logger.info(`Version         : ${this.instance.version}`)
-        this.instance.logger.info(`Revision        : ${this.instance.revision}`)
-        this.instance.logger.info(`IsReady         : ${this.instance.loaded}`)
-        this.instance.logger.info('===================================')
     }
 }
