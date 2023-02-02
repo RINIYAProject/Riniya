@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 06:26:10 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 06:45:28 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ import UserRoutes from "./Server/routes/user-routes";
 import Authentication from "./Server/middlewares/Authentication";
 import RequestLogging from "./Server/middlewares/RequestLogging";
 import Websocket from "./Websocket/index";
+
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -46,6 +48,7 @@ export default class ServerManager {
         this.requestLog = new RequestLogging()
 
         // DEBUG
+        app.use(cookieParser())
         app.use((req, res, next) => this.authClient.handle(req, res, next))
         app.use((req, res, next) => this.requestLog.handle(req, res, next))
 

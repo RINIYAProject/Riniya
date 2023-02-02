@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 03:15:56 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 03:15:57 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 07:05:23 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,11 @@ export default class AuthHelper {
                 status: false,
                 error: 'MISSING_USER'
             })
-        if (UserData.permissions >= Permissions.GET) {
+        else {
             const session: ISession = await this.createSession(UserData._id);
             callback({
                 status: true,
                 session: session
-            })
-        } else {
-            callback({
-                status: false,
-                error: 'INSUFFICIENT_PERMISSION'
             })
         }
     }
@@ -60,27 +55,28 @@ export default class AuthHelper {
             sessionExpired: false
         })
 
-        if (!SessionData)
+        if (!SessionData) {
             callback({
                 status: false,
                 error: 'MISSING_SESSION'
             })
-
-        new History({
-            userId: SessionData.userId,
-            accessToken: SessionData.accessToken,
-            clientToken: SessionData.clientToken,
-            createdAt: new Date()
-        }).save();
-
-        callback({
-            status: true,
-            session: {
+        } else {
+            new History({
+                userId: SessionData.userId,
                 accessToken: SessionData.accessToken,
                 clientToken: SessionData.clientToken,
-                sessionExpiry: SessionData.sessionExpiry
-            }
-        })
+                createdAt: new Date()
+            }).save();
+
+            callback({
+                status: true,
+                session: {
+                    accessToken: SessionData.accessToken,
+                    clientToken: SessionData.clientToken,
+                    sessionExpiry: SessionData.sessionExpiry
+                }
+            })
+        }
     }
 
     public async invalidateAll(userId: string, callback: Function) {
@@ -107,9 +103,9 @@ export default class AuthHelper {
         }).save();
 
         return {
-            accessToken: accessToken || '',
-            clientToken: clientToken || '',
-            sessionExpiry: sessionExpiry || 0
+            accessToken: accessToken,
+            clientToken: clientToken,
+            sessionExpiry: sessionExpiry
         }
     }
 }

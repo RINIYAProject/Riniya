@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:09 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 06:34:22 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 06:51:48 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ export default class Authentication extends BaseMiddleware {
     }
 
     public handle(request: Request, response: Response, next): void {
-        const scope: string = request.get('X-API-SCOPE') || 'invalid_scope'
+        const scope: string = request.get('X-API-SCOPE') || 'identify'
 
         switch (scope) {
             case 'login': {
@@ -34,35 +34,39 @@ export default class Authentication extends BaseMiddleware {
                 this.handler.login(
                     username, password,
                     (cb: ICallback) => {
-                        response.status(200).json({
-                            status: cb.status,
-                            data: {
-                                session: cb.session
-                            },
-                            error: cb.error
-                        }).end();
+                        if (cb.status) {
+                            response.cookie("session", cb.session, { maxAge: 64448 })
+                            next();
+                        } else {
+                            response.status(403).json({
+                                status: cb.status,
+                                error: cb.error
+                            }).end();
+                        }
                     }
                 )
             }
                 break
             case 'identify': {
-                const accessToken: string = request.get('X-API-TOKEN') || ""
-                const clientToken: string = request.get('X-API-CLIENT') || ""
+                const accessToken: string = request.get('X-API-TOKEN') || request.cookies['session']['accessToken']
+                const clientToken: string = request.get('X-API-CLIENT') || request.cookies['session']['clientToken']
 
                 this.handler.identify(
                     accessToken, clientToken,
                     (cb: ICallback) => {
-                        response.status(200).json({
-                            status: cb.status,
-                            data: {
-                                session: cb.session
-                            },
-                            error: cb.error
-                        }).end()
+                        if (cb.status) {
+                            next()
+                        } else {
+                            response.status(403).json({
+                                status: cb.status,
+                                data: {
+                                    session: cb.session || {}
+                                },
+                                error: cb.error
+                            }).end()
+                        }
                     }
                 )
-
-                next()
             }
                 break
             default:
