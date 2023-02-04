@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:12 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/04 21:28:56 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:19:34 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,7 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
             status: 'pending'
         })
 
-        if (VerificationData._id === null) {
-            interaction.reply({
-                embeds: [
-                    new MessageEmbed()
-                        .setTitle("Request not found.")
-                        .setDescription("This verification request has been timedout.")
-                        .setColor("RED")
-                ],
-                ephemeral: true
-            })
-        } else {
+        if (!VerificationData) {
             switch (type) {
                 case "accepted": {
                     member.roles.remove(unverifiedRole);
@@ -135,6 +125,14 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                 }
                     break
             }
+        } else {
+            interaction.message.edit({
+                components: []
+            })
+            interaction.reply({
+                content: `${member.user.username} can't be verified.`,
+                ephemeral: true
+            });
         }
     }
 
