@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:22:47 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 07:56:15 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/04 20:57:57 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ export default class InteractionEvent extends BaseEvent {
                             });
                     else
                         return handler.handler(interaction, interaction.member as GuildMember, interaction.guild);
-                } else if (interaction.isButton()) {
+                } else if (interaction.isButton() || interaction.isSelectMenu()) {
                     const customId: string = interaction.customId;
                     const handler: BaseButton<unknown, unknown> = this.instance.buttonManager.getButton(customId);
 
