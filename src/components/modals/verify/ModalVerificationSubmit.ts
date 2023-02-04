@@ -22,7 +22,7 @@ export default class ModalVerificationSubmit extends BaseModal {
         const IAge: Number = parseInt(age);
         const sona: string = interaction.getTextInputValue("row_verification_answer_sona");
 
-        const staff: GuildMember = interaction.guild.members.cache.get("382918201241108481");
+        const staff: GuildMember = interaction.guild.members.cache.get("993503408852045834");
 
         if (IAge < 13) {
             sanction(interaction.guild, staff, interaction.member, "Underaged bellow 13 years old.", "kick")
