@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:38:33 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 05:59:35 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/02 08:51:16 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ export default class Websocket {
     public readonly events: OptionMap<EventId, BaseWSEvent>
 
     public constructor(server: https.Server) {
-        this.io = new Server(server, {})
+        this.io = new Server(server, {
+            pingTimeout: 7000,
+            pingInterval: 3000
+        })
         this.events = new OptionMap<EventId, BaseWSEvent>()
     }
 

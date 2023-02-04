@@ -1,0 +1,64 @@
+CONNECTED(00000003)
+---
+Certificate chain
+ 0 s:CN = *.ghidorah.uk
+   i:C = US, O = Let's Encrypt, CN = E1
+   a:PKEY: id-ecPublicKey, 256 (bit); sigalg: ecdsa-with-SHA384
+   v:NotBefore: Jan  8 15:39:56 2023 GMT; NotAfter: Apr  8 15:39:55 2023 GMT
+ 1 s:C = US, O = Let's Encrypt, CN = E1
+   i:C = US, O = Internet Security Research Group, CN = ISRG Root X2
+   a:PKEY: id-ecPublicKey, 384 (bit); sigalg: ecdsa-with-SHA384
+   v:NotBefore: Sep  4 00:00:00 2020 GMT; NotAfter: Sep 15 16:00:00 2025 GMT
+ 2 s:C = US, O = Internet Security Research Group, CN = ISRG Root X2
+   i:C = US, O = Internet Security Research Group, CN = ISRG Root X1
+   a:PKEY: id-ecPublicKey, 384 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Sep  4 00:00:00 2020 GMT; NotAfter: Sep 15 16:00:00 2025 GMT
+ 3 s:C = US, O = Internet Security Research Group, CN = ISRG Root X1
+   i:O = Digital Signature Trust Co., CN = DST Root CA X3
+   a:PKEY: rsaEncryption, 4096 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Jan 20 19:14:03 2021 GMT; NotAfter: Sep 30 18:14:03 2024 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIDwjCCA0egAwIBAgISBDTBB/JcnWcYTqslR3a5VzPlMAoGCCqGSM49BAMDMDIx
+CzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQDEwJF
+MTAeFw0yMzAxMDgxNTM5NTZaFw0yMzA0MDgxNTM5NTVaMBgxFjAUBgNVBAMMDSou
+Z2hpZG9yYWgudWswWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARdZQNOkT58e1Wv
+xa4/FGUjeZWPz9sccLxyUggiKTDSi3POgVaZPDJE6x9FnD4JieRBYrsHRv99Lzun
+CC0M0XB8o4ICVTCCAlEwDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUF
+BwMBBggrBgEFBQcDAjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBQd/u+H2uAOxaGr
+aWXD4rx0tlg+lDAfBgNVHSMEGDAWgBRa8+0r/DbCN3m5UjDqVG/PVcsurDBVBggr
+BgEFBQcBAQRJMEcwIQYIKwYBBQUHMAGGFWh0dHA6Ly9lMS5vLmxlbmNyLm9yZzAi
+BggrBgEFBQcwAoYWaHR0cDovL2UxLmkubGVuY3Iub3JnLzAlBgNVHREEHjAcgg0q
+LmdoaWRvcmFoLnVrggtnaGlkb3JhaC51azBMBgNVHSAERTBDMAgGBmeBDAECATA3
+BgsrBgEEAYLfEwEBATAoMCYGCCsGAQUFBwIBFhpodHRwOi8vY3BzLmxldHNlbmNy
+eXB0Lm9yZzCCAQQGCisGAQQB1nkCBAIEgfUEgfIA8AB1AHoyjFTYty22IOo44FIe
+6YQWcDIThU070ivBOlejUutSAAABhZJAxWYAAAQDAEYwRAIgYxgvdy/xdOyYVFbq
+/p6X6bUH517ZQKP53qvl5q5S/OwCIBk99f3p29vP6qCxDk9Xzo2D0G9hoTs54fjI
+EK8HI+cTAHcA6D7Q2j71BjUy51covIlryQPTy9ERa+zraeF3fW0GvW4AAAGFkkDH
+NwAABAMASDBGAiEA7RLTr/Ddb/NZ/zOsiUgjD0npYGUUBt5Tx6e0VkhbebgCIQCX
++AVRzsSUlHloWx9AWSe5RcbeAwlRJcbsxfFNWRk5LjAKBggqhkjOPQQDAwNpADBm
+AjEAh5NsU0cx3jmWvETsVWk74QrhW3dgjWY4OJxDRSnOyfaddJszvudk3WDadpd8
+nlEgAjEAoJWXOdMHMK+S9IA44qgeRzxSqqeN+yGpd+OBbXxJTHt+zZUWdRtu80fm
+srDfjj12
+-----END CERTIFICATE-----
+subject=CN = *.ghidorah.uk
+issuer=C = US, O = Let's Encrypt, CN = E1
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: ECDSA
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 4507 bytes and written 401 bytes
+Verification: OK
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Server public key is 256 bit
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 0 (ok)
+---

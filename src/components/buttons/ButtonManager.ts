@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:23 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:13:40 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/04 20:41:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ import AcceptRules from "./rules/AcceptRules";
 import ButtonVerify from "./verification/ButtonVerify";
 import Fragment from "./Fragment";
 import ButtonSelectRole from "./roles/ButtonSelectRole";
+import SelectUpdate from "./verification/SelectUpdate";
 
 export default class ButtonManager {
     private BUTTONS: OptionMap<String, BaseButton<unknown, unknown>>;
@@ -37,6 +38,7 @@ export default class ButtonManager {
         this.addButton(new AcceptRules());
         this.addButton(new ButtonVerify());
         this.addButton(new ButtonSelectRole());
+        this.addButton(new SelectUpdate());
 
         //COMPONENTS
     }

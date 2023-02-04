@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 08:39:00 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:47:05 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ export default class ServerManager {
         app.use((request, response, next) => {
             const scope: string = request.get('X-API-SCOPE') || 'identify'
 
-            if (request.originalUrl.match('/'))
+            if (!request.originalUrl.includes('/api'))
                 next()
 
             switch (scope) {
@@ -143,7 +143,7 @@ export default class ServerManager {
         this.wsServer = https.createServer({
             key: this.fileHelper.search(process.env.SERVER_KEY),
             cert: this.fileHelper.search(process.env.SERVER_CERT)
-        })
+        }, app)
     }
 
     public initServers(): void {

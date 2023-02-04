@@ -45,8 +45,17 @@ export default class ModalVerificationSubmit extends BaseModal {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton("Verify", "https://dashboard.riniya.com/guild/" + GuildModel.guildId + "/verify/" + memberId),
-                        this.instance.buttonManager.createLinkButton("Status", "https://dashboard.riniya.com/guild/" + GuildModel.guildId + "/verify/" + memberId + "/status")
+                        {
+                            custom_id: 'row_verification_update',
+                            placeholder: 'Verification options',
+                            max_values: 1,
+                            options: [
+                                { label: 'Accept.', value: `accepted:${memberId}`, emoji: { name: 'foxuwu', id: '1059684731366670336' } },
+                                { label: 'Refuse', value: `refused:${memberId}`, emoji: { name: 'bongoHearts', id: '996984352313446470', animated: true } },
+                                { label: 'Ban', value: `banned:${memberId}`, emoji: { name: 'bongoban', id: '643488110612840485', animated: true } },
+                            ],
+                            type: 3
+                        }
                     ]
                 }
             ]

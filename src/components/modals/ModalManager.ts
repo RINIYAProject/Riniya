@@ -1,6 +1,7 @@
 import BaseModal from "@riniya.ts/components/BaseModal";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import ModalAnnounce from "./owner/ModalAnnounce";
+import ModalVerificationDenied from "./verify/ModalVerificationDenied";
 import ModalVerificationSubmit from "./verify/ModalVerificationSubmit";
 
 export default class ModalManager {
@@ -13,6 +14,7 @@ export default class ModalManager {
     public registerModals(): void {
         this.registerModal(new ModalAnnounce());
         this.registerModal(new ModalVerificationSubmit());
+        this.registerModal(new ModalVerificationDenied())
     }
 
     public registerModal(modal: BaseModal): void {

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:43:21 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:22:01 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/04 20:20:24 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ export default class ModalHelper {
     }
 
     public toModal(): Modal {
-        return this.modal;
+        return this.modal
     }
 }
