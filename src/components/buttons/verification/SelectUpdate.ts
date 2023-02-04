@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:24:12 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/04 20:40:47 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:00:45 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
             "row_verification_update",
             "Verify",
             new OptionMap<string, unknown>()
-                .add("isRestricted", true)
         );
     }
 
