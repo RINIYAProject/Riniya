@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 04:50:14 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 05:32:03 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ import Websocket from "./Websocket/index";
 
 import session from "express-session"
 import { v4 } from "uuid";
-import AuthHelper, { ICallback } from "@riniya.ts/utils/AuthHelper";
 
 const app = express();
 
