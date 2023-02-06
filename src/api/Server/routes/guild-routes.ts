@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:56:19 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 16:47:19 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:03:03 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ export default class GuildRoutes extends AbstractRoutes {
         this.router.get('/servers', async (req, res) => {
             res.status(200).json({
                 status: true,
-                data: Riniya.instance.guilds || []
+                data: Riniya.instance.guilds.cache.values() || []
             }).end()
         })
         this.router.get('/servers/:guildId', async (req, res) => {

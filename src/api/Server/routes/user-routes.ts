@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:56:44 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 16:48:01 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 17:02:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ const client = new TwitterClient(process.env['TWITTER_TOKEN'] || "no_token");
 export default class UserRoutes extends AbstractRoutes {
     public register() {
         this.router.post('/block-list/create', (req, res) => {
-            if (req.body.ids) {
+            if (req.body.ids === undefined) {
                 res.status(404).json({
                     status: false,
                     error: 'ID is not set.'
@@ -68,7 +68,7 @@ export default class UserRoutes extends AbstractRoutes {
         });
 
         this.router.get('/block-list/fetch/:id', async (req, res) => {
-            if (req.params.id) {
+            if (req.params.id === undefined) {
                 res.status(404).json({
                     status: false,
                     error: "Account ID cannot be null."
