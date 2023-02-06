@@ -6,26 +6,23 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:38:33 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 05:51:32 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 05:59:08 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Riniya from '@riniya.ts';
 
-import Mesa, { Message } from "@cryb/mesa"
+import Mesa from "@cryb/mesa"
 import https from "https"
-import Session from '@riniya.ts/database/Security/Session';
 
 export default class Websocket extends Mesa {
     public constructor(server: https.Server) {
         super({
-            port: 8443,
-            //server: server,
+            port: 3000,
             heartbeat: {
                 enabled: true,
                 interval: 10000
             },
-            redis: process.env['REDIS_URL'],
             sync: {
                 enabled: true
             },
