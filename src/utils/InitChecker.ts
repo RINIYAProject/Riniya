@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 03:15:50 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 02:32:47 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:14:37 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ export default class InitChecker {
             return this.print("REDIS_PASSWORD")
         else if (this.unset("REDIS_URL"))
             return this.print("REDIS_URL")
+        else if (this.unset("TWITTER_TOKEN"))
+            return this.print("TWITTER_TOKEN")
         return false
     }
 
