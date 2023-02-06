@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@2pg/oauth": "^1.0.8",
+    "@cryb/mesa": "^1.5.8",
     "@discordjs/builders": "^1.4.0",
     "@redis/client": "^1.5.5",
     "@types/cookie-parser": "^1.4.3",

@@ -6,47 +6,38 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:38:33 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 08:51:16 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 04:47:57 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Riniya from '@riniya.ts';
-import OptionMap from '@riniya.ts/utils/OptionMap';
-import BaseWSEvent from '@riniya.ts/server/BaseWSEvent';
 
-import https from 'https'
-import { Server } from "socket.io";
+import Mesa, { Message } from "@cryb/mesa"
+import https from "https"
+import Session from '@riniya.ts/database/Security/Session';
 
-import ConnectionEvent from './events/ConnectionEvent';
-import DisconnectEvent from './events/DisconnectEvent';
-import DisconnectingEvent from './events/DisconnectingEvent';
-
-export declare type EventId = String | string;
-
-export default class Websocket {
-    public readonly io: Server
-    public readonly events: OptionMap<EventId, BaseWSEvent>
-
+export default class Websocket extends Mesa {
     public constructor(server: https.Server) {
-        this.io = new Server(server, {
-            pingTimeout: 7000,
-            pingInterval: 3000
+        super({
+            port: 8443,
+            server: server,
+            heartbeat: {
+                enabled: true,
+                interval: 10000
+            },
+            redis: process.env['REDIS_URL'],
+            sync: {
+                enabled: true
+            },
+            authentication: {
+                storeConnectedUsers: true
+            }
+        });
+
+        this.on('connection', client => { })
+
+        this.on('disconnection', (code: number, reason: string) => {
+            Riniya.instance.logger.warn(`[Websocket] A client is now disconnected (code: ${code}, reasons: ${reason})`)
         })
-        this.events = new OptionMap<EventId, BaseWSEvent>()
-    }
-
-    public init(): void {
-        this.registerEvent(new ConnectionEvent())
-        this.registerEvent(new DisconnectEvent())
-        this.registerEvent(new DisconnectingEvent())
-    }
-
-    private registerEvent(event: BaseWSEvent): void {
-        this.events.add(event.name, event)
-    }
-
-    public shutdown(): void {
-        if (this.io !== undefined)
-            this.io.close((err) => Riniya.instance.logger.error(err.message))
     }
 }

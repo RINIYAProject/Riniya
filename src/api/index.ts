@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/03 14:47:05 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 04:50:14 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ export default class ServerManager {
     private wsServer: https.Server
     private fileHelper: FileHelper
 
-    private handler: AuthHelper
     private requestLog: RequestLogging
 
     public websocket: Websocket
@@ -45,7 +44,6 @@ export default class ServerManager {
         this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
         this.requestLog = new RequestLogging()
-        this.handler = new AuthHelper()
 
         // DEBUG
         app.set('trust proxy', 1) // trust first proxy
@@ -55,85 +53,6 @@ export default class ServerManager {
             saveUninitialized: true,
             cookie: { secure: true }
         }))
-        app.use((request, response, next) => {
-            const scope: string = request.get('X-API-SCOPE') || 'identify'
-
-            if (!request.originalUrl.includes('/api'))
-                next()
-
-            switch (scope) {
-                case 'login': {
-                    const username: string = request.get('X-API-USERNAME') || ""
-                    const password: string = request.get('X-API-PASSWORD') || ""
-
-                    this.handler.login(
-                        username, password,
-                        (cb: ICallback) => {
-                            if (cb.status) {
-                                response.setHeader('accessToken', cb.session.accessToken)
-                                response.setHeader('clientToken', cb.session.clientToken)
-                            }
-                            response.status((cb.error ? 403 : 200)).json({
-                                status: cb.status,
-                                data: cb.session,
-                                error: cb.error
-                            }).end();
-                        }
-                    )
-                }
-                    break
-                case 'identify': {
-                    const accessToken: string = request.get('accessToken')
-                    const clientToken: string = request.get('clientToken')
-
-                    this.handler.identify(
-                        accessToken, clientToken,
-                        (cb: ICallback) => {
-                            if (cb.status) {
-                                next()
-                            } else {
-                                response.status(403).json({
-                                    status: cb.status,
-                                    error: cb.error
-                                })
-                            }
-                        }
-                    )
-                }
-                    break
-                default:
-                    response.status(403).json({
-                        status: false,
-                        error: 'MISSING_SCOPE',
-                        message: 'Available scope is login or identify. Please read the documentations.'
-                    }).end()
-                    break
-            }
-        })
-        app.use((req, res, next) => this.requestLog.handle(req, res, next))
-
-        app.get('/', async (req, res) => {
-            res.status(200).json({
-                appName: 'Riniya',
-                appVersion: Riniya.instance.version,
-                appRevision: Riniya.instance.revision,
-                appAuthors: ["NebraskyTheWolf <farfy.dev@gmail.com>"],
-                services: {
-                    redis: {
-                        status: false,
-                        ping: -1
-                    },
-                    minio: {
-                        status: false,
-                        ping: -1
-                    },
-                    mongodb: {
-                        status: Riniya.instance.database.connection.readyState,
-                        ping: -1
-                    }
-                }
-            })
-        })
 
         this.server = https.createServer({
             key: this.fileHelper.search(process.env.SERVER_KEY),
@@ -144,18 +63,40 @@ export default class ServerManager {
             key: this.fileHelper.search(process.env.SERVER_KEY),
             cert: this.fileHelper.search(process.env.SERVER_CERT)
         }, app)
+
+        this.websocket = new Websocket(this.wsServer)
+
+        app.get('/', async (req, res) => {
+            res.status(200).json({
+                appName: 'Riniya',
+                appVersion: Riniya.instance.version,
+                appRevision: Riniya.instance.revision,
+                appAuthors: ["NebraskyTheWolf <farfy.dev@gmail.com>"],
+                services: {
+                    redis: {
+                        status: true
+                    },
+                    minio: {
+                        status: true
+                    },
+                    mongodb: {
+                        status: true
+                    },
+                    websocket: {
+                        status: true,
+                        clients: this.websocket.clients.length
+                    }
+                }
+            })
+        })
     }
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            app.use('/api', route.routing())
+            app.use('/api', (req, res, next) => this.requestLog.handle(req, res, next), route.routing())
         })
-
-        this.websocket = new Websocket(this.wsServer)
-        this.websocket.init()
         //
         this.server.listen(443)
-        this.wsServer.listen(8443)
     }
 
     public registerServers(): void {
