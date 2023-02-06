@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:38:33 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 04:47:57 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 05:51:32 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ export default class Websocket extends Mesa {
     public constructor(server: https.Server) {
         super({
             port: 8443,
-            server: server,
+            //server: server,
             heartbeat: {
                 enabled: true,
                 interval: 10000
