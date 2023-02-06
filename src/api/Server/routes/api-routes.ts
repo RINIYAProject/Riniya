@@ -6,12 +6,34 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:56:14 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/30 16:47:08 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:22:50 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Riniya from "@riniya.ts";
 import AbstractRoutes from "../../Server/AbstractRoutes";
+
+import { Client as TwitterClient } from "twitter-api-sdk"
+import { OAuth2User } from "twitter-api-sdk/dist/OAuth2User";
+import { v4 } from "uuid";
+
+const authClient = new OAuth2User({
+    client_id: process.env['TWITTER_CLIENT_ID'] || "no_id",
+    client_secret: process.env['TWITTER_SECRET'] || "no_secret",
+    callback: 'https://api.ghidorah.uk/api/callback',
+    scopes: [
+        'block.read', 'mute.read',
+        'block.write', 'mute.write',
+        'tweet.write'
+    ]
+});
+
+const authUrl = authClient.generateAuthURL({
+    state: v4(),
+    code_challenge_method: "s256"
+});
+
+const client = new TwitterClient(authClient);
 
 export default class ApiRoutes extends AbstractRoutes {
     public register() {
@@ -29,6 +51,14 @@ export default class ApiRoutes extends AbstractRoutes {
                     invite_url: `https://discord.com/api/oauth2/authorize?client_id=${Riniya.instance.application.id}&permissions=8&scope=bot`
                 }
             })
+        })
+
+        this.router.get('/authorize', async (req, res) => {
+            res.redirect(authUrl);
+        })
+
+        this.router.post('/callback', async (req, res) => {
+
         })
     }
 }
