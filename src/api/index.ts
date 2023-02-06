@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 05:38:11 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 06:05:39 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ export default class ServerManager {
         this.wsServer = https.createServer({
             key: this.fileHelper.search(process.env.SERVER_KEY),
             cert: this.fileHelper.search(process.env.SERVER_CERT)
-        }, app)
+        })
 
         this.websocket = new Websocket(this.wsServer)
 
