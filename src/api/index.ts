@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 05:32:03 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 05:38:11 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ import Websocket from "./Websocket/index";
 
 import session from "express-session"
 import { v4 } from "uuid";
+import Authentication from "./Server/middlewares/Authentication";
 
 const app = express();
 
@@ -36,6 +37,7 @@ export default class ServerManager {
     private fileHelper: FileHelper
 
     private requestLog: RequestLogging
+    private auth: Authentication
 
     public websocket: Websocket
 
@@ -43,6 +45,7 @@ export default class ServerManager {
         this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
         this.requestLog = new RequestLogging()
+        this.auth = new Authentication()
 
         // DEBUG
         app.set('trust proxy', 1) // trust first proxy
@@ -92,7 +95,7 @@ export default class ServerManager {
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            app.use('/api', (req, res, next) => this.requestLog.handle(req, res, next), route.routing())
+            app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
         })
         //
         this.server.listen(443)
