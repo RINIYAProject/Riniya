@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:09:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/01/09 02:20:26 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/07 00:58:57 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ export default class Tuple<T> {
 
     public add(type: T): void {
         this.data.add(v4(), type);
+    }
+
+    public clear(): void {
+        this.data.getMap().clear();
     }
 
     public getAll(): Collection<string, T> {

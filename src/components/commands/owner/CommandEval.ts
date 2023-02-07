@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/30 00:53:21 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/07 00:49:29 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ import ModalHelper from "@riniya.ts/utils/ModalHelper";
 import { GuildMember, Guild, CommandInteraction } from "discord.js";
 import { TextInputComponent } from "discord-modals";
 
-export default class CommandEval extends BaseCommand {
+export default class CommandEval extends BaseCommand { 
     public constructor() {
         super("eval", "Start a code evaluation", new OptionMap<string, boolean>()
             .add("isDeveloper", true),

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:56:14 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 21:22:50 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:48:31 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ const authClient = new OAuth2User({
         'block.write', 'mute.write',
         'tweet.write'
     ]
-});
-
-const authUrl = authClient.generateAuthURL({
-    state: v4(),
-    code_challenge_method: "s256"
 });
 
 const client = new TwitterClient(authClient);
@@ -54,11 +49,14 @@ export default class ApiRoutes extends AbstractRoutes {
         })
 
         this.router.get('/authorize', async (req, res) => {
-            res.redirect(authUrl);
+            res.redirect(authClient.generateAuthURL({
+                state: '',
+                code_challenge_method: "s256" 
+            }));
         })
 
         this.router.post('/callback', async (req, res) => {
-
+            
         })
     }
 }
