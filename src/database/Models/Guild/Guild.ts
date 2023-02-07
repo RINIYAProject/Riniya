@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Guild.ts                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: NebraskyTheWolf <contact@ghidorah.uk>      +#+  +:+       +#+        */
+/*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 07:19:49 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/04 01:24:30 by NebraskyThe      ###   ########.fr       */
+/*   Updated: 2023/02/07 01:56:45 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ export interface Guild {
     loggingChannel?: string;
     loggingModeration?: string;
     loggingUpdate?: string;
+
+    inviteCheck?: boolean;
 
     level?: boolean;
     levelAlertChannel?: string;
@@ -67,6 +69,8 @@ export default mongoose.model<Guild & mongoose.Document>("Guild", new mongoose.S
     loggingChannel: { type: String },
     loggingModeration: { type: String },
     loggingUpdate: { type: String },
+
+    inviteCheck: { type: Boolean, default: false },
 
     level: { type: Boolean },
     levelAlertChannel: { type: String },

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/07 01:40:13 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/07 01:57:44 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,8 @@ import discordModals from "discord-modals";
 import ServerManager from "./api/index";
 
 import Levels from "discord-xp";
-import TasksManager from 'components/tasks/TasksManager';
+import TasksManager from './components/tasks/TasksManager';
 import InitChecker from './utils/InitChecker';
-
-const redisClient = createClient({
-    url: 'redis://127.0.0.1:6379',
-    password: process.env.REDIS_PASSWORD
-})
 
 export default class Riniya extends Client {
     public static instance: Riniya
