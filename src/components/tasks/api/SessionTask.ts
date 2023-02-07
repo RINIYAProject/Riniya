@@ -6,7 +6,7 @@ export default class SessionTask extends BaseTask {
     private DATE_NOW: number = Date.now()
 
     public constructor() {
-        super("SessionTask", "Managing the session expiration.", "* 59 * * *",
+        super("SessionTask", "Managing the session expiration.", "* * 1 * * *",
             async () => {
                 this.instance.logger.info(this.name + '@' + this.description + ': Job started.');
                 (await Session.find({ sessionExpired: false })).forEach((session) => {
