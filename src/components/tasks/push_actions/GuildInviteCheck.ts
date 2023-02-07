@@ -17,7 +17,7 @@ export default class GuildInviteCheck extends BaseTask {
                                 guildId: guild.id,
                                 inviteCode: invite.code
                             })
-                            if (inv.inviteCode === null) {
+                            if (inv && inv.inviteCode) {
                                 guild.invites.delete(invite.code, "Compromised invite.");
                                 const message: MessageEmbed = new MessageEmbed()
                                 message.setTitle(`Job ${v4()} compromised invite detected.`)
@@ -30,6 +30,8 @@ export default class GuildInviteCheck extends BaseTask {
                                 })
                             }
                         })
+                    } else {
+                        this.instance.logger.info(this.name + '@' + this.description + ' : Skipping guild ' + guild.id);
                     }
                 })
                 this.instance.logger.info(this.name + '@' + this.description + ' : Job finished.');
