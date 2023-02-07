@@ -17,9 +17,7 @@ export default class GuildInviteCheck extends BaseTask {
                                 guildId: guild.id,
                                 inviteCode: invite.code
                             })
-                            if (inv && inv.inviteCode) {
-                                // IGNORE
-                            } else {
+                            if (!inv) {
                                 guild.invites.delete(invite.code, "Compromised invite.");
                                 const message: MessageEmbed = new MessageEmbed()
                                 message.setTitle(`Job ${v4()} compromised invite detected.`)
