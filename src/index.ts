@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 06:00:22 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/07 01:40:13 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,9 @@ export default class Riniya extends Client {
         this.serverManager = new ServerManager()
         this.serverManager.registerServers()
         this.serverManager.initServers()
+
+        this.taskManager = new TasksManager();
+        this.taskManager.registerAll();
 
         this.discordXp = Levels
 

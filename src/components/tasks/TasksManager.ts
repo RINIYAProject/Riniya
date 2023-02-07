@@ -2,6 +2,7 @@ import Riniya from "@riniya.ts";
 import BaseTask from "@riniya.ts/components/BaseTask";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import SessionTask from "./api/SessionTask";
+import GuildInviteCheck from "./push_actions/GuildInviteCheck";
 
 export default class TasksManager {
     private TASKS: OptionMap<string, BaseTask>
@@ -12,6 +13,7 @@ export default class TasksManager {
 
     public registerAll(): void {
         this.register(new SessionTask())
+        this.register(new GuildInviteCheck())
     }
 
     private register(task: BaseTask): void {

@@ -6,12 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/07 01:27:45 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/07 01:34:58 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import { SlashCommandNumberOption } from "@discordjs/builders";
 import BaseCommand from "@riniya.ts/components/BaseCommand";
+import Invites from "@riniya.ts/database/Moderation/Invites";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import Tuple from "@riniya.ts/utils/Tuple";
 
@@ -40,7 +41,7 @@ export default class CommandInvite extends BaseCommand {
         const amounts: number = inter.options.getNumber("quantity") || 5;
 
         this.cache.clear()
-        
+
         const message: MessageEmbed = new MessageEmbed();
         message.setTitle("Generated invites");
         message.setColor("RED");
@@ -52,6 +53,10 @@ export default class CommandInvite extends BaseCommand {
                 unique: true,
                 reason: `Trusted user ${v4()}`
             }).then(invite => {
+                new Invites({
+                    guildId: guild.id,
+                    inviteCode: invite.code
+                }).save();
                 this.cache.add(invite)
             })
         }
