@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/07 01:07:59 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/07 01:14:57 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ export default class CommandInvite extends BaseCommand {
         message.setDescription("All this invites are ephemeral and can only be used 1 time.");
 
         for (var i = 0; i < amounts; i++) {
-            guild.invites.create(guild.systemChannelId, {
+            await guild.invites.create(guild.systemChannelId, {
                 maxUses: 1,
                 reason: `Trusted user ${v4()}`
             }).then(invite => {
@@ -52,7 +52,7 @@ export default class CommandInvite extends BaseCommand {
                 message.addField(`#${i}`, `Failed to get invite code.`);
             })
         }
-        
+
         message.setAuthor(`${amounts} invite has been created.`);
 
         inter.reply({
