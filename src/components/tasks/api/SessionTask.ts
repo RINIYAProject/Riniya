@@ -6,13 +6,13 @@ export default class SessionTask extends BaseTask {
     private DATE_NOW: number = Date.now()
 
     public constructor() {
-        super("SessionTask", "Managing the session expiration.", "* * 1 * * *",
+        super("SessionTask", "Managing the session expiration.", "* 59 * * * *",
             async () => {
                 this.instance.logger.info(this.name + '@' + this.description + ': Job started.');
-                (await Session.find({ sessionExpired: false })).forEach((session) => {
+                (await Session.find({ sessionExpired: false })).forEach(async (session) => {
                     if (this.DATE_NOW >= session.sessionExpiry) {
                         this.instance.logger.warn(`Session ${session.accessToken} expired. Terminating session.`)
-                        Session.updateOne({ _id: session._id }, { sessionExpired: true }, {})
+                        await Session.updateOne({ _id: session._id }, { sessionExpired: true }, {})
                     }
                 });
                 this.instance.logger.info(this.name + '@' + this.description + ': Job finished.');
