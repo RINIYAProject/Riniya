@@ -6,10 +6,13 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 11:52:16 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/07 01:57:44 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 07:28:38 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+import * as dotenv from "dotenv";
+
+dotenv.config()
 
 import 'module-alias/register';
 import { createClient } from 'redis';

@@ -10,7 +10,8 @@
     "import": "npm run build && ts-node src/importers/import.ts",
     "lint": "eslint .",
     "test": "jest tests/ --runInBand",
-    "clean": "rm package-lock.json && rm -rf node_modules"
+    "clean": "rm package-lock.json && rm -rf node_modules",
+    "websocket:client": "ts-node src/TextPoC.ts"
   },
   "author": "NebraskyTheWolf",
   "license": "ISC",
