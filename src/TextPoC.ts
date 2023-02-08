@@ -1,57 +1,64 @@
-import io from "socket.io-client"
-import FileHelper from "./utils/FileHelper";
+import { Client, Message } from '@cryb/mesa'
+import { serialize } from 'v8';
+
+import ora from "ora"
 
 export default class PoC {
+
+    public counter = 0
+    public reconnect = 5
+
+    public connectId: NodeJS.Timeout
+    public disconnectId: NodeJS.Timeout
+
+
     public constructor() {
-        const socket = io('https://45.147.98.210:8443/payloads', {
-            autoConnect: true,
-            timeout: 7000,
-            upgrade: true,
-            cert: new FileHelper().search("/home/leona/server.cert")
-        });
+        var spinner: ora.Ora = ora("Initializing").start()
+        spinner.spinner = "clock"
+        spinner.color = "red"
 
-        socket.connect();
+        process.on('uncaughtException', () => { })
+        process.on('unhandledRejection', () => { })
 
-        console.log("Trying to connect with id : " + socket.id + " status : ")
+        const socket = new Client(process.env['WEBSOCKET_URL'] || "wss://api.ghidorah.uk")
 
-        socket.on("connect", () => {
-            console.log(socket.id)
-            const engine = socket.io.engine;
-            console.log(engine.transport.name); // in most cases, prints "polling"
-
-            engine.once("upgrade", () => {
-                // called when the transport is upgraded (i.e. from HTTP long-polling to WebSocket)
-                console.log(engine.transport.name); // in most cases, prints "websocket"
-            });
-
-            engine.on("packet", ({ type, data }) => {
-                // called for each packet received
-                console.log("packet.")
-            });
-
-            engine.on("packetCreate", ({ type, data }) => {
-                // called for each packet sent
-                console.log("packetCreate.")
-            });
-
-            engine.on("drain", () => {
-                console.log("drained.")
-            });
-
-            engine.on("close", (reason) => {
-                console.log("closed.")
-            });
+        socket.on("connected", () => {
+            spinner.text = "Connection etablished."
+            spinner.spinner = "dots"
+            if (this.disconnectId)
+                clearInterval(this.disconnectId)
+            this.connectId = setInterval(() => {
+                this.counter = this.counter + 1;
+                spinner.text = "Listening since " + this.counter + " seconds"
+                spinner.color = "green"
+                socket.send(new Message(0, {
+                    latency: true
+                }, "DEBUG"))
+            }, 1000)
         })
 
-        socket.on("connect_error", (err) => {
-            console.log(err)
-        });
-
-        socket.on('disconnect', () => {
-            console.log(socket.id + " disconnected.")
+        socket.on('error', (err) => {
+            spinner.fail("Error occured : " + err.message)
+            process.exit()
         })
 
+        socket.on('disconnected', () => {
+            clearInterval(this.connectId)
+            this.disconnectId = setInterval(() => {
+                this.reconnect = this.reconnect - 1;
+                spinner.text = "Disconnected : trying to reconnect in " + this.reconnect + "s"
+                spinner.color = "red"
+                spinner.spinner = "clock"
+                if (this.reconnect === 0) {
+                    this.reconnect = 5
+                    socket.connect()
+                }
+            }, 1000)
+        })
 
+        socket.on('message', message => {
+            ora(`Message received : Action ${message.type}`).succeed();
+        });
     }
 }
 
