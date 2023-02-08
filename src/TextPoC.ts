@@ -33,6 +33,11 @@ export default class PoC {
                 spinner.text = "Listening since " + this.counter + " seconds"
                 if (this.messageCount >= 50)
                     spinner.prefixText = `HANDSHAKE`
+                else if (this.counter >= 50 && this.messageCount < 50) {
+                    spinner.warn("The debug operation has failed. Please check the server-side and try again.")
+                    socket.disconnect(1006)
+                    process.exit(1006)
+                }
                 spinner.color = "green"
             }, 1000)
         })
