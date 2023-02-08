@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/07 01:34:58 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:25:04 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ export default class CommandInvite extends BaseCommand {
         }
 
         const data = this.cache.getAll().map((id, invite) => {
-            let iid = 0
             return {
-                name: `Invite #${iid++}`,
+                name: `Invite ${invite.split("-")[0]}`,
                 value: id.url,
                 inline: false
             }

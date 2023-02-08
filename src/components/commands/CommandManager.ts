@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:40:08 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/07 01:08:48 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 01:52:24 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ import CommandSpawnButton from "./owner/CommandSpawnButton";
 import CommandDonate from "./misc/CommandDonate";
 import CommandRole from "./administrator/CommandRole";
 import CommandInvite from "./owner/CommandInvite";
+import CommandTargetInvite from "./owner/CommandTargetInvite";
 
 export default class CommandManager {
     private REGISTRY: OptionMap<String, BaseCommand>;
@@ -143,6 +144,7 @@ export default class CommandManager {
         this.registerCommand(new CommandReload());
         this.registerCommand(new CommandSpawnButton())
         this.registerCommand(new CommandInvite())
+        this.registerCommand(new CommandTargetInvite())
         /////////////
 
         this.registerCommand(new CommandCreate());
