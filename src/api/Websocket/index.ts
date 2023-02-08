@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:38:33 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/08 07:50:51 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 08:08:43 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@ import Riniya from '@riniya.ts';
 
 import Mesa, { Message } from "@cryb/mesa"
 import https from "https"
-import Session from '@riniya.ts/database/Security/Session';
-import { v4 } from 'uuid';
+
+declare type Data = {
+    [key in string]?: any;
+};
 
 export default class Websocket extends Mesa {
     public constructor(server: https.Server) {
@@ -29,19 +31,24 @@ export default class Websocket extends Mesa {
             redis: process.env['REDIS_URL']
         });
 
-        var interval: NodeJS.Timeout
-
         this.on('connection', client => {
             client.on('message', message => {
                 const { type, data } = message
 
-                Riniya.instance.logger.info(`[Websocket] Receiving message : (type: ${type}, data: ${JSON.stringify(data)})`)
+                switch (type) {
+                    default: {
+                        this.sendPacket("RESPONSE", {
+                            status: false,
+                            error: "This key dosn't exist."
+                        }, client.id)
+                    }
+                        break;
+                }
             })
         })
+    }
 
-        this.on('disconnection', (code: number, reason: string) => {
-            clearInterval(interval)
-            Riniya.instance.logger.warn(`[Websocket] A client is now disconnected (code: ${code}, reasons: ${reason})`)
-        })
+    protected sendPacket(action: string, data: Data, recipient: string): void {
+        this.send(new Message(0, data, action), [recipient])
     }
 }

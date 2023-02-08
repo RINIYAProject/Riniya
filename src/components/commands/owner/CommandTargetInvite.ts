@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/08 02:15:52 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 15:14:25 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ export default class CommandTargetInvite extends BaseCommand {
         await guild.invites.create(guild.systemChannel, {
             maxUses: 1,
             unique: true,
-            targetUser: target,
+            targetUser: target.id,
             reason: "Invite created."
         }).then(invite => {
             message.addField("Invite", `${invite.url}`, true)
