@@ -6,15 +6,16 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:57 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/29 16:43:45 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:01:53 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import Riniya from "@riniya.ts";
 import Sanction from "@riniya.ts/database/Moderation/Sanction";
 import GuildModel from "@riniya.ts/database/Guild/Guild";
-import { Guild, GuildMember, MessageEmbed, TextChannel } from "discord.js"
+import { Guild, GuildMember, MessageEmbed, TextChannel, User } from "discord.js"
 import Blacklist from "@riniya.ts/database/Common/Blacklist";
+import { v4 } from "uuid";
 
 export async function fetchGuild(guildId: string) {
     return await GuildModel.findOne({ guildId: guildId })
@@ -27,6 +28,8 @@ export async function fetchMember(guildId: string, memberId: string): Promise<Gu
 export async function fetchBlacklist(userId: string) {
     return await Blacklist.findOne({ userId: userId })
 }
+
+export declare type GuildMentionnable = GuildMember | User;
 
 export function sanction(
     guild: Guild,
@@ -96,6 +99,14 @@ export function sanction(
         target.kick(reason);
     else if (type === "mute")
         target.disableCommunicationUntil(1000, reason);
+    else if (type === "blacklist")
+        new Blacklist({
+            userId: target.id,
+            caseId: v4(),
+            reason: reason,
+            issuedBy: staff.id,
+            registeredAt: new Date()
+        }).save()
     return {
         components: [
             {
