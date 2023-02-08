@@ -7,6 +7,7 @@ export default class PoC {
 
     public counter = 0
     public reconnect = 5
+    public messageCount = 0
 
     public connectId: NodeJS.Timeout
     public disconnectId: NodeJS.Timeout
@@ -30,16 +31,15 @@ export default class PoC {
             this.connectId = setInterval(() => {
                 this.counter = this.counter + 1;
                 spinner.text = "Listening since " + this.counter + " seconds"
+                if (this.messageCount >= 50)
+                    spinner.prefixText = `HANDSHAKE`
                 spinner.color = "green"
-                socket.send(new Message(0, {
-                    latency: true
-                }, "DEBUG"))
             }, 1000)
-
-            socket.on('message', (message) => {
-                console.log("e")
-            });
         })
+
+        socket.on('message', (message) => {
+            this.messageCount = this.messageCount + 1;
+        });
 
         socket.on('error', (err) => {
             spinner.fail("Error occured : " + err.message)

@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:38:33 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/08 07:24:00 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 07:50:51 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ export default class Websocket extends Mesa {
         var interval: NodeJS.Timeout
 
         this.on('connection', client => {
-
-            interval = setInterval(() => {
-                this.send(new Message(0, {
-                    id: v4(),
-                    data: {
-                        guilds: Riniya.instance.guilds.cache.size
-                    }
-                }, "DEBUG"), ['*'])
-            }, 1000)
-
             client.on('message', message => {
                 const { type, data } = message
 
