@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 21:23:43 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 04:18:02 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ export default class ServerManager {
             cert: this.fileHelper.search(process.env.SERVER_CERT)
         })
 
-        this.websocket = new Websocket(this.wsServer)
+        this.websocket = new Websocket(this.server)
 
         app.get('/', async (req, res) => {
             res.status(200).json({
