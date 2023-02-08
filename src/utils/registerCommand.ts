@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:23:18 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/09 08:22:17 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 15:23:47 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ export async function removeApplicationCommands() {
     Riniya.instance.application.commands.cache.forEach(command => {
         Riniya.instance.application.commands.delete(command);
     });
+}
+
+export function getRest(): REST {
+    return new REST({ version: "9" }).setToken(process.env.TOKEN);
 }
 
 export async function registerCommands(
