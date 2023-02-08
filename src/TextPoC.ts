@@ -35,6 +35,10 @@ export default class PoC {
                     latency: true
                 }, "DEBUG"))
             }, 1000)
+
+            socket.on('message', (message) => {
+                console.log("e")
+            });
         })
 
         socket.on('error', (err) => {
@@ -55,10 +59,6 @@ export default class PoC {
                 }
             }, 1000)
         })
-
-        socket.on('message', message => {
-            ora(`Message received : Action ${message.type}`).succeed();
-        });
     }
 }
 
