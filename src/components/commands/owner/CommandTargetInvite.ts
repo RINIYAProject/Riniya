@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 21:39:54 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/02/08 01:52:17 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/08 02:15:52 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ export default class CommandTargetInvite extends BaseCommand {
             message.addField("Invite", `${invite.url}`, true)
         }).catch(err => {
             message.addField("Error", `${err}.`)
+        })
+
+        inter.reply({
+            embeds: [message]
         })
     }
 }
