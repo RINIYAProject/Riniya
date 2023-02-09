@@ -11,7 +11,7 @@ export default class TasksManager {
     }
 
     public registerAll(): void {
-        this.register(new SessionTask())
+        //this.register(new SessionTask())
     }
 
     private register(task: BaseTask): void {
