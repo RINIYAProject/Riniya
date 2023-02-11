@@ -39,15 +39,7 @@ export default class Authentication extends BaseMiddleware {
                     accessToken, clientToken,
                     (cb: ICallback) => {
                         if (cb.status) {
-                            if (cb.user.permissions >= route.permissionIndex) {
-                                next()
-                            } else {
-                                response.status(403).json({
-                                    status: false,
-                                    error: "You are not allowed to use this method.",
-                                    message: "PERMISSION_DENIED"
-                                }).end()
-                            }
+                            next()
                         } else {
                             response.status(403).json({
                                 status: cb.status,
