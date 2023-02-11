@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/11 01:09:41 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 01:50:25 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ import session from "express-session"
 import { v4 } from "uuid";
 import Authentication from "./Server/middlewares/Authentication";
 import OsintRoutes from "./Server/routes/osint-routes";
+
+import * as parser from "body-parser"
 
 const app = express();
 
@@ -82,6 +84,8 @@ export default class ServerManager {
                 }
             })
         })
+
+        app.use(parser.json())
     }
 
     public initServers(): void {
