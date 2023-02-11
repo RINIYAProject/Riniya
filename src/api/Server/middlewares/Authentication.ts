@@ -32,8 +32,8 @@ export default class Authentication extends BaseMiddleware {
             }
                 break
             case 'identify': {
-                const accessToken: string = request.get('accessToken')
-                const clientToken: string = request.get('clientToken')
+                const accessToken: string = request.get('accessToken') || "no_access"
+                const clientToken: string = request.get('clientToken') || "no_access"
 
                 this.handler.identify(
                     accessToken, clientToken,
