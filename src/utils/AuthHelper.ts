@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 03:15:56 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/11 04:03:18 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 04:09:47 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ export declare interface ISession {
 export declare interface ICallback {
     status: boolean;
     session?: ISession;
-    user?: IUser;
     error?: string;
 }
 
@@ -75,11 +74,7 @@ export default class AuthHelper {
                     accessToken: SessionData.accessToken,
                     clientToken: SessionData.clientToken,
                     sessionExpiry: SessionData.sessionExpiry
-                },
-                user: await User.findOne({
-                    accessToken: SessionData.accessToken,
-                    clientToken: SessionData.clientToken,
-                })
+                }
             })
         }
     }
