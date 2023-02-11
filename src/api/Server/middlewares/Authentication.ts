@@ -39,7 +39,14 @@ export default class Authentication extends BaseMiddleware {
                     accessToken, clientToken,
                     (cb: ICallback) => {
                         if (cb.status) {
-                            next()
+                            if (cb.session.userId !== undefined) {
+                                next()
+                            } else {
+                                response.status(403).json({
+                                    status: false,
+                                    error: "Request denied."
+                                }).end()
+                            }
                         } else {
                             response.status(403).json({
                                 status: cb.status,

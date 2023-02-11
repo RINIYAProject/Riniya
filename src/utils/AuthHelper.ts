@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 03:15:56 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/11 04:09:47 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 04:14:06 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ export default class AuthHelper {
             callback({
                 status: true,
                 session: {
+                    userId: SessionData.userId,
                     accessToken: SessionData.accessToken,
                     clientToken: SessionData.clientToken,
                     sessionExpiry: SessionData.sessionExpiry
