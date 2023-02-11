@@ -11,7 +11,7 @@ export default class Authentication extends BaseMiddleware {
         this.handler = new AuthHelper()
     }
 
-    public handle(route: AbstractRoutes, request: Request, response: Response, next): void {
+    public handle(request: Request, response: Response, next): void {
         const scope: string = request.get('X-API-SCOPE') || 'default'
 
         switch (scope) {
@@ -32,8 +32,8 @@ export default class Authentication extends BaseMiddleware {
             }
                 break
             case 'identify': {
-                const accessToken: string = request.get('accessToken') || "no_access"
-                const clientToken: string = request.get('clientToken') || "no_access"
+                const accessToken: string = request.get('accessToken')
+                const clientToken: string = request.get('clientToken')
 
                 this.handler.identify(
                     accessToken, clientToken,

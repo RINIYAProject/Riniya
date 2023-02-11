@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/11 01:50:25 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 04:19:35 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ export default class ServerManager {
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
             if (route.protected)
-                app.use('/api', (req, res, next) => this.auth.handle(route, req, res, next), route.routing())
+                app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
             else
                 app.use('/api', route.routing())
         })
@@ -99,10 +99,10 @@ export default class ServerManager {
     }
 
     public registerServers(): void {
-        this.routes.add(new ApiRoutes(false, 0))
-        this.routes.add(new GuildRoutes(true, 5000))
-        this.routes.add(new UserRoutes(true, 750))
-        this.routes.add(new OsintRoutes(true, 2550))
+        this.routes.add(new ApiRoutes(false))
+        this.routes.add(new GuildRoutes(true))
+        this.routes.add(new UserRoutes(true))
+        this.routes.add(new OsintRoutes(true))
     }
 
     public registerServer(server: AbstractRoutes): void {

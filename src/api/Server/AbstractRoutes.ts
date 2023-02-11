@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 15:35:24 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/10 23:44:21 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 04:19:41 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ export declare enum ErrorType {
 
 export default abstract class AbstractRoutes extends Base {
     public protected: boolean
-    public readonly permissionIndex: number
     protected router: Router
 
-    public constructor(isProtected: boolean, permissionIndex: number) {
+    public constructor(isProtected: boolean) {
         super("routes", "", "SERVER")
         this.protected = isProtected
-        this.permissionIndex = permissionIndex
         this.router = router;
 
         this.register(); // SELF REGISTERING.
