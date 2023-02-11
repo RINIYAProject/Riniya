@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/11 04:19:35 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 04:23:04 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,7 @@ export default class ServerManager {
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            if (route.protected)
-                app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
-            else
-                app.use('/api', route.routing())
+            app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
         })
         this.server.listen(443)
     }
