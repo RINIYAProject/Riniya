@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "test": "jest tests/ --runInBand",
     "clean": "rm package-lock.json && rm -rf node_modules",
-    "websocket:client": "ts-node src/TextPoC.ts"
+    "websocket:client": "ts-node src/test/WebsocketClient.ts"
   },
   "author": "NebraskyTheWolf",
   "license": "ISC",

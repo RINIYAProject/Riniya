@@ -6,16 +6,17 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 03:15:56 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/02 07:12:57 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 00:59:31 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import History from "@riniya.ts/database/Security/History";
 import Session from "@riniya.ts/database/Security/Session";
-import User from "@riniya.ts/database/Security/User";
+import User, { User as IUser } from "@riniya.ts/database/Security/User";
 import { v4 } from "uuid";
 
 export declare interface ISession {
+    userId: string;
     accessToken: string;
     clientToken: string;
     sessionExpiry: number;
@@ -24,6 +25,7 @@ export declare interface ISession {
 export declare interface ICallback {
     status: boolean;
     session?: ISession;
+    user?: IUser;
     error?: string;
 }
 
@@ -73,7 +75,11 @@ export default class AuthHelper {
                     accessToken: SessionData.accessToken,
                     clientToken: SessionData.clientToken,
                     sessionExpiry: SessionData.sessionExpiry
-                }
+                },
+                user: await User.findOne({
+                    accessToken: SessionData.accessToken,
+                    clientToken: SessionData.clientToken,
+                })
             })
         }
     }
@@ -102,6 +108,7 @@ export default class AuthHelper {
         }).save();
 
         return {
+            userId: userId,
             accessToken: accessToken,
             clientToken: clientToken,
             sessionExpiry: sessionExpiry

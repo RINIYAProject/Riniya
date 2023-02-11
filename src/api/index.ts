@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/08 04:18:02 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 00:56:29 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,19 @@ import AbstractRoutes from "./Server/AbstractRoutes";
 import ApiRoutes from "./Server/routes/api-routes";
 import GuildRoutes from "./Server/routes/guild-routes";
 import UserRoutes from "./Server/routes/user-routes";
-import RequestLogging from "./Server/middlewares/RequestLogging";
 import Websocket from "./Websocket/index";
 
 import session from "express-session"
 import { v4 } from "uuid";
 import Authentication from "./Server/middlewares/Authentication";
+import OsintRoutes from "./Server/routes/osint-routes";
 
 const app = express();
 
 export default class ServerManager {
     private routes: Tuple<AbstractRoutes>
     private server: https.Server
-    private wsServer: https.Server
     private fileHelper: FileHelper
-
-    private requestLog: RequestLogging
     private auth: Authentication
 
     public websocket: Websocket
@@ -44,7 +41,6 @@ export default class ServerManager {
     public constructor() {
         this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
-        this.requestLog = new RequestLogging()
         this.auth = new Authentication()
 
         // DEBUG
@@ -60,11 +56,6 @@ export default class ServerManager {
             key: this.fileHelper.search(process.env.SERVER_KEY),
             cert: this.fileHelper.search(process.env.SERVER_CERT)
         }, app)
-
-        this.wsServer = https.createServer({
-            key: this.fileHelper.search(process.env.SERVER_KEY),
-            cert: this.fileHelper.search(process.env.SERVER_CERT)
-        })
 
         this.websocket = new Websocket(this.server)
 
@@ -96,18 +87,18 @@ export default class ServerManager {
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
             if (route.protected)
-                app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
+                app.use('/api', (req, res, next) => this.auth.handle(route, req, res, next), route.routing())
             else
                 app.use('/api', route.routing())
         })
-        //
         this.server.listen(443)
     }
 
     public registerServers(): void {
-        this.routes.add(new ApiRoutes(false))
-        this.routes.add(new GuildRoutes(true))
-        this.routes.add(new UserRoutes(true))
+        this.routes.add(new ApiRoutes(false, 0))
+        this.routes.add(new GuildRoutes(true, 5000))
+        this.routes.add(new UserRoutes(true, 750))
+        this.routes.add(new OsintRoutes(true, 2550))
     }
 
     public registerServer(server: AbstractRoutes): void {
