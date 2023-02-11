@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/11 01:05:37 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/11 01:09:41 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,6 @@ export default class ServerManager {
                     }
                 }
             })
-        })
-
-        app.use((req, res, next) => {
-            res.status(404).json({ status: false, error: 'Method not found.' })
-        })
-
-        app.use((err, req, res, next) => {
-            res.status(500).json({ status: false, error: 'An internal error has occured.' })
         })
     }
 
