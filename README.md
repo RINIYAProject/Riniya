@@ -9,7 +9,7 @@
 Hey, there is the discord bot, this include the backend and all the bot base.
  
 #### How do I use it?
-Well, it's simple. All you need it git, a MongoDB server and Redis, and you need a SSL Certificate if you are willing to use the Backend.
+Well, it's simple. All you need is git, a MongoDB server and Redis, and you need a SSL Certificate if you are willing to use the Backend.
 
 ```
 git clone git@github.com/RINIYAProject/Riniya.git
