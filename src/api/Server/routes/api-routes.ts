@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 13:56:14 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/06 21:48:31 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:52:20 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,6 @@ export default class ApiRoutes extends AbstractRoutes {
                     invite_url: `https://discord.com/api/oauth2/authorize?client_id=${Riniya.instance.application.id}&permissions=8&scope=bot`
                 }
             })
-        })
-
-        this.router.get('/authorize', async (req, res) => {
-            res.redirect(authClient.generateAuthURL({
-                state: '',
-                code_challenge_method: "s256" 
-            }));
-        })
-
-        this.router.post('/callback', async (req, res) => {
-            
         })
     }
 }

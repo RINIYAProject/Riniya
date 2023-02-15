@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 06:25:13 by NebraskyThe       #+#    #+#             */
-/*   Updated: 2023/01/30 00:10:05 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:53:41 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ import {
     SlashCommandSubcommandGroupBuilder,
     SlashCommandSubcommandsOnlyBuilder,
     SlashCommandUserOption,
+    ToAPIApplicationCommandOptions,
 } from '@discordjs/builders'
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import { CommandInteraction, Guild, GuildMember } from "discord.js";
@@ -119,5 +120,9 @@ export default abstract class BaseCommand extends Base {
 
     public getCommand(): SlashCommandBuilder {
         return this.command;
+    }
+
+    public getArgs(): ToAPIApplicationCommandOptions[] {
+        return this.command.options
     }
 }
