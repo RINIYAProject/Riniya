@@ -74,9 +74,10 @@ isProtected = The button will only interact with the peoples inside the develope
 - [ ] RiniyaLoader
 
 #### Disclaimers
-This project is under the GNU-GPLv3 licence. You must follow the licence and guidelines to use this project. 
-No commercial usage is allowed, You must upload your source if you are using this project. 
+This project is under the GNU-GPLv3 license. You must follow the license and guidelines to use this project. 
+No commercial usage is allowed, You must upload your source publically under the same license and author. if you are using this project. 
 You cannot remove the Author header / Contributor name inside the code.
+You cannot add you in the author list. You are only allowed to be in the contributor list if you did a pull request on the official repository.
 
 ### Visitors:
 <img src="https://visitor-badge.laobi.icu/badge?page_id=RINIYAProject&left_color=black&right_color=black&left_text=Visitors" alt="visitors"/>
