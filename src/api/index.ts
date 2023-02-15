@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 02:39:31 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/11 04:23:04 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:17:01 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,14 @@ import OsintRoutes from "./Server/routes/osint-routes";
 
 import * as parser from "body-parser"
 
+import RateLimit from "express-rate-limit"
+
 const app = express();
+const limiter = RateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 5
+})
+app.use(limiter)
 
 export default class ServerManager {
     private routes: Tuple<AbstractRoutes>

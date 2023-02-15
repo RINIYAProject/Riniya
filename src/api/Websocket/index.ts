@@ -6,7 +6,7 @@
 /*   By: alle.roy <alle.roy.student@42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 19:38:33 by alle.roy          #+#    #+#             */
-/*   Updated: 2023/02/14 10:27:39 by alle.roy         ###   ########.fr       */
+/*   Updated: 2023/02/15 07:38:44 by alle.roy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@ import Riniya from '@riniya.ts';
 
 import Mesa, { Message } from "@cryb/mesa"
 import https from "https"
-import { MessageEmbed, TextChannel, User } from 'discord.js';
+import { MessageEmbed, TextChannel, User as DUser } from 'discord.js';
 import Session from '@riniya.ts/database/Security/Session';
+import User from '@riniya.ts/database/Security/User';
 
 declare type Data = {
     [key in string]?: any;
@@ -46,12 +47,16 @@ export default class Websocket extends Mesa {
         this.on('connection', client => {
             client.authenticate(async (data, done) => {
                 try {
-                    const user = await Session.findOne({
+                    const session = await Session.findOne({
                         accessToken: data.accessToken,
                         clientToken: data.clientToken
                     })
+                    
+                    const user = await User.findOne({
+                        _id: session?._id
+                    })
 
-                    done(null, { id: user._id, user: user })
+                    done(null, { id: session.userId, user: user })
                 } catch (error) {
                     done(error)
                 }
@@ -98,7 +103,7 @@ export default class Websocket extends Mesa {
     private handle(clientId: string, payload: string, data: any) {
         switch (payload) {
             case "discord_account_link": {
-                let user: User = Riniya.instance.users.cache.get(data['discordId'] || "no_id");
+                let user: DUser = Riniya.instance.users.cache.get(data['discordId'] || "no_id");
                 try {
                     user.send({
                         embeds: [
