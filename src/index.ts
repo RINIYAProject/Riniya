@@ -26,7 +26,7 @@ import ModalManager from "./components/modals/ModalManager";
 import discordModals from "discord-modals";
 import ServerManager from "./api/index";
 
-import Levels from "discord-xp";
+import DiscordXp from "discord-xp";
 import TasksManager from './components/tasks/TasksManager';
 import InitChecker from './utils/InitChecker';
 
@@ -45,7 +45,7 @@ export default class Riniya extends Client {
     public modalManager: ModalManager
     public serverManager: ServerManager
     public taskManager: TasksManager
-    public discordXp: Levels
+    public discordXp: DiscordXp
     public loaded: boolean = false
 
     public readonly version: string = process.env.VERSION || "Unreferenced version."
@@ -106,7 +106,6 @@ export default class Riniya extends Client {
         }).catch(err => {
             this.logger.warn("Failed to contact the database.")
         });
-        Levels.setURL(process.env.MONGODB)
 
         this.load()
     }
@@ -133,7 +132,7 @@ export default class Riniya extends Client {
         this.taskManager = new TasksManager();
         this.taskManager.registerAll();
 
-        this.discordXp = Levels
+        //this.discordXp
 
         this.login(process.env.TOKEN)
     }

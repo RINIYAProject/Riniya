@@ -25,6 +25,7 @@ import Guild from "@riniya.ts/database/Guild/Guild";
 import ModalHelper from "@riniya.ts/utils/ModalHelper";
 import { TextInputComponent } from "discord-modals";
 import Verification from "@riniya.ts/database/Guild/Verification";
+import AcitivityHelper from "@riniya.ts/utils/ActivityHelper";
 
 export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
     public constructor() {
@@ -80,6 +81,12 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                     status: 'verified'
                 }, { upsert: false })
 
+                new AcitivityHelper()
+                    .setOwner(interaction.member.id)
+                    .setType("VERIFICATION_GRANTED")
+                    .setContent(`${member.user.username} confirmed.`)
+                    .save(interaction.guildId)
+
                 interaction.reply({
                     content: `Member ${member.user.username} is now verified.`,
                     ephemeral: true
@@ -106,7 +113,6 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
             }
                 break
             case "banned": {
-
                 await Verification.updateOne({
                     guildId: interaction.guildId,
                     memberId: member.id,
@@ -116,6 +122,12 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                     issuerName: interaction.member.user.username,
                     status: 'denied'
                 }, { upsert: false })
+
+                new AcitivityHelper()
+                    .setOwner(interaction.member.id)
+                    .setType("VERIFICATION_GRANTED")
+                    .setContent(`${member.user.username} confirmed.`)
+                    .save(interaction.guildId)
 
                 sanction(interaction.guild, interaction.member, member, "Verification ban.", "ban")
             }

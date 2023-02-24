@@ -27,7 +27,13 @@ export default class MessageEvent extends BaseEvent {
                 memberId: message.author.id,
                 content: message.content || 'No content.',
                 registeredAt: message.createdTimestamp
-            }).save();
+            }).save().then(result => {
+                this.instance.serverManager.websocket.sendPacket("RTC_MESSAGE_ACK", {
+                    guildId: message.guild.id,
+                    memberId: message.author.id,
+                    messageId: result._id
+                }, "*")
+            })
 
             const guild = await Guild.findOne({ guildId: message.guildId });
 

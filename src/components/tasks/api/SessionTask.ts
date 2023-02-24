@@ -1,21 +1,24 @@
 import BaseTask from "@riniya.ts/components/BaseTask";
-import Session from "@riniya.ts/database/Security/Session";
+import Member from "@riniya.ts/database/Guild/Member";
 
 export default class SessionTask extends BaseTask {
-
-    private DATE_NOW: number = Date.now()
-
     public constructor() {
-        super("SessionTask", "Managing the session expiration.", "* 59 * * * *",
+        super("MemberSync", "Syncing member lists.", "* * 24 * * *",
             async () => {
-                this.instance.logger.info(this.name + '@' + this.description + ': Job started.');
-                (await Session.find({ sessionExpired: false })).forEach(async (session) => {
-                    if (this.DATE_NOW >= session.sessionExpiry) {
-                        this.instance.logger.warn(`Session ${session.accessToken} expired. Terminating session.`)
-                        await Session.updateOne({ _id: session._id }, { sessionExpired: true }, {})
-                    }
-                });
-                this.instance.logger.info(this.name + '@' + this.description + ': Job finished.');
+                this.instance.guilds.cache.forEach(result => {
+                    result.members.cache.forEach(async member => {
+                        await Member.deleteOne({ guildId: result.id, memberId: member.id })
+                        new Member({
+                            guildId: result.id,
+                            memberId: member.id,
+                            username: member.user.username,
+                            avatar: member.avatarURL({ format: 'png', size: 128 }),
+                            banner: member.user.bannerURL({ format: 'png' }),
+                            hexColor: member.user.accentColor
+                        })
+                    })
+                })
+                this.instance.serverManager.websocket.sendPacket("RTC_MEMBERS_ACK", {  }, "*")
             })
     }
 }

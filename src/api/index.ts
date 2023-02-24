@@ -74,22 +74,23 @@ export default class ServerManager {
                 appVersion: Riniya.instance.version,
                 appRevision: Riniya.instance.revision,
                 appAuthors: ["NebraskyTheWolf <farfy.dev@gmail.com>"],
+                appUptime: Riniya.instance.uptime,
                 services: {
-                    redis: {
-                        status: true
-                    },
-                    minio: {
-                        status: true
-                    },
-                    mongodb: {
-                        status: true
-                    },
                     websocket: {
                         status: true,
+                        host: "wss://api.ghidorah.uk",
                         clients: this.websocket.clients.length
                     }
                 }
             })
+        })
+
+        app.post('/update', async (req, res) => {
+            this.websocket.sendPacket("RTC_UPDATE_ACK", {
+                action: 'git',
+                data: req?.body || {}
+            }, "*")
+            res.status(200).end()
         })
 
         app.use(parser.json())

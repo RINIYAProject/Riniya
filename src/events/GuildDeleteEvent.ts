@@ -17,7 +17,9 @@ import { Guild } from "discord.js";
 export default class GuildDeleteEvent extends BaseEvent {
     public constructor() {
         super("guildDelete", async (guild: Guild) => {
-
+            this.instance.serverManager.websocket.sendPacket("RTC_SERVER_DELETED", {
+                guildId: guild.id
+            }, "*")
         });
     }
 }

@@ -3,6 +3,7 @@ import BaseModal from "@riniya.ts/components/BaseModal";
 import { GuildMember, MessageEmbed, TextChannel } from "discord.js";
 import { ModalSubmitInteraction } from "discord-modals";
 import Verification from "@riniya.ts/database/Guild/Verification";
+import AcitivityHelper from "@riniya.ts/utils/ActivityHelper";
 
 export default class ModalVerificationDenied extends BaseModal {
     public constructor() {
@@ -40,6 +41,12 @@ export default class ModalVerificationDenied extends BaseModal {
             issuerName: interaction.member.user.username,
             status: 'denied'
         }, { upsert: false })
+
+        new AcitivityHelper()
+            .setOwner(interaction.member.id)
+            .setType("VERIFICATION_DENIED")
+            .setContent(`${member.user.username} has been denied for ${reason}.`)
+            .save(interaction.guildId)
 
         interaction.reply({
             content: `Member ${member.user.username} : verification denied.`,

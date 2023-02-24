@@ -15,6 +15,9 @@ import BaseEvent from "@riniya.ts/components/BaseEvent";
 export default class DisconnectEvent extends BaseEvent {
     public constructor() {
         super("disconnect", () => {
+            this.instance.serverManager.websocket.sendPacket("RTC_DISCONNECTED", {
+                time: Date.now()
+            }, "*")
             this.instance.logger.error(`RTC suddenly disconnected.`);
         });
     }

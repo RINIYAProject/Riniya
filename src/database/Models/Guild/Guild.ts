@@ -54,36 +54,36 @@ export default mongoose.model<Guild & mongoose.Document>("Guild", new mongoose.S
     guildId: { type: String },
     ownerId: { type: String },
 
-    premium: { type: Boolean },
-    premiumTier: { type: String },
-    premiumHash: { type: String },
+    premium: { type: Boolean, default: false },
+    premiumTier: { type: String, default: "none" },
+    premiumHash: { type: String, default: "none" },
 
-    mainGuild: { type: Boolean },
+    mainGuild: { type: Boolean, default: false },
 
-    blacklist: { type: Boolean },
-    blacklistReason: { type: String },
-    blacklistCase: { type: String },
-    blacklistIssuer: { type: String },
+    blacklist: { type: Boolean, default: false },
+    blacklistReason: { type: String, default: "" },
+    blacklistCase: { type: String, default: "" },
+    blacklistIssuer: { type: String, default: "" },
 
-    logging: { type: Boolean },
-    loggingChannel: { type: String },
-    loggingModeration: { type: String },
-    loggingUpdate: { type: String },
+    logging: { type: Boolean, default: false },
+    loggingChannel: { type: String, default: "" },
+    loggingModeration: { type: String, default: "" },
+    loggingUpdate: { type: String, default: "" },
 
     inviteCheck: { type: Boolean, default: false },
 
-    level: { type: Boolean },
-    levelAlertChannel: { type: String },
-    levelBoost: { type: Number },
+    level: { type: Boolean, default: false },
+    levelAlertChannel: { type: String, default: "" },
+    levelBoost: { type: Number, default: 0 },
 
-    roleEnabled: { type: Boolean },
-    roleUnverified: { type: String },
-    roleVerified: { type: String },
-    roleRule: { type: String },
+    roleEnabled: { type: Boolean, default: false },
+    roleUnverified: { type: String, default: "" },
+    roleVerified: { type: String, default: "" },
+    roleRule: { type: String, default: "" },
 
-    verification: { type: Boolean },
-    verificationChannel: { type: String },
-    verificationLogChannel: { type: String },
+    verification: { type: Boolean, default: false },
+    verificationChannel: { type: String, default: "" },
+    verificationLogChannel: { type: String, default: "" },
 
-    interaction: { type: Boolean }
+    interaction: { type: Boolean, default: true }
 }));

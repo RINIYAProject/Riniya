@@ -20,21 +20,25 @@ import { Guild } from "discord.js";
 export default class GuildAddEvent extends BaseEvent {
     public constructor() {
         super("guildCreate", async (guild: Guild) => {
-            const guildData = await new GuildModel({
-                guildId: guild.id,
-                ownerId: guild.ownerId,
+            // TODO: Better system for the server registration =:) 
 
-                premium: false,
-                mainGuild: false,
-                blacklist: false,
-                logging: false,
-                level: false,
-                verification: false,
-                roleEnabled: false,
-                interaction: true
-            }).save();
+            const data = await GuildModel.findOne({
+                guildId: guild.id
+            })
 
-            this.instance.logger.info(`Guild ${guildData.guildId} registered.`);
+            if (!data) {
+                await new GuildModel({
+                    guildId: guild.id,
+                    ownerId: guild.ownerId
+                }).save().then(result => {
+                    this.instance.serverManager.websocket.sendPacket("RTC_SERVER_CREATED", {
+                        guildId: guild.id,
+                        ownerId: guild.ownerId,
+                        requestId: result._id
+                    }, "*")
+                    this.instance.logger.info(`Guild ${result.guildId} registered.`)
+                })
+            }
 
             registerCommands(
                 this.instance,

@@ -35,8 +35,7 @@ export default class ModalHelper {
 
     public generate(inter: Interaction<"cached">): Promise<Modal> {
         return showModal(this.modal, {
-            client: Riniya
-        .instance,
+            client: Riniya.instance,
             interaction: inter
         });
     }

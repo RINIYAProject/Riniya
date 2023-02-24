@@ -43,98 +43,9 @@ export default class Websocket extends Mesa {
                 timeout: 10000
             }
         });
-
-        this.on('connection', client => {
-            client.authenticate(async (data, done) => {
-                try {
-                    const session = await Session.findOne({
-                        accessToken: data.accessToken,
-                        clientToken: data.clientToken
-                    })
-                    
-                    const user = await User.findOne({
-                        _id: session?._id
-                    })
-
-                    done(null, { id: session.userId, user: user })
-                } catch (error) {
-                    done(error)
-                }
-            })
-
-            client.on('message', message => {
-                const { type, data } = message
-
-                switch (type) {
-                    case "AUTHENTICATION": {
-                        const channel: TextChannel = Riniya.instance.guilds.cache.get("1071173995539484702").channels.cache.get("1072224029873815674") as TextChannel
-                        channel.send({
-                            embeds: [
-                                new MessageEmbed()
-                                    .setAuthor("Authentication requested.")
-                                    .setColor("RED")
-                                    .setDescription(`CLI access ${data['status'] ? 'granted' : 'denied'} for ${data['username']}`)
-                                    .setTimestamp(Date.now())
-                            ]
-                        })
-                    }
-                        break;
-                    case "PAYLOAD": {
-                        const packet = message.data as Payload
-                        this.handle(client.id, packet.payload, packet.data);
-                    }
-                        break
-                    default: {
-                        this.sendPacket("RESPONSE", {
-                            status: false,
-                            error: "This key dosn't exist."
-                        }, client.id)
-                    }
-                        break;
-                }
-            })
-        })
     }
 
-    protected sendPacket(action: string, data: Data, recipient: string): void {
+    public sendPacket(action: string, data: Data, recipient: string): void {
         this.send(new Message(0, data, action), [recipient])
-    }
-
-    private handle(clientId: string, payload: string, data: any) {
-        switch (payload) {
-            case "discord_account_link": {
-                let user: DUser = Riniya.instance.users.cache.get(data['discordId'] || "no_id");
-                try {
-                    user.send({
-                        embeds: [
-                            new MessageEmbed()
-                                .setAuthor("RINIYA CLI - ACCOUNT ACCESS")
-                                .setTitle("Authorisation requested for RiniyaCLI.")
-                                .setDescription("Do you allow RiniyaCLI to have access to your servers data?")
-                                .addField("ClientID", "" + clientId)
-                                .setColor("RED")
-                        ],
-                        components: [
-                            {
-                                type: 1,
-                                components: [
-                                    Riniya.instance.buttonManager.createLinkButton("Authorize", "https://api.ghidorah.uk/api/security/cli/authorize/" + data['discordId'] + "/" + data['accessToken']),
-                                    Riniya.instance.buttonManager.createLinkButton("Cancel", "https://api.ghidorah.uk/api/security/cli/cancel/" + data['discordId'] + "/" + data['accessToken'])
-                                ]
-                            }
-                        ]
-                    })
-                } catch (err) {
-                    Riniya.instance.logger.error(err)
-                }
-            }
-                break;
-            default: {
-                this.sendPacket("PAYLOAD_RESPONSE", {
-                    status: false,
-                    error: "Payload key is invalid."
-                }, clientId)
-            }
-        }
     }
 }

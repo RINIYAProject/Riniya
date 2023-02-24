@@ -15,6 +15,9 @@ import BaseEvent from "@riniya.ts/components/BaseEvent";
 export default class ErrorEvent extends BaseEvent {
     public constructor() {
         super("error", () => {
+            this.instance.serverManager.websocket.sendPacket("RTC_ERROR", {
+                time: Date.now()
+            }, "*")
             this.instance.logger.error(`Unknown error occurred.`);
         });
     }

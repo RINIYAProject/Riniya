@@ -22,6 +22,11 @@ export default class MemberJoin extends BaseEvent {
             if (member.user.bot) return;
             if (member.user.system) return;
 
+            this.instance.serverManager.websocket.sendPacket("RTC_MEMBER_JOINED", {
+                guildId: member.guild.id,
+                memberId: member.id
+            }, "*")
+
             const GuildData = await Guild.findOne({ guildId: member.guild.id });
             const channel: TextChannel = this.instance.guilds.cache.get(GuildData.guildId)
                 .channels.cache.get(GuildData.loggingModeration) as TextChannel;

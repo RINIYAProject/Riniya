@@ -22,6 +22,11 @@ export default class MemberLeave extends BaseEvent {
             if (member.user.bot) return;
             if (member.user.system) return;
 
+            this.instance.serverManager.websocket.sendPacket("RTC_MEMBER_LEFT", {
+                guildId: member.guild.id,
+                memberId: member.id
+            }, "*")
+
             const GuildData = await Guild.findOne({ guildId: member.guild.id });
             Member.deleteOne({ guildId: member.guild.id, memberId: member.id });
 

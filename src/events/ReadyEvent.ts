@@ -11,16 +11,21 @@
 /* ************************************************************************** */
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
+import { v4 } from "uuid";
 
 export default class Ready extends BaseEvent {
     public constructor() {
         super("ready", () => {
             this.instance.user.setStatus("online");
-            this.instance.user.setActivity(`Lurk`, { type: "WATCHING" });
+            this.instance.user.setActivity(`Lurk at cutie fluffies`, { type: "WATCHING" });
 
             this.instance.loaded = true;
-
             this.instance.logger.info('The system is ready.');
+
+            this.instance.serverManager.websocket.sendPacket("RTC_CLIENT_STATE", {
+                id: v4(),
+                state: 'ready'
+            }, "*")
         });
     }
 }
