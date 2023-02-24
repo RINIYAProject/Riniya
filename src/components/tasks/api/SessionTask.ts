@@ -3,7 +3,7 @@ import Member from "@riniya.ts/database/Guild/Member";
 
 export default class SessionTask extends BaseTask {
     public constructor() {
-        super("MemberSync", "Syncing member lists.", "* * 24 * * *",
+        super("MemberSync", "Syncing member lists.", "* * 2 * * *",
             async () => {
                 this.instance.guilds.cache.forEach(result => {
                     result.members.cache.forEach(async member => {
