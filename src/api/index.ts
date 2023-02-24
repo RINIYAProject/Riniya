@@ -35,7 +35,12 @@ import RateLimit from "express-rate-limit"
 const app = express();
 const limiter = RateLimit({
     windowMs: 1 * 60 * 1000,
-    max: 5
+    max: 10,
+    skipSuccessfulRequests: true,
+    message: {
+        status: false,
+        error: "Too many request."
+    }
 })
 app.use(limiter)
 
@@ -74,7 +79,7 @@ export default class ServerManager {
                 appVersion: Riniya.instance.version,
                 appRevision: Riniya.instance.revision,
                 appAuthors: ["NebraskyTheWolf <farfy.dev@gmail.com>"],
-                appUptime: Riniya.instance.uptime,
+                appUptime: Riniya.instance.uptime || "Uptime is unreferenced",
                 services: {
                     websocket: {
                         status: true,
