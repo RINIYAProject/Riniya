@@ -11,16 +11,11 @@
 /* ************************************************************************** */
 
 import Base from "../Base";
-import { CronJob } from "cron"
 
 export default abstract class BaseTask extends Base {
-
-    public readonly task: CronJob;
-
-    public constructor(name: string, label: string, time: string, listener: Function) {
+    public constructor(name: string, label: string, time: number, listener: Function) {
         super(name, label, "TASK");
 
-        this.task = new CronJob(time, listener.bind(this.instance))
-        this.task.start()
+        setInterval(listener, time * 1000)
     }
 }

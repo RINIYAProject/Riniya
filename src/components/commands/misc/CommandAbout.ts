@@ -49,6 +49,11 @@ export default class CommandAbout extends BaseCommand {
             .setLabel("Report")
             .setStyle("LINK");
 
+        const github: MessageButton = new MessageButton()
+            .setURL("https://github.com/RINIYAProject/Riniya")
+            .setLabel("Github")
+            .setStyle("LINK");
+
         inter.reply({
             "components": [
                 {
@@ -57,7 +62,8 @@ export default class CommandAbout extends BaseCommand {
                         website,
                         dashboard,
                         documentation,
-                        report
+                        report,
+                        github
                     ]
                 }
             ],

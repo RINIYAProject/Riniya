@@ -13,9 +13,15 @@
 import Riniya from "@riniya.ts";
 import Sanction from "@riniya.ts/database/Moderation/Sanction";
 import GuildModel from "@riniya.ts/database/Guild/Guild";
-import { Guild, GuildMember, MessageEmbed, TextChannel, User } from "discord.js"
+import { Guild, GuildMember, MessageEmbed, Snowflake, TextChannel, User } from "discord.js"
 import Blacklist from "@riniya.ts/database/Common/Blacklist";
 import { v4 } from "uuid";
+
+export async function fetchBlacklist(userId: Snowflake) {
+    return await Blacklist.findOne({ userId: userId }, null, { sort: {
+        'registeredAt': -1 
+    }})
+}
 
 export async function fetchGuild(guildId: string) {
     return await GuildModel.findOne({ guildId: guildId })
@@ -23,10 +29,6 @@ export async function fetchGuild(guildId: string) {
 
 export async function fetchMember(guildId: string, memberId: string): Promise<GuildMember> {
     return Riniya.instance.guilds.cache.get(guildId).members.cache.get(memberId);
-}
-
-export async function fetchBlacklist(userId: string) {
-    return await Blacklist.findOne({ userId: userId })
 }
 
 export declare type GuildMentionnable = GuildMember | User;
