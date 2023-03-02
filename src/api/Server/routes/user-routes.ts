@@ -51,7 +51,8 @@ export default class UserRoutes extends AbstractRoutes {
         });
 
         this.router.get('/block-list/fetchAll', async (req, res) => {
-            const blocklist = await Blocklist.find({ })
+            const blocklist = await Blocklist.find()
+
             res.status(200).json({
                 status: true,
                 data: blocklist || []
@@ -83,7 +84,7 @@ export default class UserRoutes extends AbstractRoutes {
             if (req.params.id === undefined)
                 this.error(res, 400)
             try {
-                const data = Blocklist.findOne({ twitterId: req.params.id })
+                const data = await Blocklist.findOne({ twitterId: req.params.id })
                 res.status(200).json({
                     status: true,
                     data: data || { accountId: null }
