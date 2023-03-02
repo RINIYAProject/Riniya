@@ -19,7 +19,6 @@ import {
     GuildMember
 } from "discord.js";
 import BaseButton from "@riniya.ts/components/BaseButton";
-import GuildModel from "@riniya.ts/database/Guild/Guild"
 import { sanction } from "@riniya.ts/types";
 import Guild from "@riniya.ts/database/Guild/Guild";
 import ModalHelper from "@riniya.ts/utils/ModalHelper";
