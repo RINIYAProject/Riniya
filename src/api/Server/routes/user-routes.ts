@@ -87,5 +87,19 @@ export default class UserRoutes extends AbstractRoutes {
                 });
             }
         })
+
+        this.router.get("/block-list/:id", async (req, res) => {
+            if (req.params.id === undefined)
+                this.error(res, 400)
+            try {
+                const data = Blocklist.findOne({ twitterId: req.params.id })
+                res.status(200).json({
+                    status: true,
+                    data: data || { accountId: null }
+                })
+            } catch (err) {
+                this.error(res, 403)
+            }
+        })
     }
 }
