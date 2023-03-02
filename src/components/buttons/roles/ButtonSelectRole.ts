@@ -29,7 +29,7 @@ export default class ButtonSelectRole extends BaseButton<MessageButton, void> {
             const role = interaction.guild.roles.cache.get(x.roleId);
 
             return {
-                value: x.id,
+                value: x.roleId,
                 label: role?.name,
                 description: x?.description,
                 emoji: x?.emoji || role?.unicodeEmoji,
