@@ -25,7 +25,8 @@ export default class SelectRoleSubmit extends BaseButton<MessageSelectMenu, void
             .setDescription("You have selected " + interaction.values.length + " roles.")
 
         interaction.values.map(x => {
-            let role: Role = interaction.member.guild.roles.cache.get(x)
+            this.instance.logger.info("DEBUG: roleId: " + x)
+            let role: Role = interaction.guild.roles.cache.get(x)
             if (interaction.member.roles.cache.has(role.id)) {
                 interaction.member.roles.cache.delete(role.id)
                 embed.addField(role.name, "removed.")
