@@ -20,6 +20,7 @@ import ButtonVerify from "./verification/ButtonVerify";
 import Fragment from "./Fragment";
 import ButtonSelectRole from "./roles/ButtonSelectRole";
 import SelectUpdate from "./verification/SelectUpdate";
+import SelectRoleSubmit from "./roles/SelectRoleSubmit";
 
 export default class ButtonManager {
     private BUTTONS: OptionMap<String, BaseButton<unknown, unknown>>;
@@ -39,6 +40,7 @@ export default class ButtonManager {
         this.addButton(new ButtonVerify());
         this.addButton(new ButtonSelectRole());
         this.addButton(new SelectUpdate());
+        this.addButton(new SelectRoleSubmit());
 
         //COMPONENTS
     }
@@ -71,7 +73,7 @@ export default class ButtonManager {
 
     public getButton(customId: String): BaseButton<unknown, unknown> {
         const button: BaseButton<unknown, unknown> = this.BUTTONS.get(customId);
-        if (button.setting.get("isRestricted"))
+        if (button.setting !== undefined && button.setting.get("isRestricted"))
             throw new Error("You can't call " + button.customId + " because it's restricted.");
         return button;
     }
