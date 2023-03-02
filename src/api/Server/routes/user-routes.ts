@@ -51,19 +51,10 @@ export default class UserRoutes extends AbstractRoutes {
         });
 
         this.router.get('/block-list/fetchAll', async (req, res) => {
-            const blocklist = (await Blocklist.find()).map(async (id) => {
-                const account = await client.users.findUserById(id.twitterId);
-
-                return {
-                    accountId: id.twitterId,
-                    accountName: account.data.name || "Account is deleted.",
-                    accountUsername: account.data.username || "Account is deleted."
-                }
-            });
-
+            const blocklist = await Blocklist.find({ })
             res.status(200).json({
                 status: true,
-                data: blocklist
+                data: blocklist || []
             });
         });
 
