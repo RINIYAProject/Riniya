@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 import BaseButton from "@riniya.ts/components/BaseButton";
+import OptionMap from "@riniya.ts/utils/OptionMap";
 import { MessageEmbed, MessageSelectMenu, Role, SelectMenuInteraction } from "discord.js";
 
 export default class SelectRoleSubmit extends BaseButton<MessageSelectMenu, void> {
     public constructor() {
-        super("row_role_select", "Role selection submit");
+        super("row_role_select", "Role selection submit", new OptionMap<string, unknown>());
     }
 
     public async handler(interaction: SelectMenuInteraction<"cached">): Promise<void> {
