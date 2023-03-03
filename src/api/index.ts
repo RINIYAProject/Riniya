@@ -77,12 +77,15 @@ export default class ServerManager {
 
         this.websocket = new Websocket(this.server)
 
+        /*
         this.minioClient = new Minio.Client({
             endPoint: process.env['MINIO_SERVER_HOST'],
             port: parseInt(process.env['MINIO_SERVER_PORT']),
             accessKey: process.env['MINIO_ACCESS_KEY'],
             secretKey: process.env['MINIO_SECRET_KEY']
         }) || undefined
+        */
+
 
         this.checkBucket("avatars")
         this.checkBucket("banners")
@@ -130,7 +133,7 @@ export default class ServerManager {
         this.routes.add(new GuildRoutes(true))
         this.routes.add(new UserRoutes(true))
         this.routes.add(new OsintRoutes(true))
-        this.routes.add(new StorageRoutes(true))
+        //this.routes.add(new StorageRoutes(true))
     }
 
     public registerServer(server: AbstractRoutes): void {
