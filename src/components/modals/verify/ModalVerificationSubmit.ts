@@ -40,9 +40,24 @@ export default class ModalVerificationSubmit extends BaseModal {
             new Verification({
                 guildId: GuildModel.id,
                 memberId: memberId,
+                memberName: interaction.user.username,
                 registeredAt: new Date().getTime(),
                 updatedAt: new Date().getTime(),
-                expireAt: new Date().setSeconds(3000),
+                expireAt: Date.now() * 1 * 60 * 1000,
+                answers: [
+                    {
+                        title: "How did you find us?",
+                        content: find
+                    },
+                    {
+                        title: "How old are you?",
+                        content: age
+                    },
+                    {
+                        title: "Do you have a fursona?",
+                        content: sona
+                    }
+                ]
             }).save();
 
             await channel.send({

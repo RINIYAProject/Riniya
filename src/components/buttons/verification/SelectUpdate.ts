@@ -77,8 +77,9 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                 }, {
                     issuerId: interaction.member.id,
                     issuerName: interaction.member.user.username,
-                    status: 'verified'
-                }, { upsert: false })
+                    status: 'verified',
+                    updatedAt: Date.now()
+                })
 
                 new AcitivityHelper()
                     .setOwner(interaction.member.id)
@@ -119,8 +120,9 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                 }, {
                     issuerId: interaction.member.id,
                     issuerName: interaction.member.user.username,
-                    status: 'denied'
-                }, { upsert: false })
+                    status: 'banned',
+                    updatedAt: Date.now()
+                })
 
                 new AcitivityHelper()
                     .setOwner(interaction.member.id)

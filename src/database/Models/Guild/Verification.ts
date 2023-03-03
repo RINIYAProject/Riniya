@@ -16,13 +16,13 @@ export interface Verification {
     guildId: string;
     memberId: string;
     memberName: string;
-    issuerId: string | 'pending';
-    issuerName: string | 'pending';
-    status: string | 'pending' | 'verified' | 'denied' | 'timedout';
-    answers: Object;
+    issuerId?: string;
+    issuerName?: string;
+    status?: string ;
+    answers?: Object;
     registeredAt: number;
-    updatedAt: number;
-    expireAt: number;
+    updatedAt?: number;
+    expireAt?: number;
 }
 
 export default mongoose.model<Verification & mongoose.Document>("Verification", new mongoose.Schema<Verification & mongoose.Document>({

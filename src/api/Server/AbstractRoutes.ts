@@ -14,6 +14,8 @@ import Base from "../../abstracts/Base";
 import { Router, Response } from "express";
 import express from "express";
 
+import Minio from "minio"
+
 export declare enum ErrorType {
     SUCCESS_CALLBACK = 200,
     MISSING_ARGUMENTS = 400,
@@ -26,6 +28,8 @@ export declare enum ErrorType {
 export default abstract class AbstractRoutes extends Base {
     public protected: boolean
     protected router: Router
+
+    protected minioCLI: Minio.Client = this.instance.serverManager.minioClient
 
     public constructor(isProtected: boolean) {
         super("routes", "", "SERVER")

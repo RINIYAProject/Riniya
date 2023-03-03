@@ -39,8 +39,9 @@ export default class ModalVerificationDenied extends BaseModal {
         }, {
             issuerId: interaction.member.id,
             issuerName: interaction.member.user.username,
-            status: 'denied'
-        }, { upsert: false })
+            status: 'denied',
+            updatedAt: Date.now()
+        })
 
         new AcitivityHelper()
             .setOwner(interaction.member.id)

@@ -29,6 +29,7 @@ import ServerManager from "./api/index";
 import DiscordXp from "discord-xp";
 import TasksManager from './components/tasks/TasksManager';
 import InitChecker from './utils/InitChecker';
+import VerificationManager from "database/VerificationManager";
 
 export default class Riniya extends Client {
     public static instance: Riniya
@@ -47,6 +48,7 @@ export default class Riniya extends Client {
     public taskManager: TasksManager
     public discordXp: DiscordXp
     public loaded: boolean = false
+    public verification: VerificationManager
 
     public readonly version: string = process.env.VERSION || "Unreferenced version."
     public readonly revision: string = process.env.REVISION || "Unreferenced revision code."
@@ -132,7 +134,7 @@ export default class Riniya extends Client {
         this.taskManager = new TasksManager();
         this.taskManager.registerAll();
 
-        //this.discordXp
+        this.verification = new VerificationManager()
 
         this.login(process.env.TOKEN)
     }
