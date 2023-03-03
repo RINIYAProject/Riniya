@@ -54,7 +54,7 @@ export default class ServerManager {
     private auth: Authentication
 
     public websocket: Websocket
-    public readonly minioClient: Minio.Client
+    public readonly minioClient?: Minio.Client
 
     public constructor() {
         this.routes = new Tuple<AbstractRoutes>()
@@ -82,7 +82,7 @@ export default class ServerManager {
             port: parseInt(process.env['MINIO_SERVER_PORT']),
             accessKey: process.env['MINIO_ACCESS_KEY'],
             secretKey: process.env['MINIO_SECRET_KEY']
-        })
+        }) || undefined
 
         this.checkBucket("avatars")
         this.checkBucket("banners")
