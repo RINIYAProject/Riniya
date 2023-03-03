@@ -29,7 +29,7 @@ import ServerManager from "./api/index";
 import DiscordXp from "discord-xp";
 import TasksManager from './components/tasks/TasksManager';
 import InitChecker from './utils/InitChecker';
-import VerificationManager from "database/VerificationManager";
+import VerificationManager from "./database/VerificationManager";
 
 export default class Riniya extends Client {
     public static instance: Riniya
