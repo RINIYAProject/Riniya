@@ -98,13 +98,14 @@ export default class VerificationManager {
     }
 
     protected async updateTime(id: string, time: number): Promise<Boolean> {
+        let ok: Boolean = false
         await Verification.updateOne({
             memberId: id
         }, {
             expireAt: time
         }).then(document => {
-            return document.acknowledged
+            ok = document.acknowledged
         })
-        return false
+        return ok
     }
 }
