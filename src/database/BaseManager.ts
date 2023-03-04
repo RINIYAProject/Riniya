@@ -1,4 +1,4 @@
-import CacheManager from "@riniya.ts/cache";
+import CacheManager from "../cache/CacheManager";
 import { getLogger } from "@riniya.ts/types";
 import Tuple from "@riniya.ts/utils/Tuple";
 
