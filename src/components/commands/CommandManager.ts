@@ -13,7 +13,7 @@
 import Logger from "@riniya.ts/logger";
 import BaseCommand from "@riniya.ts/components/BaseCommand";
 import OptionMap from "@riniya.ts/utils/OptionMap";
-import { removeApplicationCommands } from "@riniya.ts/utils/registerCommand";
+import { deleteCommand } from "@riniya.ts/utils/registerCommand";
 import { Collection } from "discord.js";
 
 import CommandBan from "./administrator/CommandBan";
@@ -163,7 +163,7 @@ export default class CommandManager {
 
     public reload() {
         this.REGISTRY.getMap().clear();
-        removeApplicationCommands();
+        deleteCommand();
         this.registerCommands();
     }
 

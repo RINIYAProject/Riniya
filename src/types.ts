@@ -16,6 +16,15 @@ import GuildModel from "@riniya.ts/database/Guild/Guild";
 import { Guild, GuildMember, MessageEmbed, Snowflake, TextChannel, User } from "discord.js"
 import Blacklist from "@riniya.ts/database/Common/Blacklist";
 import { v4 } from "uuid";
+import Logger from "@riniya.ts/logger";
+
+export function getInstance(): Riniya {
+    return Riniya.instance;
+}
+
+export function getLogger(): Logger {
+    return Riniya.instance.logger;
+}
 
 export async function fetchBlacklist(userId: Snowflake) {
     return await Blacklist.findOne({ userId: userId }, null, { sort: {
@@ -128,4 +137,20 @@ export function sanction(
                 .addField("Reason", reason, true)
         ]
     }
+}
+
+export function checkBucket(name: string): void {
+    if (process.env['MINIO_SERVER_ENABLED'] === undefined)
+        return getLogger().warn("Skipping " + name + " bucket check ( S3 server is down ).")
+    getInstance().minioClient.bucketExists(name, result => {
+        if (result.stack === undefined) {
+            getLogger().info(name + " S3 bucket loaded.")
+        } else {
+            getInstance().minioClient.makeBucket(name, process.env["MINIO_SERVER_REGION"], {
+                ObjectLocking: false
+            }, result => {
+                getLogger().info(" [S3] : Error occurred when constructing the bucket " + result.name)
+            })
+        }
+    })
 }

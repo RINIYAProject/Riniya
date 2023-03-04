@@ -15,6 +15,7 @@ import { Router, Response } from "express";
 import express from "express";
 
 import Minio from "minio"
+import CacheManager from "@riniya.ts/cache";
 
 export declare enum ErrorType {
     SUCCESS_CALLBACK = 200,
@@ -29,12 +30,14 @@ export default abstract class AbstractRoutes extends Base {
     public protected: boolean
     protected router: Router
 
-    protected minioCLI: Minio.Client = this.instance.serverManager.minioClient
+    protected readonly minioCLI: Minio.Client = this.instance.minioClient
+    protected readonly cache: CacheManager
 
     public constructor(isProtected: boolean) {
         super("routes", "", "SERVER")
         this.protected = isProtected
         this.router = router;
+        this.cache = new CacheManager("api")
 
         this.register(); // SELF REGISTERING.
     }

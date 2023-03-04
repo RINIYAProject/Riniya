@@ -12,10 +12,15 @@
 
 import mongoose from "mongoose";
 
+export declare type Answer = {
+    title: string;
+    content: string;
+}
+
 export interface Verification {
     guildId: string;
     memberId: string;
-    memberName: string;
+    memberName?: string;
     issuerId?: string;
     issuerName?: string;
     status?: string ;
@@ -32,7 +37,7 @@ export default mongoose.model<Verification & mongoose.Document>("Verification", 
     issuerId: { type: String, default: 'pending' },
     issuerName: { type: String, default: 'pending' },
     status: { type: String, default: 'pending' },
-    answers: { type: Object, default: [] },
+    answers: { type: Object },
     registeredAt: { type: Number },
     updatedAt: { type: Number },
     expireAt: { type: Number }

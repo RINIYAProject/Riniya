@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import Blocklist from "@riniya.ts/database/Moderation/Blocklist";
+import Blocklist, { Blocklist as IBlocklist } from "@riniya.ts/database/Moderation/Blocklist";
 import AbstractRoutes from "../../Server/AbstractRoutes";
 
 import { Client as TwitterClient } from "twitter-api-sdk"
@@ -51,12 +51,49 @@ export default class UserRoutes extends AbstractRoutes {
         });
 
         this.router.get('/block-list/fetchAll', async (req, res) => {
-            const blocklist = await Blocklist.find()
-
-            res.status(200).json({
-                status: true,
-                data: blocklist || []
-            });
+            this.cache.exists("block-list/all").then(async result => {
+                if (result) {
+                    this.cache.getObject<{
+                        twitterId: string;
+                    }[]>("block-list/all").then(result => {
+                        res.status(200).json({
+                            status: true,
+                            data: {
+                                cacheInfo: {
+                                    objectId: result.objectId,
+                                    createdAt: result.cachedAt
+                                },
+                                accounts: result.data
+                            }
+                        });
+                    }).catch((reason) => {
+                        res.status(500).json({
+                            status: false,
+                            error: reason
+                        });
+                    })
+                } else {
+                    const blocklist = (await Blocklist.find()).map(x => {
+                        return {
+                            twitterId: x.twitterId
+                        }
+                    })
+                    this.cache.addObject<{
+                        twitterId: string;
+                    }[]>("block-list/all", blocklist, 60000).then(result => {
+                        res.status(200).json({
+                            status: true,
+                            data: result
+                        });
+                    }).catch(err => {
+                        res.status(500).json({
+                            status: false,
+                            error: "Caching problem. Please contact a administrator.",
+                            message: err
+                        });
+                    })
+                }
+            })
         });
 
         this.router.get('/block-list/fetch/:id', async (req, res) => {
@@ -66,17 +103,46 @@ export default class UserRoutes extends AbstractRoutes {
                     error: "Account ID cannot be null."
                 });
             } else {
-                client.users.findUserById(req.params.id).then((data) => {
-                    res.status(200).json({
-                        status: true,
-                        data: data.data
-                    });
-                }).catch((reason) => {
-                    res.status(404).json({
-                        status: false,
-                        error: reason
-                    });
-                });
+                this.cache.exists("block-list/by-id/" + req.params.id).then(result => {
+                    if (result) {
+                        this.cache.getObject<{}>("block-list/by-id/" + req.params.id).then(document => {
+                            res.status(200).json({
+                                status: true,
+                                data: {
+                                    cacheInfo: {
+                                        objectId: document.objectId,
+                                        createdAt: document.cachedAt
+                                    },
+                                    account: document.data
+                                }
+                            })
+                        }).catch((reason) => {
+                            res.status(500).json({
+                                status: false,
+                                error: reason
+                            });
+                        })
+                    } else {
+                        client.users.findUserById(req.params.id).then((data) => {
+                            this.cache.addObject<{}>("block-list/by-id/" + req.params.id, data?.data, 60000).then(result => {
+                                res.status(200).json({
+                                    status: true,
+                                    data: result
+                                });
+                            }).catch((reason) => {
+                                res.status(404).json({
+                                    status: false,
+                                    error: reason
+                                });
+                            })
+                        }).catch((reason) => {
+                            res.status(404).json({
+                                status: false,
+                                error: reason
+                            });
+                        })
+                    }
+                })
             }
         })
 

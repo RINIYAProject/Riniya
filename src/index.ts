@@ -28,13 +28,20 @@ import ServerManager from "./api/index";
 
 import DiscordXp from "discord-xp";
 import TasksManager from './components/tasks/TasksManager';
-import InitChecker from './utils/InitChecker';
+import InitChecker from '@riniya.ts/utils/InitChecker';
 import VerificationManager from "./database/VerificationManager";
+
+import Minio from "minio"
+import { checkBucket } from "./types";
+
+import { createClient, RedisClientType } from "redis";
 
 export default class Riniya extends Client {
     public static instance: Riniya
 
     public database: mongoose.Mongoose
+    public minioClient: Minio.Client
+    public redisClient: RedisClientType
 
     public readonly REGISTRY: SlashCommandBuilder
     public readonly logger: Logger
@@ -108,6 +115,20 @@ export default class Riniya extends Client {
         }).catch(err => {
             this.logger.warn("Failed to contact the database.")
         });
+
+        this.minioClient = new Minio.Client({
+            endPoint: process.env['MINIO_SERVER_HOST'],
+            accessKey: process.env['MINIO_ACCESS_KEY'],
+            secretKey: process.env['MINIO_SECRET_KEY']
+        })
+
+        this.redisClient = createClient({
+            url: process.env['REDIS_URL']
+        })
+
+        checkBucket("avatars")
+        checkBucket("banners")
+        checkBucket("storage")
 
         this.load()
     }

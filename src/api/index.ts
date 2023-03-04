@@ -33,8 +33,6 @@ import * as parser from "body-parser"
 import RateLimit from "express-rate-limit"
 import StorageRoutes from "./Server/routes/minio-routes";
 
-import Minio from "minio"
-
 const app = express();
 const limiter = RateLimit({
     windowMs: 1 * 60 * 1000,
@@ -54,7 +52,6 @@ export default class ServerManager {
     private auth: Authentication
 
     public websocket: Websocket
-    public readonly minioClient?: Minio.Client
 
     public constructor() {
         this.routes = new Tuple<AbstractRoutes>()
@@ -76,21 +73,7 @@ export default class ServerManager {
         }, app)
 
         this.websocket = new Websocket(this.server)
-
-        /*
-        this.minioClient = new Minio.Client({
-            endPoint: process.env['MINIO_SERVER_HOST'],
-            port: parseInt(process.env['MINIO_SERVER_PORT']),
-            accessKey: process.env['MINIO_ACCESS_KEY'],
-            secretKey: process.env['MINIO_SECRET_KEY']
-        }) || undefined
-        */
-
-
-        this.checkBucket("avatars")
-        this.checkBucket("banners")
-        this.checkBucket("images")
-
+        
         app.get('/', async (req, res) => {
             res.status(200).json({
                 appName: 'Riniya',
@@ -100,11 +83,11 @@ export default class ServerManager {
                 appUptime: Riniya.instance.uptime || "Uptime is unreferenced",
                 services: {
                     websocket: {
-                        clients: this.websocket.clients.length
+                        clients: this.websocket.clients.length,
+                        environement: (this.websocket.wss.address() === "45.147.98.210" ? "production" : "debug") 
                     },
                     s3: {
-                        status: process.env['MINIO_SERVER_ENABLED'] || false,
-                        buckets: this.minioClient.listBuckets() || "S3 services is not initialized.",
+                        buckets: Riniya.instance.minioClient.listBuckets(),
                     }
                 }
             })
@@ -133,26 +116,10 @@ export default class ServerManager {
         this.routes.add(new GuildRoutes(true))
         this.routes.add(new UserRoutes(true))
         this.routes.add(new OsintRoutes(true))
-        //this.routes.add(new StorageRoutes(true))
+        this.routes.add(new StorageRoutes(true))
     }
 
     public registerServer(server: AbstractRoutes): void {
         this.routes.add(server)
-    }
-
-    protected checkBucket(name: string) {
-        if (process.env['MINIO_SERVER_ENABLED'] === undefined)
-            return Riniya.instance.logger.warn("Skipping " + name + " bucket check ( S3 server is down ).")
-        this.minioClient.bucketExists(name, result => {
-            if (result.stack === undefined) {
-                Riniya.instance.logger.info(name + " S3 bucket loaded.")
-            } else {
-                this.minioClient.makeBucket(name, process.env["MINIO_SERVER_REGION"], {
-                    ObjectLocking: false
-                }, result => {
-                    Riniya.instance.logger.info(" [S3] : Error occurred when constructing the bucket " + result.name)
-                })
-            }
-        })
     }
 }

@@ -13,14 +13,27 @@
 import BaseCommand from "@riniya.ts/components/BaseCommand";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
-import { Client } from "discord.js";
+import { Client, Snowflake } from "discord.js";
 import CommandManager from "../components/commands/CommandManager";
 import Riniya from "@riniya.ts";
 
-export async function removeApplicationCommands() {
+export function deleteCommand() {
     Riniya.instance.application.commands.cache.forEach(command => {
-        Riniya.instance.application.commands.delete(command);
-    });
+        removeApplicationCommands(command.id)
+    })
+}
+
+export async function removeApplicationCommands(commandId: Snowflake) {
+    try {
+        const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
+
+        await rest.delete(
+            Routes.applicationCommand(Riniya.instance.user.id, commandId)
+        );
+    } catch(error) {
+        console.log(`Delete command error on ${commandId}`)
+        console.log(error)
+    }
 }
 
 export function getRest(): REST {

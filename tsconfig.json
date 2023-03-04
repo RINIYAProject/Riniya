@@ -36,6 +36,9 @@
       ],
       "@rinia.ts/controllers/*": [
         "api/controllers/*"
+      ],
+      "@riniya.ts/cache": [
+        "cache/CacheManager.ts"
       ]
     }
   },
