@@ -101,7 +101,7 @@ export default class Riniya extends Client {
             this.start()
     }
 
-    private start() {
+    private async start() {
         this.logger.info("Loading system...")
         this.logger.info(`Version: ${this.version}`)
         this.logger.info(`Revision: ${this.revision}`)
@@ -119,6 +119,7 @@ export default class Riniya extends Client {
         this.redisClient = createClient({
             url: process.env['REDIS_URL']
         })
+        await this.redisClient.connect()
 
         checkBucket("avatars")
         checkBucket("banners")
