@@ -85,7 +85,9 @@ export default class VerificationManager {
             Riniya.instance.logger.info("[VerificationManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
                 this.timeoutCache.add(setInterval(async () => {
-                    let acknowledged = await this.updateTime(x.memberId, x.expireAt - 1)
+                    var countDown = x.expireAt
+                    var countDown = countDown - 1
+                    let acknowledged = await this.updateTime(x.memberId, countDown)
     
                     Riniya.instance.logger.info("DEBUG: memberName === " + (x.memberName || "MemberName is not set") + " ,countDown === " + x.expireAt + ", acknowledged === " + acknowledged)
     
