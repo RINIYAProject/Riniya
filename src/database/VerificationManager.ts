@@ -32,6 +32,7 @@ export default class VerificationManager {
     public constructor() {
         this.cache = new CacheManager("verification")
         this.users = new OptionMap<String, IVerification>()
+        this.timeoutCache = new Tuple<NodeJS.Timeout>()
 
         this.cache.exists("users-list").then(result => {
             if (result) {
