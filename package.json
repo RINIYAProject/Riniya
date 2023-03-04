@@ -95,6 +95,7 @@
     "@riniya.ts/database": "build/database/Models",
     "@riniya.ts/components": "build/abstracts/components",
     "@riniya.ts/server": "build/abstracts/server",
-    "@riniya.ts/controllers": "build/api/controllers"
+    "@riniya.ts/controllers": "build/api/controllers",
+    "@riniya.ts/cache": "cache/CacheManager.js"
   }
 }
