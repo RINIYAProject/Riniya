@@ -5,6 +5,7 @@ import OptionMap from "@riniya.ts/utils/OptionMap";
 import Tuple from "@riniya.ts/utils/Tuple";
 import Verification, { Verification as IVerification } from "./Models/Guild/Verification";
 import { MessageEmbed, Snowflake, User } from "discord.js";
+import BaseManager from "./BaseManager";
 
 export declare type Answer = {
     title: string;
@@ -24,29 +25,15 @@ export declare type CacheSlot = {
     expireAt: number;
 }
 
-export default class VerificationManager {
-
-    private readonly cache: CacheManager
+export default class VerificationManager extends BaseManager {
     private readonly users: OptionMap<String, IVerification>
-    private readonly timeoutCache: Tuple<NodeJS.Timeout>
 
     public constructor() {
-        this.cache = new CacheManager("verification")
-        this.users = new OptionMap<String, IVerification>()
-        this.timeoutCache = new Tuple<NodeJS.Timeout>()
-
-        setInterval(() => {
-            getLogger().info("[VerificationManager] : Refreshing cache...")
-            this.cache.removeObject("users-list").then(result => {
-                if (result) {
-                    this.init()
-                }
-            })
-            getLogger().info("[VerificationManager] : Cache refreshed.")
-        }, 280 * 1000)
+        super("VerificationManager", "verification", 280, "users-list")
     }
 
     public init() {
+        this.timeoutCache.getAll().forEach(intr => clearInterval(intr))
         this.cache.exists("users-list").then(result => {
             if (result) {
                 this.cache.getObject<CacheSlot[]>("users-list").then(documents => {
@@ -67,7 +54,7 @@ export default class VerificationManager {
             }
         })
 
-        this.processTimeout();
+        this.process();
     }
 
     protected async load() {
@@ -99,7 +86,7 @@ export default class VerificationManager {
         })
     }
 
-    protected processTimeout() {
+    protected process() {
         this.cache.getObject<CacheSlot[]>("users-list").then(result => {
             Riniya.instance.logger.info("[VerificationManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {

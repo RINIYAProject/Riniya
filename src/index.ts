@@ -35,6 +35,7 @@ import Minio from "minio"
 import { checkBucket } from "./types";
 
 import { createClient, RedisClientType } from "redis";
+import SessionManager from "./database/SessionManager";
 
 export default class Riniya extends Client {
     public static instance: Riniya
@@ -55,7 +56,9 @@ export default class Riniya extends Client {
     public taskManager: TasksManager
     public discordXp: DiscordXp
     public loaded: boolean = false
+
     public verification: VerificationManager
+    public sessionManager: SessionManager
 
     public readonly version: string = process.env.VERSION || "Unreferenced version."
     public readonly revision: string = process.env.REVISION || "Unreferenced revision code."
@@ -152,6 +155,9 @@ export default class Riniya extends Client {
 
         this.verification = new VerificationManager()
         this.verification.init()
+
+        this.sessionManager = new SessionManager();
+        this.sessionManager.init()
 
         this.login(process.env.TOKEN)
     }

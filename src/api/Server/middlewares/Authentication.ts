@@ -40,7 +40,14 @@ export default class Authentication extends BaseMiddleware {
                     (cb: ICallback) => {
                         if (cb.status) {
                             if (cb.session.userId !== undefined) {
-                                next()
+                                if (cb.session.expired) {
+                                    response.status(403).json({
+                                        status: false,
+                                        error: "Session expired, Please relogin before continuing."
+                                    }).end()
+                                } else {
+                                    next()
+                                }
                             } else {
                                 response.status(403).json({
                                     status: false,

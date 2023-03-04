@@ -20,6 +20,7 @@ export declare interface ISession {
     accessToken: string;
     clientToken: string;
     sessionExpiry: number;
+    expired: boolean;
 }
 
 export declare interface ICallback {
@@ -51,8 +52,7 @@ export default class AuthHelper {
     public async identify(accessToken: string, clientToken: string, callback: Function) {
         const SessionData = await Session.findOne({
             accessToken: accessToken,
-            clientToken: clientToken,
-            sessionExpired: false
+            clientToken: clientToken
         })
 
         if (!SessionData) {
@@ -74,7 +74,8 @@ export default class AuthHelper {
                     userId: SessionData.userId,
                     accessToken: SessionData.accessToken,
                     clientToken: SessionData.clientToken,
-                    sessionExpiry: SessionData.sessionExpiry
+                    sessionExpiry: SessionData.sessionExpiry,
+                    expired: SessionData.sessionExpired
                 }
             })
         }
@@ -91,7 +92,7 @@ export default class AuthHelper {
     private async createSession(userId: string): Promise<ISession> {
         const accessToken: string = v4()
         const clientToken: string = v4()
-        const sessionExpiry: number = 1000 * 60 * 30
+        const sessionExpiry: number = 300
 
         new Session({
             userId: userId,
@@ -107,7 +108,8 @@ export default class AuthHelper {
             userId: userId,
             accessToken: accessToken,
             clientToken: clientToken,
-            sessionExpiry: sessionExpiry
+            sessionExpiry: sessionExpiry,
+            expired: false
         }
     }
 }
