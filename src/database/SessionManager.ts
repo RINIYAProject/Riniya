@@ -45,7 +45,7 @@ export default class SessionManager extends BaseManager {
 
     protected async load() {
         const forms: ISession[] = (await Session.find({
-            status: "pending"
+            sessionExpired: false
         })).map(x => {
             return {
                 userId: x.userId,
@@ -66,11 +66,14 @@ export default class SessionManager extends BaseManager {
             getLogger().info("[SessionManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
                 this.timeoutCache.add(setInterval(async () => {
-                    var countDown = x.sessionExpiry -= 1
-                    await this.updateTime(x.clientToken, countDown, (countDown === 1 ? true : false))
-    
-                    if (countDown === 0) {
-                        return getLogger().info("[SessionManager] : " + x.clientToken + " has been deactivated.")   
+                    if (!x.sessionExpired) {
+                        var countDown = x.sessionExpiry -= 1
+                        await this.updateTime(x.clientToken, countDown, false)
+        
+                        if (countDown === 0) {
+                            await this.updateTime(x.clientToken, x.sessionExpiry, true)
+                            return getLogger().info("[SessionManager] : " + x.clientToken + " has been deactivated.")   
+                        }
                     }
                 }, 1000))
             })
