@@ -65,17 +65,17 @@ export default class SessionManager extends BaseManager {
         this.cache.getObject<ISession[]>("session-list").then(result => {
             getLogger().info("[SessionManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
-                this.timeoutCache.add(setInterval(async () => {
-                    if (!x.sessionExpired) {
-                        var countDown = x.sessionExpiry -= 1
-                        await this.updateTime(x.clientToken, countDown, false)
-        
-                        if (countDown === 0) {
-                            await this.updateTime(x.clientToken, x.sessionExpiry, true)
-                            return getLogger().info("[SessionManager] : " + x.clientToken + " has been deactivated.")   
-                        }
+                var inter = setInterval(async () => {
+                    var countDown = x.sessionExpiry -= 1
+                    await this.updateTime(x.clientToken, countDown, false)
+
+                    if (countDown === 0) {
+                        await this.updateTime(x.clientToken, x.sessionExpiry, true)
+                        getLogger().info("[SessionManager] : " + x.clientToken + " has been deactivated.")
+                        clearInterval(inter)
                     }
-                }, 1000))
+                }, 1000)
+                this.timeoutCache.add(inter)
             })
         })
     }

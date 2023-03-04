@@ -12,6 +12,7 @@
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
 import Guild from "@riniya.ts/database/Guild/Guild";
+import Member from "@riniya.ts/database/Guild/Member";
 import { fetchBlacklist } from "@riniya.ts/types";
 
 import { GuildMember, MessageEmbed, Role, TextChannel } from "discord.js";
@@ -30,6 +31,14 @@ export default class MemberJoin extends BaseEvent {
             const GuildData = await Guild.findOne({ guildId: member.guild.id });
             const channel: TextChannel = this.instance.guilds.cache.get(GuildData.guildId)
                 .channels.cache.get(GuildData.loggingModeration) as TextChannel;
+
+            new Member({
+                guildId: member.guild.id,
+                memberId: member.id,
+                username: member.user.username,
+                identifier: member.user.discriminator,
+                avatar: member.user.avatarURL({ format: "png" })
+            }).save()
 
             await fetchBlacklist(member.id)
                 .then((result) => {

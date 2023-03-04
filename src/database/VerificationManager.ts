@@ -90,7 +90,7 @@ export default class VerificationManager extends BaseManager {
         this.cache.getObject<CacheSlot[]>("users-list").then(result => {
             Riniya.instance.logger.info("[VerificationManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
-                this.timeoutCache.add(setInterval(async () => {
+                var inter = setInterval(async () => {
                     var countDown = x.expireAt -= 1
                     await this.updateTime(x.memberId, countDown)
     
@@ -102,8 +102,11 @@ export default class VerificationManager extends BaseManager {
                         this.sendNotification(x.memberId, countDown)
                     } else if (countDown === 60 * 2) {
                         this.sendNotification(x.memberId, countDown)
+                    } else if (countDown === 0) {
+                        
                     }
-                }, 1000))
+                }, 1000)
+                this.timeoutCache.add(inter)
             })
         })
     }
@@ -129,10 +132,12 @@ export default class VerificationManager extends BaseManager {
 
     protected async updateTime(id: string, time: number): Promise<Boolean> {
         let ok: Boolean = false
+        let expired: Boolean = (time === 0 ? true : false)
         await Verification.updateOne({
             memberId: id
         }, {
-            expireAt: time
+            expireAt: time,
+            status: (expired ? "timedout" : "pending")
         }).then(document => {
             ok = document.acknowledged
         })
