@@ -1,6 +1,6 @@
 import Riniya from "@riniya.ts";
 import CacheManager from "../cache/CacheManager";
-import { getLogger } from "@riniya.ts/types";
+import { getInstance, getLogger } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import Tuple from "@riniya.ts/utils/Tuple";
 import Verification, { Verification as IVerification } from "./Models/Guild/Verification";
@@ -37,6 +37,12 @@ export default class VerificationManager {
 
         setTimeout(() => {
             getLogger().info("[VerificationManager] : Refreshing cache...")
+            this.cache.removeObject("users-list").then(result => {
+                if (result) {
+                    this.init()
+                }
+            })
+            getLogger().info("[VerificationManager] : Cache refreshed.")
         }, 280 * 1000)
     }
 
@@ -81,6 +87,10 @@ export default class VerificationManager {
                 expireAt: x.expireAt  
             }
         })
+
+        if (forms.length < 1) {
+            return getLogger().warn("[VerificationManager] : No forms detected, Skipping.")
+        }
 
         this.cache.addObject<CacheSlot[]>("users-list", forms, 280 * 1000).then(result => {
             Riniya.instance.logger.info("[VerificationManager] : " + result.length + " forms loaded.")
