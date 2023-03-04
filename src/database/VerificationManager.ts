@@ -35,7 +35,7 @@ export default class VerificationManager {
         this.users = new OptionMap<String, IVerification>()
         this.timeoutCache = new Tuple<NodeJS.Timeout>()
 
-        setTimeout(() => {
+        setInterval(() => {
             getLogger().info("[VerificationManager] : Refreshing cache...")
             this.cache.removeObject("users-list").then(result => {
                 if (result) {
