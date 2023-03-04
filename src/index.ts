@@ -116,12 +116,6 @@ export default class Riniya extends Client {
             this.logger.warn("Failed to contact the database.")
         });
 
-        this.minioClient = new Minio.Client({
-            endPoint: process.env['MINIO_SERVER_HOST'],
-            accessKey: process.env['MINIO_ACCESS_KEY'],
-            secretKey: process.env['MINIO_SECRET_KEY']
-        })
-
         this.redisClient = createClient({
             url: process.env['REDIS_URL']
         })
