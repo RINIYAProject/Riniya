@@ -1,5 +1,5 @@
 import Riniya from "@riniya.ts";
-import CacheManager from "@riniya.ts/cache";
+import CacheManager from "../cache/CacheManager";
 import { getLogger } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import Tuple from "@riniya.ts/utils/Tuple";

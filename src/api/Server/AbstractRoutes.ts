@@ -15,7 +15,7 @@ import { Router, Response } from "express";
 import express from "express";
 
 import Minio from "minio"
-import CacheManager from "@riniya.ts/cache";
+import CacheManager from "../../cache/CacheManager";
 
 export declare enum ErrorType {
     SUCCESS_CALLBACK = 200,
