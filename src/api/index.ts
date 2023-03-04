@@ -73,7 +73,7 @@ export default class ServerManager {
         }, app)
 
         this.websocket = new Websocket(this.server)
-        
+
         app.get('/', async (req, res) => {
             res.status(200).json({
                 appName: 'Riniya',
@@ -85,9 +85,6 @@ export default class ServerManager {
                     websocket: {
                         clients: this.websocket.clients.length,
                         environement: (this.websocket.wss.address() === "45.147.98.210" ? "production" : "debug") 
-                    },
-                    s3: {
-                        buckets: Riniya.instance.minioClient.listBuckets(),
                     }
                 }
             })

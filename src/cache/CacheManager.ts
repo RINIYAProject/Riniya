@@ -60,7 +60,7 @@ export default class CacheManager {
 
         const deleted = await getInstance().redisClient.del(buildKey)
         return new Promise<Boolean>((resolve) => {
-            resolve((deleted >= 1))
+            resolve((deleted === 1 ? true : false))
         })
     }
 
@@ -69,7 +69,7 @@ export default class CacheManager {
 
         const exists = await getInstance().redisClient.exists(buildKey)
         return new Promise<Boolean>((resolve) => {
-            resolve((exists >= 1))
+            resolve((exists === 1 ? true : false))
         })
     }
 }
