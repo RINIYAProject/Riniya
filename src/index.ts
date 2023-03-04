@@ -151,6 +151,7 @@ export default class Riniya extends Client {
         this.taskManager.registerAll();
 
         this.verification = new VerificationManager()
+        this.verification.init()
 
         this.login(process.env.TOKEN)
     }

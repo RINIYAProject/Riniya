@@ -4,6 +4,7 @@ import { getLogger } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import Tuple from "@riniya.ts/utils/Tuple";
 import Verification, { Verification as IVerification } from "./Models/Guild/Verification";
+import { MessageEmbed, Snowflake, User } from "discord.js";
 
 export declare type Answer = {
     title: string;
@@ -34,6 +35,12 @@ export default class VerificationManager {
         this.users = new OptionMap<String, IVerification>()
         this.timeoutCache = new Tuple<NodeJS.Timeout>()
 
+        setTimeout(() => {
+            getLogger().info("[VerificationManager] : Refreshing cache...")
+        }, 280 * 1000)
+    }
+
+    public init() {
         this.cache.exists("users-list").then(result => {
             if (result) {
                 this.cache.getObject<CacheSlot[]>("users-list").then(documents => {
@@ -58,7 +65,9 @@ export default class VerificationManager {
     }
 
     protected async load() {
-        const forms: CacheSlot[] = (await Verification.find()).map(x => {
+        const forms: CacheSlot[] = (await Verification.find({
+            status: "pending"
+        })).map(x => {
             return {
                 guildId: x.guildId,
                 memberId: x.memberId,
@@ -73,7 +82,7 @@ export default class VerificationManager {
             }
         })
 
-        this.cache.addObject<CacheSlot[]>("users-list", forms, 60000).then(result => {
+        this.cache.addObject<CacheSlot[]>("users-list", forms, 280 * 1000).then(result => {
             Riniya.instance.logger.info("[VerificationManager] : " + result.length + " forms loaded.")
         }).catch((reason) => {
             Riniya.instance.logger.info("[VerificationManager] : " + reason)
@@ -86,15 +95,38 @@ export default class VerificationManager {
             result.data.forEach(x => {
                 this.timeoutCache.add(setInterval(async () => {
                     var countDown = x.expireAt -= 1
-                    let acknowledged = await this.updateTime(x.memberId, countDown)
+                    await this.updateTime(x.memberId, countDown)
     
-                    Riniya.instance.logger.info("DEBUG: memberName === " + (x.memberName || "MemberName is not set") + " ,countDown === " + x.expireAt + ", acknowledged === " + acknowledged)
-    
-                    if (x.expireAt === 50) {
-                        Riniya.instance.logger.info("DEBUG: countDown === 50")
+                    if (countDown === 43200) {
+                        this.sendNotification(x.memberId, countDown)
+                    } else if (countDown === 21600) {
+                        this.sendNotification(x.memberId, countDown)
+                    } else if (countDown === 11600) {
+                        this.sendNotification(x.memberId, countDown)
+                    } else if (countDown === 60 * 2) {
+                        this.sendNotification(x.memberId, countDown)
                     }
                 }, 1000))
             })
+        })
+    }
+
+    protected sendNotification(userId: Snowflake, time: number): void {
+        let user: User = Riniya.instance.users.cache.get(userId)
+        user.send({
+            embeds: [
+                new MessageEmbed()
+                    .setAuthor("Please don't forget to verify your account.")
+                    .setDescription(`Hello ${user.username}, 
+                        You have joined 'The Vakea Lounge' but forgot to verify your account.
+
+                        Please verify your account so that you are not locked out of the server.
+                        
+                        You must do this before the time limit indicated below`
+                    )
+                    .setColor("ORANGE")
+                    .addField("Expire in", `${new Date(time * 1000).getHours()} hours.`)
+            ]
         })
     }
 

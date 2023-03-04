@@ -43,7 +43,7 @@ export default class ModalVerificationSubmit extends BaseModal {
                 memberName: interaction.user.username,
                 registeredAt: new Date().getTime(),
                 updatedAt: new Date().getTime(),
-                expireAt: Date.now() * 1 * 60 * 1000,
+                expireAt: 86400,
                 answers: [
                     {
                         title: "How did you find us?",
