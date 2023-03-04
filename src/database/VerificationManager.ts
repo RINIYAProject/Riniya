@@ -84,13 +84,12 @@ export default class VerificationManager {
         this.cache.getObject<CacheSlot[]>("users-list").then(result => {
             Riniya.instance.logger.info("[VerificationManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
-                this.timeoutCache.add(setInterval(() => {
-                    let countDown = x.expireAt - 1
-                    let acknowledged = this.updateTime(x.memberId, countDown)
+                this.timeoutCache.add(setInterval(async () => {
+                    let acknowledged = await this.updateTime(x.memberId, x.expireAt - 1)
     
-                    Riniya.instance.logger.info("DEBUG: memberName === " + x.memberName + " ,countDown === " + countDown + ", acknowledged === " + acknowledged)
+                    Riniya.instance.logger.info("DEBUG: memberName === " + (x.memberName || "MemberName is not set") + " ,countDown === " + x.expireAt + ", acknowledged === " + acknowledged)
     
-                    if (countDown === 50) {
+                    if (x.expireAt === 50) {
                         Riniya.instance.logger.info("DEBUG: countDown === 50")
                     }
                 }, 1000))
