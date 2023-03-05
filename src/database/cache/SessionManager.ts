@@ -1,15 +1,10 @@
-import { getInstance, getLogger } from "@riniya.ts/types";
+import { getLogger } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
-import Tuple from "@riniya.ts/utils/Tuple";
 import BaseManager from "./BaseManager";
-import Session from "./Models/Security/Session";
-import { Session as ISession } from "./Models/Security/Session";
+import Session from "../Models/Security/Session";
+import { Session as ISession } from "../Models/Security/Session";
 
-export declare type SessionSlot = {
-
-}
-
-export default class SessionManager extends BaseManager {
+export default class SessionManager extends BaseManager<ISession[]> {
 
     private readonly sessions: OptionMap<String, ISession>
 
@@ -20,27 +15,25 @@ export default class SessionManager extends BaseManager {
     }
 
     public init() {
-        this.timeoutCache.getAll().forEach(intr => clearInterval(intr))
-        this.cache.exists("session-list").then(result => {
+        this.has().then(result => {
             if (result) {
-                this.cache.getObject<ISession[]>("session-list").then(documents => {
+                this.getObject().then(documents => {
                     getLogger().info("[SessionManager] : Loading " + documents.objectId + " cache object.")
                     getLogger().info("[SessionManager] : Metadata " + documents.objectId + ", created at " + documents.cachedAt + ", tuple-size=" + documents.data.length)
 
                     documents.data.map(x => {
-                        getLogger().info("[SessionManager] : Fetching " + x.userId + "...")
+                        getLogger().info("[SessionManager] : Fetching " + x.clientToken.split("-")[0] + "...")
                         this.sessions.add(documents.objectId, x)
                     })
 
                     getLogger().info("[SessionManager] : " + documents.objectId + " has been loaded.")
-                }).catch((reason) => {
-                    getLogger().error("[SessionManager] : " + reason + ", Aborting operation.")
+                    this.process()
                 })
             } else {
-                this.load();
+                this.load()
+                this.init()
             }
         })
-        this.process()
     }
 
     protected async load() {
@@ -56,23 +49,24 @@ export default class SessionManager extends BaseManager {
             }
         })
 
-        this.cache.addObject<ISession[]>("session-list", forms, 250).then(result => {
+        this.addObject(forms).then(result => {
             getLogger().info("[SessionManager] : " + result.length + " sessions added.")
         })
     }
 
     protected async process() {
-        this.cache.getObject<ISession[]>("session-list").then(result => {
+        this.getObject().then(result => {
             getLogger().info("[SessionManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
                 var inter = setInterval(async () => {
+                    const uniqueId = inter;
                     var countDown = x.sessionExpiry -= 1
                     await this.updateTime(x.clientToken, countDown, false)
 
                     if (countDown === 0) {
                         await this.updateTime(x.clientToken, x.sessionExpiry, true)
                         getLogger().info("[SessionManager] : " + x.clientToken + " has been deactivated.")
-                        clearInterval(inter)
+                        clearInterval(uniqueId)
                     }
                 }, 1000)
                 this.timeoutCache.add(inter)

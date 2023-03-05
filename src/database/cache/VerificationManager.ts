@@ -1,16 +1,9 @@
 import Riniya from "@riniya.ts";
-import CacheManager from "../cache/CacheManager";
-import { getInstance, getLogger } from "@riniya.ts/types";
+import { getLogger } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
-import Tuple from "@riniya.ts/utils/Tuple";
-import Verification, { Verification as IVerification } from "./Models/Guild/Verification";
+import Verification, { Verification as IVerification } from "../Models/Guild/Verification";
 import { MessageEmbed, Snowflake, User } from "discord.js";
 import BaseManager from "./BaseManager";
-
-export declare type Answer = {
-    title: string;
-    content: string;
-}
 
 export declare type CacheSlot = {
     guildId: string;
@@ -25,7 +18,7 @@ export declare type CacheSlot = {
     expireAt: number;
 }
 
-export default class VerificationManager extends BaseManager {
+export default class VerificationManager extends BaseManager<CacheSlot[]> {
     private readonly users: OptionMap<String, IVerification>
 
     public constructor() {
@@ -33,10 +26,9 @@ export default class VerificationManager extends BaseManager {
     }
 
     public init() {
-        this.timeoutCache.getAll().forEach(intr => clearInterval(intr))
-        this.cache.exists("users-list").then(result => {
+        this.has().then(result => {
             if (result) {
-                this.cache.getObject<CacheSlot[]>("users-list").then(documents => {
+                this.getObject().then(documents => {
                     getLogger().info("[VerificationManager] : Loading " + documents.objectId + " cache object.")
                     getLogger().info("[VerificationManager] : Metadata " + documents.objectId + ", created at " + documents.cachedAt + ", tuple-size=" + documents.data.length)
 
@@ -46,15 +38,13 @@ export default class VerificationManager extends BaseManager {
                     })
 
                     getLogger().info("[VerificationManager] : " + documents.objectId + " has been loaded.")
-                }).catch((reason) => {
-                    getLogger().error("[VerificationManager] : " + reason + ", Aborting operation.")
+                    this.process();
                 })
             } else {
-                this.load();
+                this.load()
+                this.init()
             }
         })
-
-        this.process();
     }
 
     protected async load() {
@@ -79,7 +69,7 @@ export default class VerificationManager extends BaseManager {
             return getLogger().warn("[VerificationManager] : No forms detected, Skipping.")
         }
 
-        this.cache.addObject<CacheSlot[]>("users-list", forms, 280 * 1000).then(result => {
+        this.addObject(forms).then(result => {
             Riniya.instance.logger.info("[VerificationManager] : " + result.length + " forms loaded.")
         }).catch((reason) => {
             Riniya.instance.logger.info("[VerificationManager] : " + reason)
@@ -87,7 +77,7 @@ export default class VerificationManager extends BaseManager {
     }
 
     protected process() {
-        this.cache.getObject<CacheSlot[]>("users-list").then(result => {
+        this.getObject().then(result => {
             Riniya.instance.logger.info("[VerificationManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
                 var inter = setInterval(async () => {

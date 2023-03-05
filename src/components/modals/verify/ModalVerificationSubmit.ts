@@ -60,6 +60,10 @@ export default class ModalVerificationSubmit extends BaseModal {
                 ]
             }).save();
 
+            this.instance.cacheController
+                .getController("verifications")
+                .init()
+
             await channel.send({
                 embeds: [embed],
                 components: [

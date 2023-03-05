@@ -29,13 +29,12 @@ import ServerManager from "./api/index";
 import DiscordXp from "discord-xp";
 import TasksManager from './components/tasks/TasksManager';
 import InitChecker from '@riniya.ts/utils/InitChecker';
-import VerificationManager from "./database/VerificationManager";
 
 import Minio from "minio"
 import { checkBucket } from "./types";
-
 import { createClient, RedisClientType } from "redis";
-import SessionManager from "./database/SessionManager";
+
+import CacheController from "./database/CacheController";
 
 export default class Riniya extends Client {
     public static instance: Riniya
@@ -57,8 +56,7 @@ export default class Riniya extends Client {
     public discordXp: DiscordXp
     public loaded: boolean = false
 
-    public verification: VerificationManager
-    public sessionManager: SessionManager
+    public cacheController: CacheController
 
     public readonly version: string = process.env.VERSION || "Unreferenced version."
     public readonly revision: string = process.env.REVISION || "Unreferenced revision code."
@@ -153,11 +151,8 @@ export default class Riniya extends Client {
         this.taskManager = new TasksManager();
         this.taskManager.registerAll();
 
-        this.verification = new VerificationManager()
-        this.verification.init()
-
-        this.sessionManager = new SessionManager();
-        this.sessionManager.init()
+        this.cacheController = new CacheController();
+        this.cacheController.initialize();
 
         this.login(process.env.TOKEN)
     }
