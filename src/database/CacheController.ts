@@ -10,7 +10,7 @@ export default class CacheController {
     public constructor() {
         this.controllers = new OptionMap<String, BaseManager<unknown>>()
 
-        this.controllers.add("verifications", new VerificationManager())
+        //this.controllers.add("verifications", new VerificationManager())
         this.controllers.add("sessions", new SessionManager())
     }
 

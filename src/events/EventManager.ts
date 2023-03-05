@@ -21,6 +21,7 @@ import GuildDeleteEvent from "./GuildDeleteEvent";
 import InteractionEvent from "./InteractionEvent";
 import MemberJoin from "./MemberJoinEvent";
 import MemberLeave from "./MemberLeaveEvent";
+import MemberUpdateEvent from "./MemberUpdateEvent";
 import MessageEvent from "./MessageEvent";
 import ModalSubmit from "./ModalSubmitEvent";
 import Ready from "./ReadyEvent";
@@ -42,6 +43,7 @@ export default class EventManager {
         this.registerEvent(new InteractionEvent());
         this.registerEvent(new MemberJoin());
         this.registerEvent(new MemberLeave());
+        this.registerEvent(new MemberUpdateEvent())
         this.registerEvent(new MessageEvent());
         this.registerEvent(new ModalSubmit());
         this.registerEvent(new Ready());

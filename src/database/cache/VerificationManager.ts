@@ -2,7 +2,7 @@ import Riniya from "@riniya.ts";
 import { getLogger } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import Verification, { Verification as IVerification } from "../Models/Guild/Verification";
-import { MessageEmbed, Snowflake, User } from "discord.js";
+import { Guild, GuildMember, MessageEmbed, Snowflake, User } from "discord.js";
 import BaseManager from "./BaseManager";
 
 export declare type CacheSlot = {
@@ -26,6 +26,8 @@ export default class VerificationManager extends BaseManager<CacheSlot[]> {
     }
 
     public init() {
+        this.users.getMap().clear()
+
         this.has().then(result => {
             if (result) {
                 this.getObject().then(documents => {
@@ -81,19 +83,20 @@ export default class VerificationManager extends BaseManager<CacheSlot[]> {
             Riniya.instance.logger.info("[VerificationManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
                 var inter = setInterval(async () => {
+                    const uniqueId = inter
                     var countDown = x.expireAt -= 1
                     await this.updateTime(x.memberId, countDown)
     
                     if (countDown === 43200) {
-                        this.sendNotification(x.memberId, countDown)
+                        this.sendNotification(x.memberId, x.guildId, countDown)
                     } else if (countDown === 21600) {
-                        this.sendNotification(x.memberId, countDown)
+                        this.sendNotification(x.memberId, x.guildId, countDown)
                     } else if (countDown === 11600) {
-                        this.sendNotification(x.memberId, countDown)
+                        this.sendNotification(x.memberId, x.guildId, countDown)
                     } else if (countDown === 60 * 2) {
-                        this.sendNotification(x.memberId, countDown)
+                        this.sendNotification(x.memberId, x.guildId, countDown)
                     } else if (countDown === 0) {
-                        
+                        clearInterval(uniqueId)
                     }
                 }, 1000)
                 this.timeoutCache.add(inter)
@@ -101,14 +104,23 @@ export default class VerificationManager extends BaseManager<CacheSlot[]> {
         })
     }
 
-    protected sendNotification(userId: Snowflake, time: number): void {
-        let user: User = Riniya.instance.users.cache.get(userId)
-        user.send({
+    protected sendNotification(userId: Snowflake, guildId: Snowflake, time: number): void {
+        let guild: Guild = Riniya.instance.guilds.cache.get(guildId)
+        let member: GuildMember = guild.members.cache.get(userId);
+
+        if (time === 0) {
+            member.send({
+                content: "You have been kicked due to verification inactivity."
+            })
+            member.kick("Verification timed out.")
+        }
+        
+        member.send({
             embeds: [
                 new MessageEmbed()
                     .setAuthor("Please don't forget to verify your account.")
-                    .setDescription(`Hello ${user.username}, 
-                        You have joined 'The Vakea Lounge' but forgot to verify your account.
+                    .setDescription(`Hello ${member.user.username}, 
+                        You have joined '${guild.name}' but forgot to verify your account.
 
                         Please verify your account so that you are not locked out of the server.
                         
