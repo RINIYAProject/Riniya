@@ -1,15 +1,11 @@
 import BaseEvent from "@riniya.ts/components/BaseEvent";
-import Guild from "@riniya.ts/database/Guild/Guild";
 import { Guild as DGuild, GuildMember, MessageEmbed, TextChannel } from "discord.js";
 
 export default class MemberUpdateEvent extends BaseEvent {
     public constructor() {
         super("guildMemberUpdate", async (oldMember: GuildMember, newMember: GuildMember) => {
             if (oldMember.premiumSince !== newMember.premiumSince) {
-                const MainGuild = await Guild.findOne({
-                    mainGuild: true
-                })
-                const handle: DGuild = this.instance.guilds.cache.get(MainGuild.id)
+                const handle: DGuild = this.instance.guilds.cache.get("1052173534299947008")
                 const channel: TextChannel = handle.channels.cache.get("1052173988756992050") as TextChannel
                 channel.send({
                     embeds: [

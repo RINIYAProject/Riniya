@@ -138,19 +138,3 @@ export function sanction(
         ]
     }
 }
-
-export function checkBucket(name: string): void {
-    if (process.env['MINIO_SERVER_ENABLED'] === undefined)
-        return getLogger().warn("Skipping " + name + " bucket check ( S3 server is down ).")
-    getInstance().minioClient.bucketExists(name, result => {
-        if (result.stack === undefined) {
-            getLogger().info(name + " S3 bucket loaded.")
-        } else {
-            getInstance().minioClient.makeBucket(name, process.env["MINIO_SERVER_REGION"], {
-                ObjectLocking: false
-            }, result => {
-                getLogger().info(" [S3] : Error occurred when constructing the bucket " + result.name)
-            })
-        }
-    })
-}

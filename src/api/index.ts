@@ -14,7 +14,7 @@ import Tuple from "@riniya.ts/utils/Tuple";
 import Riniya from "@riniya.ts";
 
 import express from "express";
-import https from "https";
+import http from "http";
 
 import FileHelper from "@riniya.ts/utils/FileHelper";
 import AbstractRoutes from "./Server/AbstractRoutes";
@@ -31,7 +31,6 @@ import OsintRoutes from "./Server/routes/osint-routes";
 import * as parser from "body-parser"
 
 import RateLimit from "express-rate-limit"
-import StorageRoutes from "./Server/routes/minio-routes";
 
 const app = express();
 const limiter = RateLimit({
@@ -47,7 +46,7 @@ app.use(limiter)
 
 export default class ServerManager {
     private routes: Tuple<AbstractRoutes>
-    private server: https.Server
+    private server: http.Server
     private fileHelper: FileHelper
     private auth: Authentication
 
@@ -67,10 +66,7 @@ export default class ServerManager {
             cookie: { secure: true }
         }))
 
-        this.server = https.createServer({
-            key: this.fileHelper.search(process.env.SERVER_KEY),
-            cert: this.fileHelper.search(process.env.SERVER_CERT)
-        }, app)
+        this.server = http.createServer(app)
 
         this.websocket = new Websocket(this.server)
 
@@ -105,7 +101,7 @@ export default class ServerManager {
         this.routes.getAll().forEach((route) => {
             app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
         })
-        this.server.listen(443)
+        this.server.listen(3443)
     }
 
     public registerServers(): void {
@@ -113,7 +109,6 @@ export default class ServerManager {
         this.routes.add(new GuildRoutes(true))
         this.routes.add(new UserRoutes(true))
         this.routes.add(new OsintRoutes(true))
-        this.routes.add(new StorageRoutes(true))
     }
 
     public registerServer(server: AbstractRoutes): void {

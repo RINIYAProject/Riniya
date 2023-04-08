@@ -10,25 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import Riniya from '@riniya.ts';
-
 import Mesa, { Message } from "@cryb/mesa"
-import https from "https"
-import { MessageEmbed, TextChannel, User as DUser } from 'discord.js';
-import Session from '@riniya.ts/database/Security/Session';
-import User from '@riniya.ts/database/Security/User';
+import http from "http"
 
 declare type Data = {
     [key in string]?: any;
 };
 
-declare type Payload = {
-    payload: string;
-    data: any
-}
-
 export default class Websocket extends Mesa {
-    public constructor(server: https.Server) {
+    public constructor(server: http.Server) {
         super({
             port: 8443,
             server: server,

@@ -30,8 +30,6 @@ import DiscordXp from "discord-xp";
 import TasksManager from './components/tasks/TasksManager';
 import InitChecker from '@riniya.ts/utils/InitChecker';
 
-import Minio from "minio"
-import { checkBucket } from "./types";
 import { createClient, RedisClientType } from "redis";
 
 import CacheController from "./database/CacheController";
@@ -40,7 +38,6 @@ export default class Riniya extends Client {
     public static instance: Riniya
 
     public database: mongoose.Mongoose
-    public minioClient: Minio.Client
     public redisClient: RedisClientType
 
     public readonly REGISTRY: SlashCommandBuilder
@@ -121,10 +118,6 @@ export default class Riniya extends Client {
             url: process.env['REDIS_URL']
         })
         await this.redisClient.connect()
-
-        checkBucket("avatars")
-        checkBucket("banners")
-        checkBucket("storage")
 
         this.load()
     }
