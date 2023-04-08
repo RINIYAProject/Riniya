@@ -14,7 +14,6 @@ import Base from "../../abstracts/Base";
 import { Router, Response } from "express";
 import express from "express";
 
-import Minio from "minio"
 import CacheManager from "../../cache/CacheManager";
 
 export declare enum ErrorType {
@@ -30,7 +29,6 @@ export default abstract class AbstractRoutes extends Base {
     public protected: boolean
     protected router: Router
 
-    protected readonly minioCLI: Minio.Client = this.instance.minioClient
     protected readonly cache: CacheManager
 
     public constructor(isProtected: boolean) {
