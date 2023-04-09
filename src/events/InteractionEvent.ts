@@ -92,6 +92,10 @@ export default class InteractionEvent extends BaseEvent {
                             });
                     else
                         return handler.handler(interaction);
+                } else if (interaction.isContextMenu()) {
+                    
+                } else if (interaction.isUserContextMenu()) {
+                    
                 }
             } catch (err) {
                 this.instance.logger.error(`InteractionEvent:(${interaction.id}) | ${err}`);

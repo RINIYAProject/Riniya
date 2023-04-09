@@ -19,8 +19,10 @@ export default class CommandUpdate extends BaseCommand {
     public constructor() {
         super("update", "Update your fursona information.", new OptionMap<string, boolean>,
             "SONA"
-        );
+        )
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) { }
+    public handler(inter: CommandInteraction<"cached">, member: GuildMember, guild: Guild) {
+
+    }
 }

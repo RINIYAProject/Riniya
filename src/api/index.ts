@@ -47,6 +47,7 @@ app.use(limiter)
 export default class ServerManager {
     private routes: Tuple<AbstractRoutes>
     private server: http.Server
+    private gateway: http.Server
     private fileHelper: FileHelper
     private auth: Authentication
 
@@ -67,8 +68,9 @@ export default class ServerManager {
         }))
 
         this.server = http.createServer(app)
+        this.gateway = http.createServer()
 
-        this.websocket = new Websocket(this.server)
+        this.websocket = new Websocket(this.gateway)
 
         app.get('/', async (req, res) => {
             res.status(200).json({
@@ -102,6 +104,7 @@ export default class ServerManager {
             app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
         })
         this.server.listen(3443)
+        this.gateway.listen(8443)
     }
 
     public registerServers(): void {

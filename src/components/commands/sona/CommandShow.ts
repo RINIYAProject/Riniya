@@ -20,7 +20,7 @@ export default class CommandShow extends BaseCommand {
     public constructor() {
         super("show", "Show the fursona of someone", new OptionMap<string, boolean>,
             "SONA"
-        );
+        )
 
         this.addUserOption(
             new SlashCommandUserOption()
@@ -30,5 +30,7 @@ export default class CommandShow extends BaseCommand {
         );
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) { }
+    public handler(inter: CommandInteraction<"cached">, member: GuildMember, guild: Guild) {
+        
+    }
 }

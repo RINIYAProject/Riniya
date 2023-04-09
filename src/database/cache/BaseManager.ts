@@ -25,7 +25,6 @@ export default abstract class BaseManager<T> {
                     this.init()
                 }
             })
-            getLogger().info(`[${name}] : Cache refreshed.`)
         }, resetTime * 1000)
     }
 

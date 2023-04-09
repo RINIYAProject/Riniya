@@ -21,14 +21,14 @@ export default class CommandCreate extends BaseCommand {
     public constructor() {
         super("create", "Register your fursona.", new OptionMap<string, boolean>,
             "SONA"
-        );
+        )
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
+    public handler(inter: CommandInteraction<"cached">, member: GuildMember, guild: Guild) {
         return new ModalHelper("row_fursona_create", "Create your fursona.")
             .addTextInput(
                 new TextInputComponent()
-                    .setLabel("YOUR SONA'S NAME")
+                    .setLabel("YOUR CHARACTER NAME")
                     .setStyle("SHORT")
                     .setMaxLength(64)
                     .setMinLength(8)
@@ -36,6 +36,27 @@ export default class CommandCreate extends BaseCommand {
             )
             .addTextInput(
                 new TextInputComponent()
+                    .setLabel("YOUR CHARACTER SPECIES")
+                    .setStyle("SHORT")
+                    .setMaxLength(64)
+                    .setMinLength(8)
+                    .setRequired(true)
             )
+            .addTextInput(
+                new TextInputComponent()
+                    .setLabel("YOUR CHARACTER AGE")
+                    .setStyle("SHORT")
+                    .setMaxLength(64)
+                    .setMinLength(8)
+                    .setRequired(true)
+            )
+            .addTextInput(
+                new TextInputComponent()
+                    .setLabel("YOUR CHARACTER NAME")
+                    .setStyle("SHORT")
+                    .setMaxLength(64)
+                    .setMinLength(8)
+                    .setRequired(true)
+            ).generate(inter)
     }
 }
