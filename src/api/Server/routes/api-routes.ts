@@ -63,7 +63,6 @@ export default class ApiRoutes extends AbstractRoutes {
                     metadata: {
                         requestId: v4(),
                         requestDate: Date.now(),
-                        issuedBy: req.user,
                     },
                     result: user
                 }
@@ -95,7 +94,6 @@ export default class ApiRoutes extends AbstractRoutes {
                 status: true,
                 data: {
                     metadata: {
-                        issuedBy: req.user,
                         requestId: v4(),
                         requestDate: Date.now(),
                         database: result
@@ -126,7 +124,6 @@ export default class ApiRoutes extends AbstractRoutes {
                     metadata: {
                         requestId: v4(),
                         requestDate: Date.now(),
-                        issuedBy: req.user,
                     },
                     result: user
                 }
@@ -154,7 +151,6 @@ export default class ApiRoutes extends AbstractRoutes {
                     metadata: {
                         requestId: v4(),
                         requestDate: Date.now(),
-                        issuedBy: req.user,
                     },
                     result: user
                 }
@@ -176,7 +172,6 @@ export default class ApiRoutes extends AbstractRoutes {
                     metadata: {
                         requestId: v4(),
                         requestDate: Date.now(),
-                        issuedBy: req.user,
                     },
                     result: users
                 }
