@@ -16,87 +16,185 @@ import Message from "@riniya.ts/database/Common/Message";
 import Verification from "@riniya.ts/database/Guild/Verification";
 import Sanction from "@riniya.ts/database/Moderation/Sanction";
 import Activity from "@riniya.ts/database/Guild/Activity";
+import { isNull } from "@riniya.ts/types";
+
+export declare type Activity = {
+    guildId: string;
+    memberId: string;
+    type: string;
+    action: string;
+    registeredAt: number;
+}
+
+export declare type ActivityModel = {
+    status: boolean;
+    data?: Activity;
+}
 
 export default class GuildRoutes extends AbstractRoutes {
     public register() {
         this.router.get('/servers', async (req, res) => {
-            res.status(200).json({
+            if (isNull(Riniya.instance.guilds))
+                return res.status(404).json({
+                    status: false,
+                    error: "No servers has been found in the database."
+                }).end()
+            return res.status(200).json({
                 status: true,
-                data: (await Riniya.instance.guilds.fetch()).values || []
+                data: (await Riniya.instance.guilds.fetch()).values()
             }).end()
         })
+
         this.router.get('/servers/:guildId', async (req, res) => {
-            if (req.params.guildId === undefined)
-                this.error(res, 406)
-            res.status(200).json({
+            if (isNull(req.params.guildId))
+                return res.status(403).json({
+                    status: false,
+                    error: `You must specify the 'server_id' first.`
+                }).end()
+
+
+            const server = Riniya.instance.guilds.cache.get(req.params.guildId)
+
+            if (isNull(server))
+                return res.status(403).json({
+                    status: false,
+                    error: `The server is not found.`
+                }).end()
+
+            return res.status(200).json({
                 status: true,
-                data: Riniya.instance.guilds.cache.get(req.params.guildId) || {}
+                data: server
             }).end()
         })
 
         this.router.get('/servers/:guildId/members', async (req, res) => {
-            if (req.params.guildId === undefined)
-                this.error(res, 404)
-            res.status(200).json({
+            if (isNull(req.params.guildId))
+                return res.status(403).json({
+                    status: false,
+                    error: `You must specify the 'server_id' first.`
+                }).end()
+
+            const members = this.instance.guilds.cache.get(req.params.guildId).members.cache.values()
+
+            if (isNull(members))
+                return res.status(403).json({
+                    status: false,
+                    error: `The member list is unavailable or the server is not existing.`
+                }).end()
+
+            return res.status(200).json({
                 status: true,
-                data: this.instance.guilds.cache.get(req.params.guildId).members.cache.values()
-            })
+                data: members
+            }).end()
         })
+
         this.router.get('/servers/:guildId/members/:memberId', async (req, res) => {
-            if (req.params.guildId === undefined)
-                this.error(res, 403)
-            if (req.params.memberId === undefined)
-                this.error(res, 403)
-            res.status(200).json({
+            if (isNull(req.params.guildId) || isNull(req.params.memberId))
+                return res.status(403).json({
+                    status: false,
+                    error: `The 'member_id' or 'guild_id' is not valid.`
+                }).end()
+
+            const member = this.instance.guilds.cache.get(req.params.guildId).members.cache.get(req.params.memberId)
+
+            if (isNull(member)) 
+                return res.status(403).json({
+                    status: false,
+                    error: `The member is not in the database.`
+                }).end()
+
+            return res.status(200).json({
                 status: true,
-                data: this.instance.guilds.cache.get(req.params.guildId).members.cache.get(req.params.memberId)
-            })
+                data: member
+            }).end()
         })
-        this.router.get('/servers/:guildId/members/:memberId/level', async (req, res) => { })
-        this.router.get('/servers/:guildId/members/:memberId/profile', async (req, res) => { })
+
+        // TODO: Later usage
+        // -> -> -> -> -> -> -> ->
+        // Level system for servers
+        // Member profile 
+        //
+        // this.router.get('/servers/:guildId/members/:memberId/level', async (req, res) => { })
+        // this.router.get('/servers/:guildId/members/:memberId/profile', async (req, res) => { })
+
         this.router.get('/servers/:guildId/members/:memberId/sanctions', async (req, res) => {
-            if (req.params.guildId === undefined || req.params.memberId === undefined)
-                this.error(res, 500)
+            if (isNull(req.params.guildId) || isNull(req.params.memberId))
+                return res.status(403).json({
+                    status: false,
+                    error: `The 'member_id' or 'guild_id' is not valid.`
+                }).end()
+
             const sanctions = await Sanction.find({
                 guildId: req.params.guildId,
                 memberId: req.params.memberId
             })
 
-            res.status(200).json({
+            if (isNull(sanctions))
+                return res.status(403).json({
+                    status: false,
+                    error: `This member does not have any sanction in this server.`
+                }).end()
+            
+            return res.status(200).json({
                 status: true,
-                data: sanctions || []
-            })
+                data: sanctions
+            }).end()
         })
 
         this.router.get('/servers/:guildId/verifications', async (req, res) => {
             if (req.params.guildId === undefined)
-                this.error(res, 403)
+                return res.status(403).json({
+                    status: false,
+                    error: `You should specify the 'server_id' first.`
+                }).end()
+
             const verifications = await Verification.find({
                 guildId: req.params.guildId
             })
 
-            res.status(200).json({
+            if (isNull(verifications))
+                return res.status(403).json({
+                    status: false,
+                    error: `This server does not have any verifications.`
+                }).end()
+            
+            return res.status(200).json({
                 status: true,
-                data: verifications || []
-            })
+                data: verifications
+            }).end()
         })
+
         this.router.get('/servers/:guildId/verifications/:userId', async (req, res) => {
             if (req.params.guildId === undefined || req.params.userId === undefined)
-                this.error(res, 403)
+                return res.status(403).json({
+                    status: false,
+                    error: `You should specify the 'server_id' and 'member_id' first.`
+                }).end()
+
             const verifications = await Verification.findOne({
                 guildId: req.params.guildId,
                 memberId: req.params.userId
             })
 
-            res.status(200).json({
+            if (isNull(verifications))
+                return res.status(403).json({
+                    status: false,
+                    error: `The object can't be found.`
+                }).end()
+
+            return res.status(200).json({
                 status: true,
-                data: verifications || {}
-            })
+                data: verifications
+            }).end()
         })
 
         this.router.get('/servers/:guildId/activity', async (req, res) => {
-            if (req.params.guildId === undefined)
-                this.error(res, 500)
+            if (isNull(req.params.guildId))
+                return res.status(403).json({
+                    status: false,
+                    error: `The 'server_id' must be specified.`
+                }).end()
+
             const activities = await Activity.find({
                 guildId: req.params.guildId
             }, null, {
@@ -106,34 +204,103 @@ export default class GuildRoutes extends AbstractRoutes {
                 }
             })
 
-            res.status(200).json({
+            if (isNull(activities))
+                return res.status(403).json({
+                    status: false,
+                    error: `The activities can't be found.`
+                }).end()
+            
+            return res.status(200).json({
                 status: true,
-                data: activities || []
-            })
+                data: activities
+            }).end()
         })
-        this.router.get('/servers/:guildId/activity/:id', async (req, res) => { })
-        this.router.post('/servers/:guildId/activity/add-activity', async (req, res) => { })
+
+        this.router.get('/servers/:guildId/activity/:id', async (req, res) => { 
+            if (isNull(req.params.id))
+                return res.status(403).json({
+                    status: false,
+                    error: `The 'activity_id' must be specified.`
+                }).end()
+
+            const activities = await Activity.findOne({
+                _id: req.params.id
+            })
+
+            if (isNull(activities))
+                return res.status(403).json({
+                    status: false,
+                    error: `The activity can't be found.`
+                }).end()
+            
+            return res.status(200).json({
+                status: true,
+                data: activities
+            }).end()
+        })
+
+        this.router.post('/servers/:guildId/activity/add-activity', async (req, res) => {
+            var data: ActivityModel = req.body
+
+            if (isNull(data.data))
+                return res.status(403).json({
+                    status: false,
+                    error: `You can\'t create a activity without data.`
+                }).end()
+
+            new Activity(data.data).save().catch(err => {
+                if (err) return this.error(res, 500)
+            })
+
+            return res.status(200).json({
+                status: true,
+                data: {
+                    activity: data.data,
+                    status: 'CREATED'
+                }
+            }).end()
+        })
 
         this.router.get('/servers/:guildId/messages', async (req, res) => {
-            if (req.params.guildId === undefined)
-                this.error(res, 404)
+            if (isNull(req.params.guildId))
+                return res.status(403).json({
+                    status: false,
+                    error: `The 'server_id' must be specified.`
+                }).end()
+
             const messages = await Message.find({ guildId: req.params.guildId })
-            res.status(200).json({
+
+            if (isNull(messages)) 
+                return res.status(403).json({
+                    status: false,
+                    error: `No messages found in this server.`
+                }).end()
+
+            return res.status(200).json({
                 status: true,
                 data: messages
-            })
+            }).end()
         })
 
         this.router.get('/servers/:guildId/messages/:memberId', async (req, res) => {
-            if (req.params.guildId === undefined)
-                this.error(res, 404)
-            if (req.params.memberId === undefined)
-                this.error(res, 404)
+            if (req.params.guildId === undefined || req.params.memberId === undefined)
+                return res.status(403).json({
+                    status: false,
+                    error: `You should specify the 'server_id' and 'member_id' first.`
+                }).end()
+
             const messages = await Message.find({ guildId: req.params.guildId, memberId: req.params.memberId })
-            res.status(200).json({
+
+            if (isNull(messages)) 
+                return res.status(403).json({
+                    status: false,
+                    error: `No messages found for this server/member.`
+                }).end()
+
+            return res.status(200).json({
                 status: true,
                 data: messages
-            })
+            }).end()
         })
     }
 }

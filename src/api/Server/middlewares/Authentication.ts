@@ -47,6 +47,7 @@ export default class Authentication extends BaseMiddleware {
                                     }).end()
                                 } else {
                                     next()
+                                    request.user = cb.session
                                 }
                             } else {
                                 response.status(403).json({

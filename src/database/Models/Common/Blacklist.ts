@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export interface Blacklist {
+export interface IBlacklist {
     userId: string;
     caseId: string;
     reason: string;
@@ -8,7 +8,7 @@ export interface Blacklist {
     registeredAt: number;
 }
 
-export default mongoose.model<Blacklist & mongoose.Document>("Blacklist", new mongoose.Schema<Blacklist & mongoose.Document>({
+export default mongoose.model<IBlacklist & mongoose.Document>("Blacklist", new mongoose.Schema<IBlacklist & mongoose.Document>({
     userId: { type: String },
     caseId: { type: String },
     reason: { type: String },

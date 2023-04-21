@@ -56,8 +56,8 @@ export function sanction(
                     {
                         type: 1,
                         components: [
-                            Riniya.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.com/server/${guild.id}/profile/${target.id}`),
-                            Riniya.instance.buttonManager.createLinkButton("Dashboard", "https://www.riniya.com/dashboard/" + guild.id)
+                            Riniya.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.uk/servers/${guild.id}/profiles/${target.id}`),
+                            Riniya.instance.buttonManager.createLinkButton("Dashboard", "https://dashboard.riniya.uk/servers/" + guild.id)
                         ]
                     }
                 ],
@@ -137,4 +137,82 @@ export function sanction(
                 .addField("Reason", reason, true)
         ]
     }
+}
+
+export function blacklist(
+    guild: Guild,
+    staff: User,
+    target: User,
+    reason: string) {
+    fetchGuild(guild.id).then(async (result) => {
+        if (result.logging) {
+            const channel: TextChannel = guild.channels.cache.get(result.loggingModeration) as TextChannel;
+            channel.send({
+                components: [
+                    {
+                        type: 1,
+                        components: [
+                            Riniya.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.uk/servers/${guild.id}/profiles/${target.id}`),
+                            Riniya.instance.buttonManager.createLinkButton("Dashboard", "https://dashboard.riniya.uk/servers/" + guild.id)
+                        ]
+                    }
+                ],
+                embeds: [
+                    new MessageEmbed({
+                        "title": "",
+                        "description": "A blacklist has been issued.",
+                        "color": 0xff3a20,
+                        "fields": [
+                            {
+                                "name": `Reason`,
+                                "value": `${reason}`,
+                                "inline": true
+                            },
+                            {
+                                "name": `Issued By`,
+                                "value": `${staff.username}`,
+                                "inline": true
+                            },
+                            {
+                                "name": `Target`,
+                                "value": `${target.username}`,
+                                "inline": true
+                            }
+                        ],
+                        "author": {
+                            "name": `Blacklist information`,
+                            "icon_url": `https://cdn.discordapp.com/attachments/1060741322358661191/1060745256636796948/a6d05968d7706183143518d96c9f066e.png`
+                        }
+                    })
+                ]
+            });
+        }
+    })
+}
+
+export function isNull(object: unknown): Boolean {
+    if (object === null || object === undefined)
+        return true
+    return false
+}
+
+export function isTypeNull<T>(object: unknown): Boolean {
+    if (object === null || object === undefined || !(object as T))
+        return true
+    return false
+}
+
+export declare type AuthenticationSession<USER> = {
+    clientToken?: string;
+    refreshToken?: string;
+    user?: USER;
+}
+
+export async function connect<T>(username: string, password: string): Promise<AuthenticationSession<T>> {
+
+    // TODO: Database connection / sync
+
+    return new Promise<AuthenticationSession<T>>((resolve, reject) => {
+
+    })
 }

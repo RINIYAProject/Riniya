@@ -13,12 +13,5 @@
 import AbstractRoutes from "../AbstractRoutes";
 
 export default class OsintRoutes extends AbstractRoutes {
-    public register() {
-        this.router.post('/osint/phone', async (req, res) => {
-            res.status(200).json({
-                status: false,
-                error: req.body.identifier
-            })
-        })
-    }
+    public register() {}
 }
