@@ -58,20 +58,21 @@ isProtected = The button will only interact with the peoples inside the develope
 
 #### Progression
 - [X] The verification system
-- [ ] Select menu self roles
+- [X] Select menu self roles
 - [X] The backend
 - [X] The websocket
 - [ ] Dashboard & Front website
+- [ ] Giveaways system
+- [ ] Authentication API
 - [ ] Level & Economy system
 - [ ] The fursona profile
-- [ ] The file bucket server
+- [X] The file bucket server
 - [ ] The minecraft redis messager
 - [ ] Context menus
 - [X] All base commands
 - [X] Database improvement
 - [X] Code optimisation & refactor
-- [ ] Fixing TSC warnings
-- [ ] RiniyaLoader
+- [X] Fixing TSC warnings
 
 #### Disclaimers
 This project is under the GNU-GPLv3 license. You must follow the license and guidelines to use this project. 
