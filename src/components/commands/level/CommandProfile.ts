@@ -38,14 +38,14 @@ export default class CommandProfile extends BaseCommand {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton(`${target.username}'s Profile`, `https://www.riniya.com/server/${guild.id}/profile/${target.id}`)
+                        this.instance.buttonManager.createLinkButton(`${target.username}'s Profile`, `https://www.riniya.uk/servers/${guild.id}/profiles/${target.id}`)
                     ]
                 }
             ],
             embeds: [
                 new MessageEmbed()
                     .setTitle("Riniya - Profile")
-                    .setDescription("You can look at the profile on our website.")
+                    .setDescription("You can look at the profile on our website :)")
                     .setColor("#36393f")
             ]
         });

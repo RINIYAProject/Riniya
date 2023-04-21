@@ -27,10 +27,10 @@ export default class CommandHelp extends BaseCommand {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton("Documentation", "https://docs.riniya.com"),
-                        this.instance.buttonManager.createLinkButton("Dashboard", "https://www.riniya.com/dashboard"),
-                        this.instance.buttonManager.createLinkButton("Commands", "https://www.riniya.com/commands"),
-                        this.instance.buttonManager.createLinkButton("Report a bug", "https://www.riniya.com/support")
+                        this.instance.buttonManager.createLinkButton("Documentation", "https://docs.riniya.uk"),
+                        this.instance.buttonManager.createLinkButton("Dashboard", "https://dashboard.riniya.uk"),
+                        this.instance.buttonManager.createLinkButton("Commands", "https://www.riniya.uk/commands"),
+                        this.instance.buttonManager.createLinkButton("Report a issue", "https://github.com/RINIYAProject/Riniya/issues/new")
                     ]
                 }
             ],

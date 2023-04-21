@@ -28,14 +28,16 @@ export default class CommandDonate extends BaseCommand {
                     type: 1,
                     components: [
                         this.instance.buttonManager.createLinkButton("Premium", "https://www.riniya.com/premium"),
-                        this.instance.buttonManager.createLinkButton("Donate", "https://www.riniya.com/donate")
+                        this.instance.buttonManager.createLinkButton("Github Sponsor", "https://github.com/sponsors/NebraskyTheWolf"),
+                        this.instance.buttonManager.createLinkButton("Patreon", "https://www.patreon.com/Vakea"),
+                        this.instance.buttonManager.createLinkButton("Ko-Fi", "https://ko-fi.com/Vakea")
                     ]
                 }
             ],
             embeds: [
                 new MessageEmbed()
                     .setTitle("Riniya - Donate")
-                    .setDescription("To thanks all our donators, your name will appear on our donators page.")
+                    .setDescription("To thanks all our donators, your name will appear on our donators page, we really appreciate all kind of supports <3")
                     .setColor("#36393f")
             ]
         });

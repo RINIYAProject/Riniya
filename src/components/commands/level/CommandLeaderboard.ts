@@ -28,14 +28,14 @@ export default class CommandLeaderboard extends BaseCommand {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton("Leaderboard", `https://www.riniya.com/server/${guild.id}/leaderboard`)
+                        this.instance.buttonManager.createLinkButton("Leaderboard", `https://www.riniya.uk/servers/${guild.id}/leaderboards`)
                     ]
                 }
             ],
             embeds: [
                 new MessageEmbed()
                     .setTitle("Riniya - Leaderboard")
-                    .setDescription("You can look at the leaderboard on our website.")
+                    .setDescription("You can look at the leaderboard on our website :)")
                     .setColor("#36393f")
             ]
         });

@@ -27,9 +27,9 @@ export default class CommandPing extends BaseCommand {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton("Status Center", "https://www.riniya.com/status"),
-                        this.instance.buttonManager.createLinkButton("Support", "https://www.riniya.com/support"),
-                        this.instance.buttonManager.createLinkButton("Feedback", "https://www.riniya.com/feedback")
+                        this.instance.buttonManager.createLinkButton("Status Center", "https://status.riniya.uk"),
+                        this.instance.buttonManager.createLinkButton("Support", "https://discord.gg/un87saPuCT"),
+                        this.instance.buttonManager.createLinkButton("Feedback", "https://www.riniya.uk/feedback")
                     ]
                 }
             ],

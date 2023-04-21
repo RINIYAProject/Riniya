@@ -24,34 +24,34 @@ export default class CommandAbout extends BaseCommand {
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const message: MessageEmbed = new MessageEmbed()
             .setTitle("Riniya - About")
-            .setDescription("Thank you for paying attention to Riniya, here you will find all the information and link of the service")
+            .setDescription("Thank you for paying attention to Riniya, there you will find all the information and link of the service")
             .addField("Version", this.instance.version, true)
             .addField("Author", "Vakea#0365", true)
             .setColor("#36393f");
 
         const website: MessageButton = new MessageButton()
-            .setURL("https://www.riniya.bot")
+            .setURL("https://www.riniya.uk")
             .setLabel("Website")
             .setStyle("LINK");
 
         const dashboard: MessageButton = new MessageButton()
-            .setURL("https://dashboard.riniya.bot")
+            .setURL("https://dashboard.riniya.uk")
             .setLabel("Dashboard")
             .setStyle("LINK");
 
         const documentation: MessageButton = new MessageButton()
-            .setURL("https://doc.riniya.bot")
+            .setURL("https://docs.riniya.uk")
             .setLabel("Documentation")
             .setStyle("LINK");
 
         const report: MessageButton = new MessageButton()
-            .setURL("https://report.riniya.bot")
-            .setLabel("Report")
+            .setURL("https://github.com/RINIYAProject/Riniya/issues/new")
+            .setLabel("Issues")
             .setStyle("LINK");
 
         const github: MessageButton = new MessageButton()
             .setURL("https://github.com/RINIYAProject/Riniya")
-            .setLabel("Github")
+            .setLabel("Repository")
             .setStyle("LINK");
 
         inter.reply({

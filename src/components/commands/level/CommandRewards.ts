@@ -27,14 +27,14 @@ export default class CommandRewards extends BaseCommand {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton("Rewards", `https://www.riniya.com/server/${guild.id}/rewards`)
+                        this.instance.buttonManager.createLinkButton("Rewards", `https://www.riniya.uk/servers/${guild.id}/rewards`)
                     ]
                 }
             ],
             embeds: [
                 new MessageEmbed()
                     .setTitle("Riniya - Rewards")
-                    .setDescription("All the rewards available during this month.")
+                    .setDescription("All the rewards available during this month :)")
                     .setColor("#36393f")
             ]
         });

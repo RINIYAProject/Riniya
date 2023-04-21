@@ -1,0 +1,15 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// The current database to use.
+use('Riniya');
+
+// Create a new document in the collection.
+db.getCollection('blacklists').insertOne({
+  userId: '1093978083536666706',
+  caseId: '890f580a-cf3b-4c51-8c18-3f5b3e04199e',
+  reason: '',
+  issuedBy: '382918201241108481',
+  registeredAt: 1677771148844,
+  __v: 0
+});

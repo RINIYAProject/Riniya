@@ -41,7 +41,7 @@ export default class GuildRoutes extends AbstractRoutes {
                 }).end()
             return res.status(200).json({
                 status: true,
-                data: (await Riniya.instance.guilds.fetch()).values()
+                data: Riniya.instance.guilds.cache.values()
             }).end()
         })
 

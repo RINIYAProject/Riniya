@@ -14,7 +14,7 @@ export default class SessionTask extends BaseTask {
                             username: member.user.username,
                             avatar: member.avatarURL({ format: 'png', size: 128 }),
                             hexColor: member.user.accentColor
-                        })
+                        }).save()
                     })
                 })
                 this.instance.serverManager.websocket.sendPacket("RTC_MEMBERS_ACK", {  }, "*")
