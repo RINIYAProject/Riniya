@@ -10,8 +10,12 @@ import AbstractRoutes from "../AbstractRoutes";
 export default class AuthRoutes extends AbstractRoutes {
     public register() {
        this.router.post("/security/login", async (req, res) => {
-            var username: String = req.body.username
-            var password: String = req.body.password
+            var username: string = req.body.username
+            var password: string = req.body.password
+
+            Riniya.instance.logger.warn("DEBUG : " + username)
+            Riniya.instance.logger.warn("DEBUG : " + password)
+
 
             if (isNull(username) || isNull(password)) {
                 return res.status(403).json({
