@@ -36,7 +36,7 @@ export default class AuthHelper {
             clientToken: clientToken
         })
 
-        if (!isNull(invalidated.clientToken)) {
+        if (!isNull(invalidated.clientToken) || !invalidated) {
             return callback({
                 status: false,
                 error: "This session has been invalidated."
