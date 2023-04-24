@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 import History from "@riniya.ts/database/Security/History";
+import Invalidated from "@riniya.ts/database/Security/Invalidated";
 import Session from "@riniya.ts/database/Security/Session";
+import { isNull } from "@riniya.ts/types";
 
 export declare interface ISession {
     userId: string;
@@ -29,6 +31,18 @@ export declare interface ICallback {
 
 export default class AuthHelper {
     public async identify(accessToken: string, clientToken: string, callback: Function) {
+        const invalidated = await Invalidated.findOne({
+            accessToken: accessToken,
+            clientToken: clientToken
+        })
+
+        if (!isNull(invalidated.clientToken)) {
+            return callback({
+                status: false,
+                error: "This session has been invalidated."
+            })
+        }
+
         const SessionData = await Session.findOne({
             accessToken: accessToken,
             clientToken: clientToken

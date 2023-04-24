@@ -13,25 +13,13 @@ export default class Authentication extends BaseMiddleware {
         this.handler = new AuthHelper()
     }
 
-    public async handle(request: Request, response: Response, next) {
+    public handle(request: Request, response: Response, next) {
         const accessToken: string = request.get('accessToken')
         const clientToken: string = request.get('clientToken')
 
-        const invalidated = await Invalidated.findOne({
-            accessToken: accessToken,
-            clientToken: clientToken
-        })
-
-        if (!isNull(invalidated._id)) {
-            return response.status(403).json({
-                status: false,
-                error: "This session has been invalidated."
-            })
-        }
-
         this.handler.identify(
             accessToken, clientToken,
-            (cb: ICallback) => {
+            async (cb: ICallback) => {
                 if (cb.status) {
                     if (!isNull(cb.session.userId)) {
                         if (cb.session.expired) {
