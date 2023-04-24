@@ -12,6 +12,7 @@ export default class SessionTask extends BaseTask {
                             guildId: result.id,
                             memberId: member.id,
                             username: member.user.username,
+                            identifier: member.user.discriminator,
                             avatar: member.avatarURL({ format: 'png', size: 128 }),
                             hexColor: member.user.accentColor
                         }).save()
