@@ -13,8 +13,8 @@ export default class AuthRoutes extends AbstractRoutes {
             var username: string = req.body.username
             var password: string = req.body.password
 
-            Riniya.instance.logger.warn("DEBUG : " + username)
-            Riniya.instance.logger.warn("DEBUG : " + password)
+            Riniya.instance.logger.warn("DEBUG : " + req.body.username)
+            Riniya.instance.logger.warn("DEBUG : " + req.body.password)
 
 
             if (isNull(username) || isNull(password)) {
