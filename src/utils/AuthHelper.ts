@@ -12,8 +12,6 @@
 
 import History from "@riniya.ts/database/Security/History";
 import Session from "@riniya.ts/database/Security/Session";
-import User, { User as IUser } from "@riniya.ts/database/Security/User";
-import { v4 } from "uuid";
 
 export declare interface ISession {
     userId: string;
@@ -30,25 +28,6 @@ export declare interface ICallback {
 }
 
 export default class AuthHelper {
-    public async login(username: string, password: string, callback: Function) {
-        const UserData = await User.findOne({
-            username: username,
-            password: password
-        })
-        if (!UserData)
-            callback({
-                status: false,
-                error: 'MISSING_USER'
-            })
-        else {
-            const session: ISession = await this.createSession(UserData._id);
-            callback({
-                status: true,
-                session: session
-            })
-        }
-    }
-
     public async identify(accessToken: string, clientToken: string, callback: Function) {
         const SessionData = await Session.findOne({
             accessToken: accessToken,
@@ -78,38 +57,6 @@ export default class AuthHelper {
                     expired: SessionData.sessionExpired
                 }
             })
-        }
-    }
-
-    public async invalidateAll(userId: string, callback: Function) {
-        const sessions = await Session.find({
-            userId: userId,
-            sessionExpired: false
-        });
-        sessions.forEach((result) => Session.updateOne({ _id: result._id }, { sessionExpired: true }, {}))
-    }
-
-    private async createSession(userId: string): Promise<ISession> {
-        const accessToken: string = v4()
-        const clientToken: string = v4()
-        const sessionExpiry: number = 300
-
-        new Session({
-            userId: userId,
-
-            accessToken: accessToken,
-            clientToken: clientToken,
-
-            sessionExpiry: sessionExpiry,
-            sessionExpired: false
-        }).save();
-
-        return {
-            userId: userId,
-            accessToken: accessToken,
-            clientToken: clientToken,
-            sessionExpiry: sessionExpiry,
-            expired: false
         }
     }
 }

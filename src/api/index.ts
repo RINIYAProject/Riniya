@@ -31,6 +31,8 @@ import OsintRoutes from "./Server/routes/osint-routes";
 import * as parser from "body-parser"
 
 import RateLimit from "express-rate-limit"
+import AuthRoutes from "./Server/routes/auth-routes";
+import BlacklistRoutes from "./Server/routes/blacklist-routes";
 
 const app = express();
 const limiter = RateLimit({
@@ -101,7 +103,10 @@ export default class ServerManager {
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
+            if (route.protected)
+                app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
+            else 
+                app.use('/api', route.routing())
         })
         this.server.listen(3443)
         this.gateway.listen(8443)
@@ -109,6 +114,8 @@ export default class ServerManager {
 
     public registerServers(): void {
         this.routes.add(new ApiRoutes(false))
+        this.routes.add(new AuthRoutes(false))
+        this.routes.add(new BlacklistRoutes(true))
         this.routes.add(new GuildRoutes(true))
         this.routes.add(new UserRoutes(true))
         this.routes.add(new OsintRoutes(true))

@@ -22,7 +22,6 @@ export default class SessionManager extends BaseManager<ISession[]> {
                     getLogger().info("[SessionManager] : Metadata " + documents.objectId + ", created at " + documents.cachedAt + ", tuple-size=" + documents.data.length)
 
                     documents.data.map(x => {
-                        getLogger().info("[SessionManager] : Fetching " + x.clientToken.split("-")[0] + "...")
                         this.sessions.add(documents.objectId, x)
                     })
 
