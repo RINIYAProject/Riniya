@@ -31,18 +31,6 @@ export declare interface ICallback {
 
 export default class AuthHelper {
     public async identify(accessToken: string, clientToken: string, callback: Function) {
-        const invalidated = await Invalidated.findOne({
-            accessToken: accessToken,
-            clientToken: clientToken
-        })
-
-        if (!isNull(invalidated.clientToken) || !invalidated) {
-            return callback({
-                status: false,
-                error: "This session has been invalidated."
-            })
-        }
-
         const SessionData = await Session.findOne({
             accessToken: accessToken,
             clientToken: clientToken
@@ -60,6 +48,18 @@ export default class AuthHelper {
                 clientToken: SessionData.clientToken,
                 createdAt: new Date()
             }).save();
+
+            const invalidated = await Invalidated.findOne({
+                accessToken: accessToken,
+                clientToken: clientToken
+            })
+    
+            if (!isNull(invalidated)) {
+                return callback({
+                    status: false,
+                    error: "This session has been invalidated."
+                })
+            }
 
             callback({
                 status: true,
