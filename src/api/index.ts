@@ -51,14 +51,12 @@ export default class ServerManager {
     private server: http.Server
     private gateway: http.Server
     private fileHelper: FileHelper
-    private auth: Authentication
 
     public websocket: Websocket
 
     public constructor() {
         this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
-        this.auth = new Authentication()
 
         // DEBUG
         app.set('trust proxy', 1) // trust first proxy
@@ -103,22 +101,19 @@ export default class ServerManager {
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            if (route.protected)
-                app.use('/api', (req, res, next) => this.auth.handle(req, res, next), route.routing())
-            else 
-                app.use('/api', route.routing())
+            app.use('/api', route.routing())
         })
         this.server.listen(3443)
         this.gateway.listen(8443)
     }
 
     public registerServers(): void {
-        this.routes.add(new ApiRoutes(false))
-        this.routes.add(new AuthRoutes(false))
-        this.routes.add(new BlacklistRoutes(true))
-        this.routes.add(new GuildRoutes(true))
-        this.routes.add(new UserRoutes(true))
-        this.routes.add(new OsintRoutes(true))
+        this.routes.add(new ApiRoutes())
+        this.routes.add(new AuthRoutes())
+        this.routes.add(new BlacklistRoutes())
+        this.routes.add(new GuildRoutes())
+        this.routes.add(new UserRoutes())
+        this.routes.add(new OsintRoutes())
     }
 
     public registerServer(server: AbstractRoutes): void {

@@ -15,6 +15,7 @@ import { Router, Response } from "express";
 import express from "express";
 
 import CacheManager from "../../cache/CacheManager";
+import Authentication from "./middlewares/Authentication";
 
 export declare enum ErrorType {
     SUCCESS_CALLBACK = 200,
@@ -26,16 +27,16 @@ export declare enum ErrorType {
 }
 
 export default abstract class AbstractRoutes extends Base {
-    public protected: boolean
     protected router: Router
-
     protected readonly cache: CacheManager
+    protected auth: Authentication
 
-    public constructor(isProtected: boolean) {
+    public constructor() {
         super("routes", "", "SERVER")
-        this.protected = isProtected
         this.router = router;
         this.cache = new CacheManager("api")
+        this.auth = new Authentication()
+
 
         this.register(); // SELF REGISTERING.
     }

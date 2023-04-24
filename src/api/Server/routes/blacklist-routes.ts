@@ -7,7 +7,7 @@ import AbstractRoutes from "../AbstractRoutes";
 
 export default class BlacklistRoutes extends AbstractRoutes {
     public register() {
-        this.router.put('/blacklist/add-user', async (req, res) => {
+        this.router.put('/blacklist/add-user', (req, res, next) => this.auth.handle(req, res, next),  async (req, res) => {
             const user: IBlacklist = req.body
 
             if (isNull(user))
@@ -39,7 +39,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
             }).end() 
         })
 
-        this.router.patch('/blacklist/edit-user', async (req, res) => {
+        this.router.patch('/blacklist/edit-user', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             const user: IBlacklist = req.body
 
             if (isNull(user) && !(user as IBlacklist))
@@ -73,7 +73,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
             }).end() 
         })
 
-        this.router.delete('/blacklist/remove-user', async (req, res) => {
+        this.router.delete('/blacklist/remove-user', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.body.user))
                 return res.status(404).json({
                     status: false,
@@ -100,7 +100,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
             }).end() 
         })
 
-        this.router.get('/blacklist/get-user/:user', async (req, res) => {
+        this.router.get('/blacklist/get-user/:user', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.user))
                 return res.status(404).json({
                     status: false,
@@ -127,7 +127,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
             }).end() 
         })
 
-        this.router.get('/blacklist/get-users', async (req, res) => {
+        this.router.get('/blacklist/get-users', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             const users = await Blacklist.find()
 
             if (isNull(users))

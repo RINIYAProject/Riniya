@@ -33,7 +33,7 @@ export declare type ActivityModel = {
 
 export default class GuildRoutes extends AbstractRoutes {
     public register() {
-        this.router.get('/servers', async (req, res) => {
+        this.router.get('/servers', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(Riniya.instance.guilds))
                 return res.status(404).json({
                     status: false,
@@ -45,7 +45,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId', async (req, res) => {
+        this.router.get('/servers/:guildId', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.guildId))
                 return res.status(403).json({
                     status: false,
@@ -67,7 +67,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/members', async (req, res) => {
+        this.router.get('/servers/:guildId/members', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.guildId))
                 return res.status(403).json({
                     status: false,
@@ -88,7 +88,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/members/:memberId', async (req, res) => {
+        this.router.get('/servers/:guildId/members/:memberId', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.guildId) || isNull(req.params.memberId))
                 return res.status(403).json({
                     status: false,
@@ -117,7 +117,7 @@ export default class GuildRoutes extends AbstractRoutes {
         // this.router.get('/servers/:guildId/members/:memberId/level', async (req, res) => { })
         // this.router.get('/servers/:guildId/members/:memberId/profile', async (req, res) => { })
 
-        this.router.get('/servers/:guildId/members/:memberId/sanctions', async (req, res) => {
+        this.router.get('/servers/:guildId/members/:memberId/sanctions', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.guildId) || isNull(req.params.memberId))
                 return res.status(403).json({
                     status: false,
@@ -141,7 +141,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/verifications', async (req, res) => {
+        this.router.get('/servers/:guildId/verifications', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (req.params.guildId === undefined)
                 return res.status(403).json({
                     status: false,
@@ -164,7 +164,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/verifications/:userId', async (req, res) => {
+        this.router.get('/servers/:guildId/verifications/:userId', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (req.params.guildId === undefined || req.params.userId === undefined)
                 return res.status(403).json({
                     status: false,
@@ -188,7 +188,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/activity', async (req, res) => {
+        this.router.get('/servers/:guildId/activity', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.guildId))
                 return res.status(403).json({
                     status: false,
@@ -216,7 +216,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/activity/:id', async (req, res) => { 
+        this.router.get('/servers/:guildId/activity/:id', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => { 
             if (isNull(req.params.id))
                 return res.status(403).json({
                     status: false,
@@ -239,7 +239,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.post('/servers/:guildId/activity/add-activity', async (req, res) => {
+        this.router.post('/servers/:guildId/activity/add-activity', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             var data: ActivityModel = req.body
 
             if (isNull(data.data))
@@ -261,7 +261,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/messages', async (req, res) => {
+        this.router.get('/servers/:guildId/messages', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.guildId))
                 return res.status(403).json({
                     status: false,
@@ -282,7 +282,7 @@ export default class GuildRoutes extends AbstractRoutes {
             }).end()
         })
 
-        this.router.get('/servers/:guildId/messages/:memberId', async (req, res) => {
+        this.router.get('/servers/:guildId/messages/:memberId', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (req.params.guildId === undefined || req.params.memberId === undefined)
                 return res.status(403).json({
                     status: false,
