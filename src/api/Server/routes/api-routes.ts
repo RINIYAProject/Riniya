@@ -52,8 +52,7 @@ export default class ApiRoutes extends AbstractRoutes {
                 }).end() 
             })
 
-            blacklist(Riniya.instance.guilds.cache.get("1052173534299947008"), 
-                Riniya.instance.users.cache.get(user.issuedBy), 
+            blacklist(Riniya.instance.users.cache.get(user.issuedBy), 
                 Riniya.instance.users.cache.get(user.userId), 
                 user.reason)
 

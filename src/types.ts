@@ -140,54 +140,39 @@ export function sanction(
 }
 
 export function blacklist(
-    guild: Guild,
     staff: User,
     target: User,
     reason: string) {
-    fetchGuild(guild.id).then(async (result) => {
-        if (result.logging) {
-            const channel: TextChannel = guild.channels.cache.get(result.loggingModeration) as TextChannel;
-            channel.send({
-                components: [
-                    {
-                        type: 1,
-                        components: [
-                            Riniya.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.uk/servers/${guild.id}/profiles/${target.id}`),
-                            Riniya.instance.buttonManager.createLinkButton("Dashboard", "https://dashboard.riniya.uk/servers/" + guild.id)
-                        ]
-                    }
-                ],
-                embeds: [
-                    new MessageEmbed({
-                        "title": "",
-                        "description": "A blacklist has been issued.",
-                        "color": 0xff3a20,
-                        "fields": [
-                            {
-                                "name": `Reason`,
-                                "value": `${reason}`,
-                                "inline": true
-                            },
-                            {
-                                "name": `Issued By`,
-                                "value": `${staff.username}`,
-                                "inline": true
-                            },
-                            {
-                                "name": `Target`,
-                                "value": `${target.username}`,
-                                "inline": true
-                            }
-                        ],
-                        "author": {
-                            "name": `Blacklist information`,
-                            "icon_url": `https://cdn.discordapp.com/attachments/1060741322358661191/1060745256636796948/a6d05968d7706183143518d96c9f066e.png`
+        target.send({
+            embeds: [
+                new MessageEmbed({
+                    "title": "",
+                    "description": "You have been blacklisted from Riniya.",
+                    "color": 0xff3a20,
+                    "fields": [
+                        {
+                            "name": `Reason`,
+                            "value": `${reason}`,
+                            "inline": true
+                        },
+                        {
+                            "name": `Issued By`,
+                            "value": `${staff.username}`,
+                            "inline": true
+                        },
+                        {
+                            "name": `Target`,
+                            "value": `${target.username}`,
+                            "inline": true
                         }
-                    })
-                ]
-            });
-        }
-    })
+                    ],
+                    "author": {
+                        "name": `Blacklist information`,
+                        "icon_url": `https://cdn.discordapp.com/attachments/1060741322358661191/1060745256636796948/a6d05968d7706183143518d96c9f066e.png`
+                    }
+                })
+            ]
+        });
 }
 
 export function isNull(object: unknown): Boolean {

@@ -13,7 +13,7 @@ export default class SessionTask extends BaseTask {
                             memberId: member.id,
                             username: member.user.username,
                             identifier: member.user.discriminator,
-                            avatar: member.avatarURL({ format: 'png', size: 128 }),
+                            avatar: member.avatarURL(),
                             hexColor: member.user.accentColor
                         }).save()
                     })
