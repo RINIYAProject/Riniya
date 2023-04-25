@@ -38,7 +38,7 @@ export default class OptionMap<T, V> {
         return this.map.delete(key);
     }
 
-    public size(): Number {
+    public size(): number {
         return this.map.size;
     }
 

@@ -11,15 +11,33 @@
 /* ************************************************************************** */
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
+import Tuple from "@riniya.ts/utils/Tuple";
 import { v4 } from "uuid";
 
 export default class Ready extends BaseEvent {
+
+    private activities: Tuple<string> = new Tuple<string>()
+
     public constructor() {
         super("ready", () => {
-            this.instance.user.setStatus("online");
-            this.instance.user.setActivity(`Lurk at cutie fluffies`, { type: "WATCHING" });
+            this.instance.user.setActivity(`Initializing...`, { type: "LISTENING" });
+            this.instance.user.setStatus("idle");
+
+            this.activities.add(`Lurk at ${this.instance.users.cache.size} cuties UwU`)
+            this.activities.add(`Handling ${this.instance.guilds.cache.size} servers :D`)
+            this.activities.add(`RINIYA Is still in developement.`)
+            this.activities.add(`Thank you for supporting us :D`)
+            this.activities.add(`/help for more informations`)
+
+            setInterval(() => {
+                this.instance.user.setActivity({
+                    type: "WATCHING",
+                    name: this.activities.random()
+                })
+            }, 5000)
 
             this.instance.loaded = true;
+            this.instance.user.setStatus("online");
             this.instance.logger.info('The system is ready.');
 
             this.instance.serverManager.websocket.sendPacket("RTC_CLIENT_STATE", {

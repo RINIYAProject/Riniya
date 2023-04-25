@@ -46,7 +46,7 @@ export default class InteractionEvent extends BaseEvent {
                         if (developer)
                             return handler.handler(interaction, interaction.member as GuildMember, interaction.guild);
                         else
-                            return ((interaction) as CommandInteraction).reply({
+                            return ((interaction) as CommandInteraction<"cached">).reply({
                                 content: 'Only my developers can execute this command.',
                                 ephemeral: true
                             });
@@ -54,7 +54,7 @@ export default class InteractionEvent extends BaseEvent {
                         if ((interaction.channel as TextChannel).nsfw)
                             return handler.handler(interaction, interaction.member as GuildMember, interaction.guild);
                         else
-                            return ((interaction) as CommandInteraction).reply({
+                            return ((interaction) as CommandInteraction<"cached">).reply({
                                 content: 'Sorry, this channel is not NSFW.',
                                 ephemeral: true
                             });
@@ -62,7 +62,7 @@ export default class InteractionEvent extends BaseEvent {
                         if (interaction.member.permissions.has("MODERATE_MEMBERS"))
                             return handler.handler(interaction, interaction.member as GuildMember, interaction.guild);
                         else
-                            return ((interaction) as CommandInteraction).reply({
+                            return ((interaction) as CommandInteraction<"cached">).reply({
                                 content: 'Sorry, you need to be Moderator to execute this command',
                                 ephemeral: true
                             });
@@ -78,7 +78,7 @@ export default class InteractionEvent extends BaseEvent {
                         if (handler.setting.get("ownerId") === interaction.member.id)
                             return handler.handler(interaction);
                         else
-                            return ((interaction) as ButtonInteraction).reply({
+                            return ((interaction) as ButtonInteraction<"cached">).reply({
                                 content: 'You are not allowed to click on this button.',
                                 ephemeral: true
                             });
@@ -86,7 +86,7 @@ export default class InteractionEvent extends BaseEvent {
                         if (developer)
                             return handler.handler(interaction);
                         else
-                            return ((interaction) as ButtonInteraction).reply({
+                            return ((interaction) as ButtonInteraction<"cached">).reply({
                                 content: 'You are not allowed to click on this button.',
                                 ephemeral: true
                             });
@@ -95,7 +95,7 @@ export default class InteractionEvent extends BaseEvent {
                 }
             } catch (err) {
                 this.instance.logger.error(`InteractionEvent:(${interaction.id}) | ${err}`);
-                return ((interaction) as CommandInteraction).reply({
+                return ((interaction) as CommandInteraction<"cached">).reply({
                     content: 'Error occured while executing interaction.',
                     ephemeral: true
                 });
