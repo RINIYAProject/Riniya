@@ -63,7 +63,7 @@ isProtected = The button will only interact with the peoples inside the develope
 - [X] The websocket
 - [ ] Dashboard & Front website
 - [ ] Giveaways system
-- [ ] Authentication API
+- [X] Authentication API
 - [ ] Level & Economy system
 - [ ] The fursona profile
 - [X] The file bucket server
