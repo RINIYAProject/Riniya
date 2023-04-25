@@ -41,58 +41,5 @@ export default class CommandInvite extends BaseCommand {
 
     async handler(inter: CommandInteraction<"cached">, member: GuildMember, guild: Guild) {
         const amounts: number = inter.options.getNumber("quantity") || 5;
-        const fG = await GuildData.findOne({
-            guildId: guild.id
-        });
-
-        this.cache.clear()
-
-        const message: MessageEmbed = new MessageEmbed();
-        message.setTitle("Generated invites");
-        message.setColor("RED");
-        message.setDescription("All this invites are ephemeral and can only be used 1 time.");
-
-        for (var i = 0; i < amounts; i++) {
-            await guild.invites.create(guild.systemChannelId, {
-                maxUses: 1,
-                unique: true,
-                reason: `Trusted user ${v4()}`
-            }).then(invite => {
-                new Invites({
-                    guildId: guild.id,
-                    inviteCode: invite.code
-                }).save();
-                this.cache.add(invite)
-            })
-        }
-
-        const data = this.cache.getAll().map((id, invite) => {
-            return {
-                name: `Invite ${invite.split("-")[0]}`,
-                value: id.url,
-                inline: false
-            }
-        })
-
-        message.addFields(data);
-        message.setAuthor(`${amounts} invite has been created.`);
-
-        if (fG.logging) {
-            const log: TextChannel = guild.channels.cache.get(fG.loggingChannel) as TextChannel
-            log.send({
-                embeds: [
-                    new MessageEmbed()
-                        .setAuthor(`${amounts} invite${(amounts > 1 ? 's' : '')} created.`)
-                        .setTitle("INVITE CREATION LOG")
-                        .setColor("RED")
-                        .addField("Issued By", `${member.user.username}`)
-                ]
-            })
-        }
-
-        inter.reply({
-            embeds: [message],
-            ephemeral: true
-        })
     }
 }
