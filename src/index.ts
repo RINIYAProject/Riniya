@@ -14,8 +14,15 @@ import * as dotenv from "dotenv";
 
 import Sentry from "@sentry/node"
 import { ProfilingIntegration } from "@sentry/profiling-node";
+import { RewriteFrames } from "@sentry/integrations";
 
 dotenv.config()
+
+global.__rootdir__ = __dirname || process.cwd();
+
+declare global {
+  var __rootdir__: string;
+}
 
 import 'module-alias/register';
 import { Client, Intents } from "discord.js";
@@ -119,6 +126,9 @@ export default class Riniya extends Client {
             tracesSampleRate: 1.0,
             profilesSampleRate: 1.0,
             integrations: [
+                new RewriteFrames({
+                    root: global.__rootdir__,
+                  }),
                 new ProfilingIntegration()
             ]
         })

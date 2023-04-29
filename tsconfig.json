@@ -2,6 +2,8 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "suppressImplicitAnyIndexErrors": true,
+    "ignoreDeprecations": "5.0",
+    "allowJs": true,
     "target": "ES6",
     "module": "CommonJS",
     "moduleResolution": "node",
