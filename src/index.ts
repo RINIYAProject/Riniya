@@ -114,7 +114,7 @@ export default class Riniya extends Client {
         this.logger.info(`Version: ${this.version}`)
         this.logger.info(`Revision: ${this.revision}`)
 
-        Sentry.init({
+        /*Sentry.init({
             dsn: process.env.SENTRY_DSN,
             attachStacktrace: true,
             release: this.version,
@@ -131,7 +131,7 @@ export default class Riniya extends Client {
                   }),
                 new ProfilingIntegration()
             ]
-        })
+        })*/
 
         discordModals(this);
 
