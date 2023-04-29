@@ -38,7 +38,7 @@ export default class AuthRoutes extends AbstractRoutes {
                 })
             }
 
-            if (database.permissions < 0x0000010000) {
+            if (isNull(database.metadata?.permissions["admin:auth"])) {
                 return res.status(403).json({
                     status: false,
                     error: "INSUFFICIENT_PERMISSION"
