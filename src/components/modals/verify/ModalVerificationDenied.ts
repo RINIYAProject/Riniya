@@ -41,6 +41,8 @@ export default class ModalVerificationDenied extends BaseModal {
             issuerName: interaction.member.user.username,
             status: 'denied',
             updatedAt: Date.now()
+        }, {
+            upsert: false
         })
 
         new AcitivityHelper()

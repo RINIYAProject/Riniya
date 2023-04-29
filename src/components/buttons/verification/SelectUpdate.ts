@@ -79,6 +79,8 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                     issuerName: interaction.member.user.username,
                     status: 'verified',
                     updatedAt: Date.now()
+                }, {
+                    upsert: false
                 })
 
                 new AcitivityHelper()
@@ -106,7 +108,7 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                     ).addTextInput(
                         new TextInputComponent()
                             .setCustomId("row_user_id")
-                            .setLabel("USER ID")
+                            .setLabel("USER ID ( DO NOT EDIT )")
                             .setRequired(true)
                             .setDefaultValue(member.id)
                     ).generate(interaction)
@@ -122,6 +124,8 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                     issuerName: interaction.member.user.username,
                     status: 'banned',
                     updatedAt: Date.now()
+                }, {
+                    upsert: false
                 })
 
                 new AcitivityHelper()

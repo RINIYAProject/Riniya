@@ -18,7 +18,6 @@ import {
 } from "discord.js";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import GuildModel from "@riniya.ts/database/Guild/Guild";
-import Verification from "@riniya.ts/database/Guild/Verification";
 import ModalHelper from "@riniya.ts/utils/ModalHelper";
 import {
     TextInputComponent

@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 import Riniya from "@riniya.ts";
+import { isNull } from "@riniya.ts/types";
 
 export default class InitChecker {
-    public init(): boolean {
+    public init(): Boolean {
         if (this.unset("TOKEN"))
             return this.print("TOKEN")
         else if (this.unset("MONGODB"))
@@ -26,14 +27,16 @@ export default class InitChecker {
             return this.print("REDIS_URL")
         else if (this.unset("TWITTER_TOKEN"))
             return this.print("TWITTER_TOKEN")
+        else if (this.unset("SENTRY_DSN"))
+            return this.print("SENTRY_DSN")
         return false
     }
 
-    private unset(key: string): boolean {
-        return process.env[key] === undefined
+    private unset(key: string): Boolean {
+        return isNull(process.env[key])
     }
 
-    private print(type: string): boolean {
+    private print(type: string): Boolean {
         Riniya.instance.logger.error("-------------------------------------------")
         Riniya.instance.logger.error(" -> InitChecker failed at '" + type + "'.  ")
         Riniya.instance.logger.error("   -> Please check your environement file. ")

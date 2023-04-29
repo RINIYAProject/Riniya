@@ -1,9 +1,7 @@
 import BaseMiddleware from "../BaseMiddleware";
 import AuthHelper, { ICallback } from "@riniya.ts/utils/AuthHelper";
 import { Request, Response } from "express";
-import AbstractRoutes from "../AbstractRoutes";
 import { isNull } from "@riniya.ts/types";
-import Invalidated from "@riniya.ts/database/Security/Invalidated";
 
 export default class Authentication extends BaseMiddleware {
     private handler: AuthHelper
@@ -33,7 +31,7 @@ export default class Authentication extends BaseMiddleware {
                     } else {
                         response.status(403).json({
                             status: false,
-                            error: "Request denied."
+                            error: "No user found for this session."
                         }).end()
                     }
                 } else {

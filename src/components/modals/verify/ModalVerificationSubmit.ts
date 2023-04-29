@@ -14,17 +14,17 @@ export default class ModalVerificationSubmit extends BaseModal {
     public async handler(interaction: ModalSubmitInteraction): Promise<void> {
         const GuildModel = await Guild.findOne({ guildId: interaction.guildId });
         const channel: TextChannel = interaction.guild.channels.cache.get(GuildModel.verificationLogChannel) as TextChannel;
-        const username: string = interaction.member.user.username;
         const memberId: string = interaction.member.user.id;
 
         const find: string = interaction.getTextInputValue("row_verification_answer_find");
         const age: string = interaction.getTextInputValue("row_verification_answer_age");
-        const IAge: Number = parseInt(age);
+        const IAge: number = parseInt(age);
         const sona: string = interaction.getTextInputValue("row_verification_answer_sona");
 
         const staff: GuildMember = interaction.guild.members.cache.get("993503408852045834");
 
         if (IAge < 13) {
+            sanction(interaction.guild, staff, interaction.member, "Underaged bellow 13 years old.", "blacklist")
             sanction(interaction.guild, staff, interaction.member, "Underaged bellow 13 years old.", "kick")
         } else {
             const embed = new MessageEmbed()

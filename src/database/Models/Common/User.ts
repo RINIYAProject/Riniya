@@ -123,7 +123,7 @@ export declare type Character = {
     name: string;
     speciality: CharacterSpeciality;
     species: CharacterSpecies;
-}
+}[]
 
 export declare type Bank = {
     gold: number;
@@ -178,8 +178,8 @@ export interface User {
     spouse?: Spouse;
 }
 
-export default mongoose.model<User & mongoose.Document>("User", new mongoose.Schema<User & mongoose.Document>({
-    userId: { type: String },
+export default mongoose.model<User & mongoose.Document>("DiscordUser", new mongoose.Schema<User & mongoose.Document>({
+    userId: { type: String, unique: true },
     player: { type: Object },
     economy: { type: Object },
     level: { type: Object },

@@ -13,7 +13,7 @@
 import BaseEvent from "@riniya.ts/components/BaseEvent";
 import Guild from "@riniya.ts/database/Guild/Guild";
 import Member from "@riniya.ts/database/Guild/Member";
-import { fetchBlacklist } from "@riniya.ts/types";
+import { fetchBlacklist, isNull } from "@riniya.ts/types";
 
 import { GuildMember, MessageEmbed, Role, TextChannel } from "discord.js";
 
@@ -42,7 +42,7 @@ export default class MemberJoin extends BaseEvent {
 
             await fetchBlacklist(member.id)
                 .then((result) => {
-                    if (result && result.issuedBy) {
+                    if (result && !isNull(result.issuedBy)) {
                         member.kick(`Blacklisted ${result.reason} | ${result.issuedBy}`).then(() => {
                             channel.send({
                                 embeds: [

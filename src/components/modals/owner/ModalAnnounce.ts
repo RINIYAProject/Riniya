@@ -28,8 +28,8 @@ export default class ModalAnnounce extends BaseModal {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton("Website", "https://www.riniya.com/"),
-                        this.instance.buttonManager.createLinkButton("News", "https://www.riniya.com/news")
+                        this.instance.buttonManager.createLinkButton("Website", "https://www.riniya.uk/"),
+                        this.instance.buttonManager.createLinkButton("News", "https://www.riniya.uk/news")
                     ]
                 }
             ],
