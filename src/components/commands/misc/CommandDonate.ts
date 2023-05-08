@@ -27,7 +27,7 @@ export default class CommandDonate extends BaseCommand {
                 {
                     type: 1,
                     components: [
-                        this.instance.buttonManager.createLinkButton("Premium", "https://www.riniya.com/premium"),
+                        this.instance.buttonManager.createLinkButton("Premium", "https://www.riniya.uk/premium"),
                         this.instance.buttonManager.createLinkButton("Github Sponsor", "https://github.com/sponsors/NebraskyTheWolf"),
                         this.instance.buttonManager.createLinkButton("Patreon", "https://www.patreon.com/Vakea"),
                         this.instance.buttonManager.createLinkButton("Ko-Fi", "https://ko-fi.com/Vakea")

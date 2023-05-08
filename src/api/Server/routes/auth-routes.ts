@@ -7,15 +7,13 @@ import { MessageEmbed } from "discord.js";
 import { v4 } from "uuid";
 import AbstractRoutes from "../AbstractRoutes";
 
+import moment from "moment";
+
 export default class AuthRoutes extends AbstractRoutes {
     public register() {
        this.router.post("/security/login", async (req, res) => {
             var username: string = req.body.username
             var password: string = req.body.password
-
-            Riniya.instance.logger.warn("DEBUG : " + req.body.username)
-            Riniya.instance.logger.warn("DEBUG : " + req.body.password)
-
 
             if (isNull(username) || isNull(password)) {
                 return res.status(403).json({
@@ -38,10 +36,37 @@ export default class AuthRoutes extends AbstractRoutes {
                 })
             }
 
+            if (!isNull(database.banned) && !isNull(database.banned.issuer)) {
+                return res.status(403).json({
+                    status: false,
+                    error: "ACCOUNT_BANNED",
+                    message: "This account has been banned.",
+                    data: database.banned
+                })
+            }
+
             if (isNull(database.metadata?.permissions["admin:auth"])) {
                 return res.status(403).json({
                     status: false,
                     error: "INSUFFICIENT_PERMISSION"
+                })
+            }
+
+            const authenticated = await Session.findOne({
+                userId: database._id,
+                sessionExpired: false
+            })
+
+            if (!isNull(authenticated) && !isNull(authenticated.accessToken)) {
+                return res.status(200).json({
+                    status: true,
+                    data: {
+                        metadata: {
+                            requestId: v4(),
+                            requestDate: Date.now()
+                        },
+                        session: authenticated
+                    }
                 })
             }
 
@@ -61,13 +86,13 @@ export default class AuthRoutes extends AbstractRoutes {
                     new MessageEmbed()
                         .setTitle("API Login detected")
                         .setColor("RED")
-                        .setDescription(`Login at ${Date.toString()} detected, if this is not you please click on "Invalidate".`)
+                        .setDescription(`New login at ${moment(Date.now())}. If this action has been made on your behalf. Please terminate this session.`)
                 ],
                 components: [
                     {
                         type: 1,
                         components: [
-                            Riniya.instance.buttonManager.createLinkButton("Invalidate", "https://api.riniya.uk/api/security/invalidate/" + accessToken)
+                            Riniya.instance.buttonManager.createLinkButton("Terminate", "https://api.riniya.uk/api/security/invalidate/" + accessToken)
                         ]
                     }
                 ]
@@ -120,6 +145,19 @@ export default class AuthRoutes extends AbstractRoutes {
                 })
             })
 
+            const check = await Invalidated.findOne({
+                userId: session.userId,
+                accessToken: session.accessToken,
+                clientToken: session.clientToken
+            })
+
+            if (!isNull(check) && !isNull(check.userId)) {
+                return res.status(200).json({
+                    status: false,
+                    error: "This session cannot be terminated twice."
+                })
+            }
+            
             return res.status(200).json({
                 status: true,
                 data: {

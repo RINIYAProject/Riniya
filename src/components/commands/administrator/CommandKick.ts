@@ -19,7 +19,7 @@ import { SlashCommandStringOption, SlashCommandUserOption } from "@discordjs/bui
 
 export default class CommandKick extends BaseCommand {
     public constructor() {
-        super("kick", "Kick a user", new OptionMap<string, boolean>()
+        super("kick", "Kicking a member in jail", new OptionMap<string, boolean>()
             .add("isProtected", true),
             "ADMINISTRATOR"
         );

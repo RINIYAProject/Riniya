@@ -12,10 +12,6 @@
 
 import * as dotenv from "dotenv";
 
-import Sentry from "@sentry/node"
-import { ProfilingIntegration } from "@sentry/profiling-node";
-import { RewriteFrames } from "@sentry/integrations";
-
 dotenv.config()
 
 global.__rootdir__ = __dirname || process.cwd();
@@ -113,25 +109,6 @@ export default class Riniya extends Client {
         this.logger.info("Loading system...")
         this.logger.info(`Version: ${this.version}`)
         this.logger.info(`Revision: ${this.revision}`)
-
-        /*Sentry.init({
-            dsn: process.env.SENTRY_DSN,
-            attachStacktrace: true,
-            release: this.version,
-            dist: this.revision,
-            sendClientReports: true,
-            onFatalError: (error: Error) => {
-                this.logger.error("[Sentry] Fatal Error : " + error)
-            },
-            tracesSampleRate: 1.0,
-            profilesSampleRate: 1.0,
-            integrations: [
-                new RewriteFrames({
-                    root: global.__rootdir__,
-                  }),
-                new ProfilingIntegration()
-            ]
-        })*/
 
         discordModals(this);
 

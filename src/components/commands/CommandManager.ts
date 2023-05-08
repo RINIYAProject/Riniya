@@ -69,15 +69,26 @@ export default class CommandManager {
     private REGISTRY: OptionMap<String, BaseCommand>;
     private logger: Logger;
 
+    public readonly groups: OptionMap<String, String> = new OptionMap<String, String>()
+
     public constructor() {
         this.REGISTRY = new OptionMap<String, BaseCommand>();
         this.logger = new Logger("CommandRegistry");
+
+        this.groups.add("ADMINISTRATOR", "Admin & Staff")
+        this.groups.add("ECONOMY", "Economy & Trading")
+        this.groups.add("FUN", "Fun & Memes")
+        this.groups.add("LEVEL", "Levelling & Rewards")
+        this.groups.add("MISC", "Miscellaneous")
+        this.groups.add("MUSIC", "Music")
+        this.groups.add("NSFW", "NSFW")
+        this.groups.add("SONA", "Fursona")
+        this.groups.add("DEFAULT", "Experiments")
     }
 
     public registerCommand(base: BaseCommand): void {
-        if (this.REGISTRY.getMap().has(base.name)) {
+        if (this.REGISTRY.getMap().has(base.name))
             throw new Error("You can't register the same command at once.");
-        }
         if (base.options.get("isDisabled")) {
             this.logger.warn(`${base.name} is disabled.`);
         } else {

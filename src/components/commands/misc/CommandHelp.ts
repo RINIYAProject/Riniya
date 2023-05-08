@@ -10,9 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+import { ToAPIApplicationCommandOptions } from "@discordjs/builders";
 import BaseCommand from "@riniya.ts/components/BaseCommand";
 import OptionMap from "@riniya.ts/utils/OptionMap";
+import Tuple from "@riniya.ts/utils/Tuple";
+import { ComponentType } from "abstracts";
 import { GuildMember, Guild, CommandInteraction, MessageEmbed } from "discord.js";
+
+export declare type ICommand = {
+    name: string
+    description: string
+    type: ComponentType
+    options?: ToAPIApplicationCommandOptions[]
+}
 
 export default class CommandHelp extends BaseCommand {
     public constructor() {
@@ -21,18 +31,44 @@ export default class CommandHelp extends BaseCommand {
         );
     }
 
+    private readonly groups: OptionMap<String, ICommand>
+
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
+
+        // COMMAND GROUPS PROCESSOR 
+        this.instance.manager.toList().map(x => {
+            this.groups.add(x.category, {
+                name: x.name,
+                description: x.description,
+                type: x.type,
+                options: x.options
+            })
+        })
+
+        const categories = this.instance.manager.groups.getMap().map(x => {
+            var unrecognised = x.replace(" ", "")
+                                    .replace("&", "_")
+                                    .toLowerCase()
+            return {
+                type: 1,
+                components: [
+                    this.instance.buttonManager.createButton(`${x}`, unrecognised)
+                ]
+            }
+        })
+
         inter.reply({
             components: [
                 {
                     type: 1,
                     components: [
+                        this.instance.buttonManager.createLinkButton("Report a issue", "https://github.com/RINIYAProject/Riniya/issues/new"),
                         this.instance.buttonManager.createLinkButton("Documentation", "https://docs.riniya.uk"),
                         this.instance.buttonManager.createLinkButton("Dashboard", "https://dashboard.riniya.uk"),
-                        this.instance.buttonManager.createLinkButton("Commands", "https://www.riniya.uk/commands"),
-                        this.instance.buttonManager.createLinkButton("Report a issue", "https://github.com/RINIYAProject/Riniya/issues/new")
+                        this.instance.buttonManager.createLinkButton("Commands", "https://www.riniya.uk/commands")
                     ]
-                }
+                },
+                ...categories
             ],
             embeds: [
                 new MessageEmbed()

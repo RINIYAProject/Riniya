@@ -12,14 +12,13 @@
 
 import { SlashCommandNumberOption } from "@discordjs/builders";
 import BaseCommand from "@riniya.ts/components/BaseCommand";
-import Invites from "@riniya.ts/database/Moderation/Invites";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import Tuple from "@riniya.ts/utils/Tuple";
 
-import GuildData from "@riniya.ts/database/Guild/Guild"
-
 import { GuildMember, Guild, CommandInteraction, MessageEmbed, Invite, TextChannel } from "discord.js";
-import { v4 } from "uuid";
+
+// DEPRECATED 
+// This command will be deleted soon.
 
 export default class CommandInvite extends BaseCommand {
 

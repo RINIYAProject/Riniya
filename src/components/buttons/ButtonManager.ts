@@ -21,6 +21,7 @@ import Fragment from "./Fragment";
 import ButtonSelectRole from "./roles/ButtonSelectRole";
 import SelectUpdate from "./verification/SelectUpdate";
 import SelectRoleSubmit from "./roles/SelectRoleSubmit";
+import FragmentAction from "./FragmentAction";
 
 export default class ButtonManager {
     private BUTTONS: OptionMap<String, BaseButton<unknown, unknown>>;
@@ -84,6 +85,10 @@ export default class ButtonManager {
 
     public createLinkButton(label: string, link: string): MessageButton {
         return new Fragment(label, link).generate();
+    }
+
+    public createButton(label: string, custom_id: string): MessageButton {
+        return new FragmentAction(label, custom_id).generate();
     }
 
     public executeOnly(customId: string, inter: Interaction<"cached">): void {

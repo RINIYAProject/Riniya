@@ -55,11 +55,11 @@ export default abstract class BaseCommand extends Base {
 
         this.command = new SlashCommandBuilder();
         this.command.setName(this.name);
-        this.command.setDescription(this.description || "");
+        this.command.setDescription(this.description || "No description set.");
         this.command.setDMPermission(this.options.get("dmPermission") || false);
     }
 
-    public abstract handler(inter: CommandInteraction, member: GuildMember, guild: Guild): void;
+    public abstract handler(inter: CommandInteraction, member: GuildMember, guild: Guild)
 
     protected addAttachmentOption(handle: SlashCommandAttachmentOption): BaseCommand {
         this.command.addAttachmentOption(handle);

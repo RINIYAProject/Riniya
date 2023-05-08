@@ -123,8 +123,8 @@ export function sanction(
             {
                 type: 1,
                 components: [
-                    Riniya.instance.buttonManager.createLinkButton("Website", "https://www.riniya.com"),
-                    Riniya.instance.buttonManager.createLinkButton("Appeal", "https://www.riniya.com/server/" + guild.id + "/" + type + "/" + target.id + "/appeal")
+                    Riniya.instance.buttonManager.createLinkButton("Website", "https://www.riniya.uk"),
+                    Riniya.instance.buttonManager.createLinkButton("Appeal", "https://www.riniya.uk/server/" + guild.id + "/" + type + "/" + target.id + "/appeal")
                 ]
             }
         ],

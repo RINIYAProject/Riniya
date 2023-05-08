@@ -1,4 +1,4 @@
-import { getLogger } from "@riniya.ts/types";
+import { getLogger, isNull } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import BaseManager from "./BaseManager";
 import Session from "../Models/Security/Session";
@@ -47,10 +47,7 @@ export default class SessionManager extends BaseManager<ISession[]> {
                 sessionExpired: x.sessionExpired
             }
         })
-
-        this.addObject(forms).then(result => {
-            getLogger().info("[SessionManager] : " + result.length + " sessions added.")
-        })
+        this.addObject(forms)
     }
 
     protected async process() {

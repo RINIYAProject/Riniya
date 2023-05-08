@@ -16,6 +16,9 @@ import { fetchBlacklist, sanction } from "@riniya.ts/types";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, User, MessageEmbed } from "discord.js";
 
+// DEPRECATED 
+// This command will be deleted soon.
+
 export default class CommandBlacklist extends BaseCommand {
     public constructor() {
         super("blacklist", "Blacklist a user", new OptionMap<string, boolean>()

@@ -16,7 +16,10 @@ import OptionMap from "@riniya.ts/utils/OptionMap";
 import { getRest } from "@riniya.ts/utils/registerCommand";
 import { Routes } from "discord-api-types/v9";
 
-import { GuildMember, Guild, CommandInteraction, MessageEmbed, User, Activity, SnowflakeUtil } from "discord.js";
+import { GuildMember, Guild, CommandInteraction, MessageEmbed, User } from "discord.js";
+
+// DEPRECATED 
+// This command will be deleted soon.
 
 export default class CommandTargetInvite extends BaseCommand {
 
