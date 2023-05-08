@@ -31,7 +31,7 @@ export default class CommandHelp extends BaseCommand {
         );
     }
 
-    private readonly groups: OptionMap<String, ICommand>
+    private readonly groups: OptionMap<String, ICommand> = new OptionMap<String, ICommand>()
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
 
