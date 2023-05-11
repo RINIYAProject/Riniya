@@ -32,6 +32,7 @@ export default class Ready extends BaseEvent {
             this.instance.user.setStatus("idle");
 
             this.initActivity()
+            this.addActivites()
 
             setInterval(() => {
                 if (this.activities.getAll().size < 1)
@@ -59,28 +60,32 @@ export default class Ready extends BaseEvent {
 
         setInterval(() => {
             this.activities.clear()
-            this.activities.add({
-                message: `Lurk at ${this.instance.users.cache.size} cuties UwU`,
-                type: "WATCHING"
-            })
-            this.activities.add({
-                message: `Handling ${this.instance.guilds.cache.size} servers :D`,
-                type: "LISTENING"
-            })
-            this.activities.add({
-                message: `RINIYA Is still in developement.`,
-                type: "COMPETING"
-            })
-            this.activities.add({
-                message: `Thank you for supporting us :D`,
-                type: "COMPETING"
-            })
-            this.activities.add({
-                message: `/help for more informations`,
-                type: "COMPETING"
-            })
+            this.addActivites()
 
             this.instance.logger.info("[ActivityManager] Data updated at " + moment(Date.now()) + ".")
         }, 30 * 1000)
+    }
+
+    private addActivites() {
+        this.activities.add({
+            message: `Lurk at ${this.instance.users.cache.size} cuties UwU`,
+            type: "WATCHING"
+        })
+        this.activities.add({
+            message: `Handling ${this.instance.guilds.cache.size} servers :D`,
+            type: "LISTENING"
+        })
+        this.activities.add({
+            message: `RINIYA Is still in developement.`,
+            type: "LISTENING"
+        })
+        this.activities.add({
+            message: `Thank you for supporting us :D`,
+            type: "LISTENING"
+        })
+        this.activities.add({
+            message: `/help for more informations`,
+            type: "LISTENING"
+        })
     }
 }
