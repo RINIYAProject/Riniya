@@ -25,7 +25,6 @@ export default class SessionManager extends BaseManager<ISession[]> {
                         this.sessions.add(documents.objectId, x)
                     })
 
-                    getLogger().info("[SessionManager] : " + documents.objectId + " has been loaded.")
                     this.process()
                 })
             } else {

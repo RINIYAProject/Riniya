@@ -12,27 +12,34 @@
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
 import Tuple from "@riniya.ts/utils/Tuple";
+import { ExcludeEnum } from "discord.js";
+import { ActivityTypes } from "discord.js/typings/enums";
+import moment from "moment";
 import { v4 } from "uuid";
+
+export declare type Activity = {
+    message: string;
+    type: ExcludeEnum<typeof ActivityTypes, 'CUSTOM'>;
+}
 
 export default class Ready extends BaseEvent {
 
-    private activities: Tuple<string> = new Tuple<string>()
+    private activities: Tuple<Activity> = new Tuple<Activity>()
 
     public constructor() {
         super("ready", () => {
             this.instance.user.setActivity(`Initializing...`, { type: "LISTENING" });
             this.instance.user.setStatus("idle");
 
-            this.activities.add(`Lurk at ${this.instance.users.cache.size} cuties UwU`)
-            this.activities.add(`Handling ${this.instance.guilds.cache.size} servers :D`)
-            this.activities.add(`RINIYA Is still in developement.`)
-            this.activities.add(`Thank you for supporting us :D`)
-            this.activities.add(`/help for more informations`)
+            this.initActivity()
 
             setInterval(() => {
+                if (this.activities.getAll().size < 1)
+                    return this.instance.logger.error("[ActivityManager] : Cannot load the activities lists.")
+                let activity = this.activities.random();
                 this.instance.user.setActivity({
-                    type: "WATCHING",
-                    name: this.activities.random()
+                    type: activity.type,
+                    name: activity.message
                 })
             }, 5000)
 
@@ -45,5 +52,35 @@ export default class Ready extends BaseEvent {
                 state: 'ready'
             }, "*")
         });
+    }
+
+    private initActivity() {
+        this.instance.logger.info("[ActivityManager] Loading activities...")
+
+        setInterval(() => {
+            this.activities.clear()
+            this.activities.add({
+                message: `Lurk at ${this.instance.users.cache.size} cuties UwU`,
+                type: "WATCHING"
+            })
+            this.activities.add({
+                message: `Handling ${this.instance.guilds.cache.size} servers :D`,
+                type: "LISTENING"
+            })
+            this.activities.add({
+                message: `RINIYA Is still in developement.`,
+                type: "COMPETING"
+            })
+            this.activities.add({
+                message: `Thank you for supporting us :D`,
+                type: "COMPETING"
+            })
+            this.activities.add({
+                message: `/help for more informations`,
+                type: "COMPETING"
+            })
+
+            this.instance.logger.info("[ActivityManager] Data updated at " + moment(Date.now()) + ".")
+        }, 30 * 1000)
     }
 }

@@ -25,10 +25,6 @@ export default class InitChecker {
             return this.print("SERVER_CERT")
         else if (this.unset("REDIS_URL"))
             return this.print("REDIS_URL")
-        else if (this.unset("TWITTER_TOKEN"))
-            return this.print("TWITTER_TOKEN")
-        else if (this.unset("SENTRY_DSN"))
-            return this.print("SENTRY_DSN")
         return false
     }
 

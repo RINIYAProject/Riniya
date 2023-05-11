@@ -35,11 +35,9 @@ export default class VerificationManager extends BaseManager<CacheSlot[]> {
                     getLogger().info("[VerificationManager] : Metadata " + documents.objectId + ", created at " + documents.cachedAt + ", tuple-size=" + documents.data.length)
 
                     documents.data.map(x => {
-                        getLogger().info("[VerificationManager] : Fetching " + x.memberId + " verification form.")
                         this.users.add(documents.objectId, x)
                     })
 
-                    getLogger().info("[VerificationManager] : " + documents.objectId + " has been loaded.")
                     this.process();
                 })
             } else {

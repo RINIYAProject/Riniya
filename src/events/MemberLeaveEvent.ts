@@ -11,11 +11,9 @@
 /* ************************************************************************** */
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
-import Member from "@riniya.ts/database/Guild/Member";
 import Guild from "@riniya.ts/database/Guild/Guild";
 
 import { GuildMember, TextChannel } from "discord.js";
-import Verification from "@riniya.ts/database/Guild/Verification";
 
 export default class MemberLeave extends BaseEvent {
     public constructor() {
@@ -29,12 +27,6 @@ export default class MemberLeave extends BaseEvent {
             }, "*")
 
             const GuildData = await Guild.findOne({ guildId: member.guild.id });
-            await Member.deleteOne({ guildId: member.guild.id, memberId: member.id });
-            await Verification.deleteOne({
-                guildId: GuildData.guildId,
-                memberId: member.id,
-                status: "pending"
-            })
 
             if (GuildData.logging) {
                 const channel: TextChannel = this.instance.guilds.cache.get(GuildData.guildId).channels.cache.get(GuildData.loggingChannel) as TextChannel;

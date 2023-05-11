@@ -15,6 +15,7 @@ import { registerCommands } from "@riniya.ts/utils/registerCommand";
 import GuildModel from "@riniya.ts/database/Guild/Guild";
 
 import { Guild } from "discord.js";
+import { isNull } from "@riniya.ts/types";
 
 
 export default class GuildAddEvent extends BaseEvent {
@@ -26,7 +27,7 @@ export default class GuildAddEvent extends BaseEvent {
                 guildId: guild.id
             })
 
-            if (!data) {
+            if (isNull(data._id)) {
                 await new GuildModel({
                     guildId: guild.id,
                     ownerId: guild.ownerId

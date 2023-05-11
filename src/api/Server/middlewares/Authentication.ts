@@ -15,6 +15,14 @@ export default class Authentication extends BaseMiddleware {
         const accessToken: string = request.get('accessToken')
         const clientToken: string = request.get('clientToken')
 
+        if (isNull(accessToken) || isNull(clientToken)) {
+            response.status(403).json({
+                status: false,
+                error: "ACCESS_DENIED",
+                message: "Authentication required."
+            }).end()
+        }
+
         this.handler.identify(
             accessToken, clientToken,
             async (cb: ICallback) => {

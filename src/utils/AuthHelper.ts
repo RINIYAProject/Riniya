@@ -36,17 +36,18 @@ export default class AuthHelper {
             clientToken: clientToken
         })
 
-        if (!SessionData) {
+        if (isNull(SessionData.userId)) {
             callback({
                 status: false,
-                error: 'MISSING_SESSION'
+                error: 'INVALID_CREDENTIALS',
+                message: "The client or access token is invalid."
             })
         } else {
             new History({
                 userId: SessionData.userId,
                 accessToken: SessionData.accessToken,
                 clientToken: SessionData.clientToken,
-                createdAt: new Date()
+                createdAt: Date.now()
             }).save();
 
             const invalidated = await Invalidated.findOne({
@@ -54,7 +55,7 @@ export default class AuthHelper {
                 clientToken: clientToken
             })
     
-            if (!isNull(invalidated)) {
+            if (!isNull(invalidated.userId)) {
                 return callback({
                     status: false,
                     error: "This session has been invalidated."

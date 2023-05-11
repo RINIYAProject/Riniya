@@ -12,10 +12,7 @@
 
 import BaseEvent from "@riniya.ts/components/BaseEvent";
 import Guild from "@riniya.ts/database/Guild/Guild";
-import Member from "@riniya.ts/database/Guild/Member";
-import { fetchBlacklist, isNull } from "@riniya.ts/types";
-
-import { GuildMember, MessageEmbed, Role, TextChannel } from "discord.js";
+import { GuildMember, Role, TextChannel } from "discord.js";
 
 export default class MemberJoin extends BaseEvent {
     public constructor() {
@@ -29,32 +26,6 @@ export default class MemberJoin extends BaseEvent {
             }, "*")
 
             const GuildData = await Guild.findOne({ guildId: member.guild.id });
-            const channel: TextChannel = this.instance.guilds.cache.get(GuildData.guildId)
-                .channels.cache.get(GuildData.loggingModeration) as TextChannel;
-
-            new Member({
-                guildId: member.guild.id,
-                memberId: member.id,
-                username: member.user.username,
-                identifier: member.user.discriminator,
-                avatar: member.user.avatarURL({ format: "png" })
-            }).save()
-
-            await fetchBlacklist(member.id)
-                .then((result) => {
-                    if (result && !isNull(result.issuedBy)) {
-                        member.kick(`Blacklisted ${result.reason} | ${result.issuedBy}`).then(() => {
-                            channel.send({
-                                embeds: [
-                                    new MessageEmbed()
-                                        .setTitle(`${member.user.username} got kicked.`)
-                                        .setDescription(`This user has been blacklisted by ${result.issuedBy} as reason ${result.reason}.`)
-                                        .addField("Case Id", result._id, true)
-                                ]
-                            });
-                        });
-                    }
-                });
 
             if (GuildData.roleEnabled) {
                 const defaultRole: Role = member.guild.roles.cache.get(GuildData.roleUnverified);
@@ -68,7 +39,7 @@ export default class MemberJoin extends BaseEvent {
                         {
                             "type": "rich",
                             "title": `Welcome ${member.user.username} on the lounge.`,
-                            "description": `Don't forget to go in <#${GuildData.verificationChannel}> to start your verification.`,
+                            "description": `Don't forget to go in <#${GuildData.verificationChannel}> to do your verification.`,
                             "color": 0x36393f,
                             "thumbnail": {
                                 "url": `https://cdn.discordapp.com/avatars/${member.id}/${member.user.avatar}.jpeg`,

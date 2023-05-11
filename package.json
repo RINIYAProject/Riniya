@@ -103,6 +103,6 @@
     "@riniya.ts/components": "build/abstracts/components",
     "@riniya.ts/server": "build/abstracts/server",
     "@riniya.ts/controllers": "build/api/controllers",
-    "@riniya.ts/cache": "cache/CacheManager.js"
+    "@riniya.ts/cache": "build/cache/CacheManager.js"
   }
 }

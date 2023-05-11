@@ -44,7 +44,7 @@ export default abstract class BaseManager<T> {
         return this.cache.exists(this.objectName)
     }
 
-    public abstract init()
-    protected abstract load()
-    protected abstract process()
+    public abstract init(): void
+    protected abstract load(): void
+    protected abstract process(): void
 }

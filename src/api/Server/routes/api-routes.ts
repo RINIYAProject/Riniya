@@ -42,8 +42,7 @@ export default class ApiRoutes extends AbstractRoutes {
                             contact: "contact@riniya.uk",
                             abuse: "abuse@riniya.uk"
                         }
-                    },
-                    disclaimers: "For all abuse reports please contact our abuse departements."
+                    }
                 }
             }).end()
         })

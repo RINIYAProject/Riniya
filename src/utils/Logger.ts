@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 import fs from "fs"
+import moment from "moment";
 
 export default class Logger {
     private prefix: string;
@@ -35,7 +36,7 @@ export default class Logger {
     }
 
     private log(type: string, message: string) {
-        const prefix = `${new Date().toTimeString()} : ${this.prefix} . [${type}] - ${message}`;
+        const prefix = `${moment(Date.now())} : ${this.prefix} . [${type}] - ${message}`;
         fs.appendFileSync(`logs/Riniya-${this.date}.log`, `${prefix}\n`);
         console.log(prefix);
     }

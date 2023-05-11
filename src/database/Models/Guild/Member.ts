@@ -27,7 +27,7 @@ export default mongoose.model<Member & mongoose.Document>("Member", new mongoose
     guildId: { type: String, required: true },
     username: { type: String, required: true },
     identifier: { type: Number, required: true },
-    avatar: { type: String, default: "https://cdn.ghidorah.uk/images/avatar/default_avatar.webp" },
-    banner: { type: String, default: "https://cdn.ghidorah.uk/images/avatar/default_banner.webp" },
+    avatar: { type: String, default: "https://cdn.riniya.uk/images/avatar/default_avatar.webp" },
+    banner: { type: String, default: "https://cdn.riniya.uk/images/avatar/default_banner.webp" },
     hexColor: { type: Number, default: 0xFFFF }
 }));
