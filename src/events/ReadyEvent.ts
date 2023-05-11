@@ -24,12 +24,13 @@ export default class Ready extends BaseEvent {
             this.instance.user.setActivity(`Initializing...`, { type: "LISTENING" });
             this.instance.user.setStatus("idle");
 
-            this.initActivity()
-            this.addActivites()
+            this.activities.add(`Lurk at ${this.instance.users.cache.size} cuties UwU`)
+            this.activities.add(`Handling ${this.instance.guilds.cache.size} servers :D`)
+            this.activities.add(`RINIYA Is still in developement.`)
+            this.activities.add(`Thank you for supporting us :D`)
+            this.activities.add(`/help for more informations`)
 
             setInterval(() => {
-                if (this.activities.getAll().size < 1)
-                    return this.instance.logger.error("[ActivityManager] : Cannot load the activities lists.")
                 this.instance.user.setActivity({
                     type: "WATCHING",
                     name: this.activities.random()
@@ -45,24 +46,5 @@ export default class Ready extends BaseEvent {
                 state: 'ready'
             }, "*")
         });
-    }
-
-    private initActivity() {
-        this.instance.logger.info("[ActivityManager] Loading activities...")
-
-        setInterval(() => {
-            this.activities.clear()
-            this.addActivites()
-
-            this.instance.logger.info("[ActivityManager] Data updated at " + moment(Date.now()) + ".")
-        }, 30 * 1000)
-    }
-
-    private addActivites() {
-        this.activities.add(`Lurk at ${this.instance.users.cache.size} cuties UwU`)
-        this.activities.add(`Handling ${this.instance.guilds.cache.size} servers :D`)
-        this.activities.add(`RINIYA Is still in developement.`)
-        this.activities.add(`Thank you for supporting us :D`)
-        this.activities.add(`/help for more informations`)
     }
 }
