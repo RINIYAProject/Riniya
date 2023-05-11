@@ -42,7 +42,7 @@ export default class Ready extends BaseEvent {
                     type: activity.type,
                     name: activity.message
                 })
-            }, 5000)
+            }, 15 * 1000)
 
             this.instance.loaded = true;
             this.instance.user.setStatus("online");
