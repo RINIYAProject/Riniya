@@ -52,7 +52,7 @@ export default class CommandHelp extends BaseCommand {
             return {
                 type: 1,
                 components: [
-                    this.instance.buttonManager.createButton(`${x}`, unrecognised)
+                    this.instance.buttonManager.createButton(`${x}`, unrecognised) 
                 ]
             }
         })
