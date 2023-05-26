@@ -13,10 +13,10 @@
     <a href="https://status.riniya.uk"><img src="https://img.shields.io/badge/Status-9766F5?&style=flat-square&logo=skynet&logoColor=white" alt="Website" /></a>
 </p>
 
-Hey, there is the discord bot, this include the backend and all the bot base.
+Hey, here's the bot discord, which includes the backend and the entire bot base.
  
 #### How do I use it?
-Well, it's simple. All you need is git, a MongoDB server and Redis, and you need a SSL Certificate if you are willing to use the Backend.
+It's very simple. All you need is git, a MongoDB server and Redis, and you need an SSL certificate if you want to use the backend.
 
 ```
 git clone git@github.com/RINIYAProject/Riniya.git
@@ -24,7 +24,7 @@ cd Riniya/
 yarn && yarn run start
 ```
 
-#### The .env is necessary to run the bot.
+#### The .env file is required to run the bot.
 #### Required variables
 ```env
 TOKEN=<your discord token>
@@ -82,14 +82,14 @@ isProtected = The button will only interact with the peoples inside the develope
 - [X] Fixing TSC warnings
 
 #### Advices
-For the web apps you should use HAProxy to dispatch the network correctly.
-You should also use a separated server for the database, just for security reasons.
+For web applications, you need to use HAProxy to distribute the network correctly.
+For security reasons, you must also use a separate server for the databases.
 
 #### Disclaimers
-This project is under the GNU-GPLv3 license. You must follow the license and guidelines to use this project. 
-No commercial usage is allowed, You must upload your source publically under the same license and author. if you are using this project. 
-You cannot remove the Author header / Contributor name inside the code.
-You cannot add you in the author list. You are only allowed to be in the contributor list if you did a pull request on the official repository.
+This project is licensed under the GNU-GPLv3 license. You must respect the license and guidelines to use this project. 
+No commercial use is allowed, you must upload your sources publicly under the same license and author if you use this project. 
+You may not remove the author's header/contributor's name from the code.
+You may not add yourself to the list of authors. You are only allowed to appear in the list of contributors if you have made a pull request on the official repository.
 
 ### Visitors:
 <img src="https://visitor-badge.laobi.icu/badge?page_id=RINIYAProject&left_color=black&right_color=black&left_text=Visitors" alt="visitors"/>
