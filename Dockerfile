@@ -11,9 +11,6 @@ RUN <<EOF
    npm install @types/mongoose
    npm install mongoose
    npm install discord-modals
-   npm install -g tsc
-   npm install -g concurrently
-   npm install -g typescript
 EOF
 
 COPY . /workspace
