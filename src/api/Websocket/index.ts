@@ -46,7 +46,7 @@ export default class Websocket extends Mesa {
 
         this.on("connection", client => {
             client.authenticate(async (data: AuthenticationUser, done) => {
-                if (isNull(data.identifier) 
+                if (isNull(data.identifier)
                     || isNull(data.accessToken)
                     || isNull(data.clientToken)) {
                         return client.disconnect(9005)
@@ -59,7 +59,7 @@ export default class Websocket extends Mesa {
                         clientToken: data.clientToken
                     })
 
-                    if (isNull(session.userId) 
+                    if (isNull(session.userId)
                         || isNull(session.accessToken)
                         || isNull(session.clientToken)) {
                             return client.disconnect(9005)
@@ -69,7 +69,7 @@ export default class Websocket extends Mesa {
                         userId: data.identifier
                     })
 
-                    if (isNull(user._id) 
+                    if (isNull(user._id)
                         || isNull(user.discordId)) {
                             return client.disconnect(10305)
                     }
@@ -83,9 +83,12 @@ export default class Websocket extends Mesa {
                 }
             })
         })
+
+        this
     }
 
     public sendPacket(action: string, data: Data, recipient: string): void {
         this.send(new Message(0, data, action), [recipient])
     }
+
 }

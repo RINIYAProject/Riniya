@@ -7,6 +7,7 @@ import AbstractRoutes from "../AbstractRoutes";
 
 export default class BlacklistRoutes extends AbstractRoutes {
     public register() {
+        this.isProtected = true;
         this.router.put('/blacklist/add-user', (req, res, next) => this.auth.handle(req, res, next),  async (req, res) => {
             const user: IBlacklist = req.body
 

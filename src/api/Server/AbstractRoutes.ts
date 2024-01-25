@@ -31,6 +31,7 @@ export default abstract class AbstractRoutes extends Base {
     protected router: Router
     protected readonly cache: CacheManager
     protected auth: Authentication
+    public isProtected: boolean;
 
     public constructor() {
         super("routes", "", "SERVER")

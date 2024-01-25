@@ -8,6 +8,7 @@ export default abstract class BaseTest {
   private readonly spinner: ora.Ora
   private readonly instanceId: string
   private timer: number = 180
+  protected isRunning: boolean = false;
 
   protected constructor(name: string) {
     this.name = name;
@@ -22,12 +23,17 @@ export default abstract class BaseTest {
     //process.on('unhandledRejection', () => { })
 
     this.updateTheme()
+
+    this.handle()
     const timeout = setInterval(() => {
+      if (this.isRunning)
+          return;
       this.timer = this.timer - 1
       if (this.timer <= 0) {
-        process.send('base:' + this.instanceId + ':' + this.name + '/abort')
+        //process.send('base:' + this.instanceId + ':' + this.name + '/abort')
         this.spinner.fail(`${this.name} test timed out.`)
         clearInterval(timeout)
+        process.exit(10016)
       }
     })
   }

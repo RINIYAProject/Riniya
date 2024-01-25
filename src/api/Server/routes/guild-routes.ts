@@ -33,7 +33,8 @@ export declare type ActivityModel = {
 
 export default class GuildRoutes extends AbstractRoutes {
     public register() {
-        this.router.get('/servers', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
+      this.isProtected = true;
+      this.router.get('/servers', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(Riniya.instance.guilds))
                 return res.status(404).json({
                     status: false,
@@ -240,9 +241,9 @@ export default class GuildRoutes extends AbstractRoutes {
         })
 
         this.router.post('/servers/:guildId/activity/add-activity', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
-            var data: ActivityModel = req.body
+          const data: ActivityModel = req.body
 
-            if (isNull(data.data))
+          if (isNull(data.data))
                 return res.status(403).json({
                     status: false,
                     error: `You can\'t create a activity without data.`

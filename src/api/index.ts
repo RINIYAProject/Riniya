@@ -82,7 +82,7 @@ export default class ServerManager {
                 services: {
                     websocket: {
                         clients: this.websocket.clients.length,
-                        environement: (this.websocket.wss.address() === "45.147.98.210" ? "production" : "debug") 
+                        environement: (this.websocket.wss.address() === "45.147.98.210" ? "production" : "debug")
                     }
                 }
             })
@@ -101,7 +101,11 @@ export default class ServerManager {
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            app.use('/api', new Authentication().handle ,route.routing())
+            if (route.isProtected) {
+                app.use('/api', new Authentication().handle, route.routing())
+            } else {
+                app.use('/api', route.routing())
+            }
         })
         this.server.listen(3443)
         this.gateway.listen(8443)
