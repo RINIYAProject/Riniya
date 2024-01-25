@@ -11,7 +11,7 @@ RUN cd /workspace \
     && npm install @types/mongoose \
     && npm install mongoose \
     && npm install discord-modals \
-    && npm install tsc \
+    && npm install tsc
 
 COPY . /workspace
 
