@@ -50,23 +50,23 @@ export default class SessionManager extends BaseManager<ISession[]> {
     }
 
     protected async process() {
-        this.getObject().then(result => {
-            getLogger().info("[SessionManager] : Processing objects in " + result.objectId)
-            result.data.forEach(x => {
-                var inter = setInterval(async () => {
-                    const uniqueId = inter;
-                    var countDown = x.sessionExpiry -= 1
-                    await this.updateTime(x.clientToken, countDown, false)
+      this.getObject().then(result => {
+        getLogger().info("[SessionManager] : Processing objects in " + result.objectId)
+        result.data.forEach(x => {
+          var inter = setInterval(async () => {
+            const uniqueId = inter;
+            const countDown = x.sessionExpiry -= 1
+            await this.updateTime(x.clientToken, countDown, false)
 
-                    if (countDown === 0) {
-                        await this.updateTime(x.clientToken, x.sessionExpiry, true)
-                        getLogger().info("[SessionManager] : " + x.clientToken + " has been deactivated.")
-                        clearInterval(uniqueId)
-                    }
-                }, 1000)
-                this.timeoutCache.add(inter)
-            })
+            if (countDown === 0) {
+              await this.updateTime(x.clientToken, x.sessionExpiry, true)
+              getLogger().info("[SessionManager] : " + x.clientToken + " has been deactivated.")
+              clearInterval(uniqueId)
+            }
+          }, 1000)
+          this.timeoutCache.add(inter)
         })
+      })
     }
 
     protected async updateTime(id: string, time: number, expired: boolean): Promise<Boolean> {

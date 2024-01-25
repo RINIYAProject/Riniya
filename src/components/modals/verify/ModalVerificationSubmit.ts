@@ -61,10 +61,10 @@ export default class ModalVerificationSubmit extends BaseModal {
               ]
             }).save().then(r => interactionId = r._id)
 
-            // Useless
-            //this.instance.cacheController
-            //    .getController("verifications")
-            //    .init()
+
+            this.instance.cacheController
+                .getController("verifications")
+                .init()
 
             await channel.send({
                 embeds: [embed],
@@ -93,7 +93,7 @@ export default class ModalVerificationSubmit extends BaseModal {
                     interactionId: interactionId,
                     messageId: r.id,
                     deleted: false
-                })
+                }).save().catch(err => console.error(err))
             });
 
             await interaction.reply({
