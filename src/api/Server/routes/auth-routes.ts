@@ -45,13 +45,6 @@ export default class AuthRoutes extends AbstractRoutes {
            })
          }
 
-         if (isNull(database.metadata?.permissions["admin:auth"])) {
-           return res.status(403).json({
-             status: false,
-             error: "INSUFFICIENT_PERMISSION"
-           })
-         }
-
          const authenticated = await Session.findOne({
            userId: database._id,
            sessionExpired: false

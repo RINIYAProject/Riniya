@@ -2,6 +2,7 @@ import BaseTest, { Result } from './BaseTest'
 import { Client } from '@cryb/mesa'
 import fetch from 'node-fetch'
 
+import axios from "axios"
 
 const socket = new Client(process.env['WEBSOCKET_URL'] || "wss://gateway.riniya.uk")
 
@@ -28,18 +29,23 @@ export default class WebsocketClient extends BaseTest {
   protected async handle() {
     this.isRunning = true;
 
-    const credentials: Body = {
-        username: "",
-        password: ""
-    }
-
     await fetch("https://api.riniya.uk/api/security/login", {
-        method: "POST",
-        body: credentials
-    }).then((response) => response.json())
-      .then((data) => {
-          console.log(data)
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: "test",
+        password: "test"
       })
+    }).then(r => r.json())
+      .then(r => console.log(r.clientToken))
+
+    axios.post("https://api.riniya.uk/api/security/login", {
+
+    }).then(r => {
+
+    }).catch(err => console.log(err.status))
 
     await socket.authenticate({
 

@@ -83,8 +83,6 @@ export default class Websocket extends Mesa {
                 }
             })
         })
-
-        this
     }
 
     public sendPacket(action: string, data: Data, recipient: string): void {
