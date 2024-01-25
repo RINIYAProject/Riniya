@@ -31,7 +31,7 @@ export default class Authentication extends BaseMiddleware {
                 if (cb.session.expired) {
                   response.status(403).json({
                     status: false,
-                    error: "Session expired, Please relogin before continuing."
+                    error: "Session expired, Please re-login before continuing."
                   }).end()
                 } else {
                   next()

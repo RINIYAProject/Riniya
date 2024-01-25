@@ -5,6 +5,7 @@ import Guild from "@riniya.ts/database/Guild/Guild";
 import { GuildMember, MessageEmbed, TextChannel } from "discord.js";
 import { ModalSubmitInteraction } from "discord-modals";
 import { sanction } from "@riniya.ts/types";
+import Interaction from '@riniya.ts/database/Common/Interaction'
 
 export default class ModalVerificationSubmit extends BaseModal {
     public constructor() {
@@ -33,10 +34,10 @@ export default class ModalVerificationSubmit extends BaseModal {
                 .setTitle("Riniya - Verification request.")
                 .setDescription(`How did you find us?: \`\`\`${find}\`\`\` How old are you?: \`\`\`${age}\`\`\` Do you have a fursona?: \`\`\`${sona}\`\`\``)
                 .addField("Username", `${interaction.user.username}`, true)
-                .addField("Descriminator", `${interaction.user.discriminator}`, true)
+                .addField("Discriminator", `${interaction.user.discriminator}`, true)
                 .addField("ID", `${interaction.user.id}`, true)
                 .setThumbnail(`https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.jpeg`);
-
+            let interactionId: string ;
             await new Verification({
               guildId: GuildModel.id,
               memberId: memberId,
@@ -58,7 +59,7 @@ export default class ModalVerificationSubmit extends BaseModal {
                   content: sona
                 }
               ]
-            }).save();
+            }).save().then(r => interactionId = r._id)
 
             // Useless
             //this.instance.cacheController
@@ -85,6 +86,14 @@ export default class ModalVerificationSubmit extends BaseModal {
                         ]
                     }
                 ]
+            }).then(r => {
+                new Interaction({
+                    guildId: interaction.guildId,
+                    memberId: interaction.member.id,
+                    interactionId: interactionId,
+                    messageId: r.id,
+                    deleted: false
+                })
             });
 
             await interaction.reply({

@@ -19,7 +19,7 @@ import {
     GuildMember
 } from "discord.js";
 import BaseButton from "@riniya.ts/components/BaseButton";
-import { sanction } from "@riniya.ts/types";
+import { sanction, updateVerification } from '@riniya.ts/types'
 import Guild from "@riniya.ts/database/Guild/Guild";
 import ModalHelper from "@riniya.ts/utils/ModalHelper";
 import { TextInputComponent } from "discord-modals";
@@ -95,6 +95,8 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                   content: `Member ${member.user.username} is now verified.`,
                   ephemeral: true
                 })
+
+                await updateVerification(interaction.guildId, member, 'Verification accepted.')
             }
                 break
             case "refused": {
@@ -139,6 +141,7 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                   .save(interaction.guildId)
 
                 sanction(interaction.guild, interaction.member, member, "Verification ban.", "ban")
+               await updateVerification(interaction.guildId, member, 'Banned by ' + interaction.member.displayName)
             }
                 break
         }

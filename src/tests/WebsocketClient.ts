@@ -1,16 +1,7 @@
 import BaseTest, { Result } from './BaseTest'
 import { Client } from '@cryb/mesa'
-import fetch from 'node-fetch'
-
-import axios from "axios"
 
 const socket = new Client(process.env['WEBSOCKET_URL'] || "wss://gateway.riniya.uk")
-
-// @ts-ignore
-export interface Body extends BodyInit {
-    username: string;
-    password: string;
-}
 
 export default class WebsocketClient extends BaseTest {
 
@@ -28,28 +19,6 @@ export default class WebsocketClient extends BaseTest {
 
   protected async handle() {
     this.isRunning = true;
-
-    await fetch("https://api.riniya.uk/api/security/login", {
-      method: "POST",
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: "test",
-        password: "test"
-      })
-    }).then(r => r.json())
-      .then(r => console.log(r.clientToken))
-
-    axios.post("https://api.riniya.uk/api/security/login", {
-
-    }).then(r => {
-
-    }).catch(err => console.log(err.status))
-
-    await socket.authenticate({
-
-    })
     socket.on("connected", () => {
       this.updateText("Connection established.")
       if (this.disconnectId)
@@ -59,9 +28,7 @@ export default class WebsocketClient extends BaseTest {
         this.updateText("Listening since " + this.counter + " seconds")
         if (this.messageCount >= 50) {
           this.updatePrefix("HANDSHAKE")
-          if (this.messageCount === 60) {
-             process.exit(0)
-          }
+          process.exit(0)
         } else if (this.counter >= 50 && this.messageCount < 50) {
           this.updateText("The debug operation has failed. Please check the server-side and try again.")
           process.exit(10016)
@@ -71,7 +38,7 @@ export default class WebsocketClient extends BaseTest {
 
     socket.on('message', (message) => {
         this.messageCount = this.messageCount + 1;
-        this.updatePrefix("EXCHANGING")
+        this.updatePrefix(message.type)
     });
 
     socket.on('error', (err) => {

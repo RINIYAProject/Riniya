@@ -13,10 +13,13 @@
 import Riniya from "@riniya.ts";
 import Sanction from "@riniya.ts/database/Moderation/Sanction";
 import GuildModel from "@riniya.ts/database/Guild/Guild";
-import { Guild, GuildMember, MessageEmbed, Snowflake, TextChannel, User } from "discord.js"
+import { Guild, GuildMember, MessageEmbed, Snowflake, TextChannel, User, Interaction } from "discord.js"
+import GuildData from "@riniya.ts/database/Guild/Guild"
 import Blacklist from "@riniya.ts/database/Common/Blacklist";
 import { v4 } from "uuid";
 import Logger from "@riniya.ts/logger";
+import InteractionData from '@riniya.ts/database/Common/Interaction'
+import { Member } from '@riniya.ts/database/Guild/Member'
 
 export function getInstance(): Riniya {
     return Riniya.instance;
@@ -206,4 +209,31 @@ export async function connect<T>(username: string, password: string): Promise<Au
     return new Promise<AuthenticationSession<T>>((resolve, reject) => {
 
     })
+}
+
+export async function updateVerification(id: string, target: GuildMember, message: string) {
+    const GuildModel = await GuildData.findOne({ guildId: id });
+    const channel: TextChannel = Riniya.instance.guilds.cache.get(id).channels.cache.get(GuildModel.verificationLogChannel) as TextChannel;
+    const interMessage = await InteractionData.findOne({
+      guildId: GuildModel.guildId,
+      memberId: target.id,
+      deleted: false
+    })
+
+    if (isNull(interMessage)) {
+        return;
+    }
+
+    await channel.messages.fetch(interMessage.messageId).then(r => r.edit({
+      components: [
+        {
+          type: 1,
+          components: [
+            Riniya.instance.buttonManager.createLinkButton(message, "https://www.riniya.uk")
+          ]
+        }
+      ]
+    }))
+
+    await InteractionData.deleteOne({ _id: interMessage._id })
 }

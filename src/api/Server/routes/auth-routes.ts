@@ -70,7 +70,7 @@ export default class AuthRoutes extends AbstractRoutes {
            userId: database._id,
            accessToken: accessToken,
            clientToken: clientToken,
-           sessionExpiry: 300,
+           sessionExpiry: Date.now(),
            sessionExpired: false
          }).save()
 
@@ -127,29 +127,11 @@ export default class AuthRoutes extends AbstractRoutes {
                 })
             }
 
-            await new Invalidated({
-                userId: session.userId,
-                accessToken: session.accessToken,
-                clientToken: session.clientToken
-            }).save().catch(err => {
-                if (!isNull(err)) return res.status(403).json({
-                    status: false,
-                    error: "Unable to invalidate the session."
-                })
+            await Session.updateOne({ _id: session._id }, {
+               $set: {
+                  sessionExpired: true
+               }
             })
-
-            const check = await Invalidated.findOne({
-                userId: session.userId,
-                accessToken: session.accessToken,
-                clientToken: session.clientToken
-            })
-
-            if (!isNull(check) && !isNull(check.userId)) {
-                return res.status(200).json({
-                    status: false,
-                    error: "This session cannot be terminated twice."
-                })
-            }
 
             return res.status(200).json({
                 status: true,
