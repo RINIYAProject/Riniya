@@ -46,28 +46,28 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
 
         switch (type) {
             case "accepted": {
-                member.roles.remove(unverifiedRole);
-                member.roles.add(verifiedRole);
+                await member.roles.remove(unverifiedRole);
+                await member.roles.add(verifiedRole);
 
-                member.send({
-                    embeds: [
-                        new MessageEmbed()
-                            .setAuthor("Verification result from " + interaction.guild.name)
-                            .setTitle(`Welcome ${member.user.username} on ${interaction.guild.name}.`)
-                            .setDescription("You are accepted in our server! Welcome fluffy fwiend OwO.")
-                            .addField("Members", `${interaction.guild.memberCount}`)
-                    ],
-                    components: [
-                        {
-                            type: 1,
-                            components: [
-                                this.instance.buttonManager.createLinkButton("Rules", "https://discord.com/channels/1052173534299947008/1052173967651250227"),
-                                this.instance.buttonManager.createLinkButton("Roles", "https://discord.com/channels/1052173534299947008/1052173992913534996"),
-                                this.instance.buttonManager.createLinkButton("Partners", "https://discord.com/channels/1052173534299947008/1052173972810256394"),
-                                this.instance.buttonManager.createLinkButton("Giveaways", "https://discord.com/channels/1052173534299947008/1052173997376282624"),
-                            ]
-                        }
-                    ]
+                await member.send({
+                  embeds: [
+                    new MessageEmbed()
+                      .setAuthor("Verification result from " + interaction.guild.name)
+                      .setTitle(`Welcome ${member.user.username} on ${interaction.guild.name}.`)
+                      .setDescription("You are accepted in our server! Welcome fluffy fwiend OwO.")
+                      .addField("Members", `${interaction.guild.memberCount}`)
+                  ],
+                  components: [
+                    {
+                      type: 1,
+                      components: [
+                        this.instance.buttonManager.createLinkButton("Rules", "https://discord.com/channels/1052173534299947008/1052173967651250227"),
+                        this.instance.buttonManager.createLinkButton("Roles", "https://discord.com/channels/1052173534299947008/1052173992913534996"),
+                        this.instance.buttonManager.createLinkButton("Partners", "https://discord.com/channels/1052173534299947008/1052173972810256394"),
+                        this.instance.buttonManager.createLinkButton("Giveaways", "https://discord.com/channels/1052173534299947008/1052173997376282624"),
+                      ]
+                    }
+                  ]
                 })
 
                 await Verification.updateOne({
@@ -75,28 +75,30 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                     memberId: member.id,
                     status: 'pending'
                 }, {
-                    issuerId: interaction.member.id,
-                    issuerName: interaction.member.user.username,
-                    status: 'verified',
-                    updatedAt: Date.now()
+                    $set: {
+                        issuerId: interaction.member.id,
+                        issuerName: interaction.member.user.username,
+                        status: 'verified',
+                        updatedAt: Date.now()
+                    }
                 }, {
                     upsert: false
                 })
 
-                new AcitivityHelper()
-                    .setOwner(interaction.member.id)
-                    .setType("VERIFICATION_GRANTED")
-                    .setContent(`${member.user.username} confirmed.`)
-                    .save(interaction.guildId)
+                await new AcitivityHelper()
+                  .setOwner(interaction.member.id)
+                  .setType("VERIFICATION_GRANTED")
+                  .setContent(`${member.user.username} confirmed.`)
+                  .save(interaction.guildId)
 
-                interaction.reply({
-                    content: `Member ${member.user.username} is now verified.`,
-                    ephemeral: true
+                await interaction.reply({
+                  content: `Member ${member.user.username} is now verified.`,
+                  ephemeral: true
                 })
             }
                 break
             case "refused": {
-                new ModalHelper("row_verification_denied", "Updating " + member.user.username + " Request.")
+                await new ModalHelper("row_verification_denied", "Updating " + member.user.username + " Request.")
                     .addTextInput(
                         new TextInputComponent()
                             .setCustomId("row_reasons")
@@ -120,19 +122,21 @@ export default class SelectUpdate extends BaseButton<MessageSelectMenu, void> {
                     memberId: member.id,
                     status: 'pending'
                 }, {
-                    issuerId: interaction.member.id,
-                    issuerName: interaction.member.user.username,
-                    status: 'banned',
-                    updatedAt: Date.now()
+                   $set: {
+                     issuerId: interaction.member.id,
+                     issuerName: interaction.member.user.username,
+                     status: 'banned',
+                     updatedAt: Date.now()
+                   }
                 }, {
                     upsert: false
                 })
 
-                new AcitivityHelper()
-                    .setOwner(interaction.member.id)
-                    .setType("VERIFICATION_GRANTED")
-                    .setContent(`${member.user.username} confirmed.`)
-                    .save(interaction.guildId)
+                await new AcitivityHelper()
+                  .setOwner(interaction.member.id)
+                  .setType("VERIFICATION_GRANTED")
+                  .setContent(`${member.user.username} confirmed.`)
+                  .save(interaction.guildId)
 
                 sanction(interaction.guild, interaction.member, member, "Verification ban.", "ban")
             }

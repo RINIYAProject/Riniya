@@ -44,10 +44,10 @@ export declare type Category =
 
 export default abstract class BaseCommand extends Base {
 
-    private command: SlashCommandBuilder
-    private category: Category
+    private readonly command: SlashCommandBuilder
+    private readonly category: Category
 
-    public constructor(name: string, description?: string, options?: OptionMap<string, boolean>, category?: Category) {
+    protected constructor(name: string, description?: string, options?: OptionMap<string, boolean>, category?: Category) {
         super(name, description, "COMMAND");
 
         this.setOptions(options || new OptionMap<string, boolean>());

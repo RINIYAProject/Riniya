@@ -21,26 +21,26 @@ export default class CommandPing extends BaseCommand {
         );
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
-        inter.reply({
-            components: [
-                {
-                    type: 1,
-                    components: [
-                        this.instance.buttonManager.createLinkButton("Status Center", "https://status.riniya.uk"),
-                        this.instance.buttonManager.createLinkButton("Support", "https://discord.gg/un87saPuCT"),
-                        this.instance.buttonManager.createLinkButton("Feedback", "https://www.riniya.uk/feedback")
-                    ]
-                }
-            ],
-            embeds: [
-                new MessageEmbed()
-                    .setTitle("Riniya - Latency")
-                    .setDescription("This ping are the gateway latency.")
-                    .addField("Version", this.instance.version, true)
-                    .addField("Latency", `${this.instance.ws.ping}`, true)
-                    .setColor("#36393f")
-            ]
+    async handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
+        await inter.reply({
+          components: [
+            {
+              type: 1,
+              components: [
+                this.instance.buttonManager.createLinkButton("Status Center", "https://status.riniya.uk"),
+                this.instance.buttonManager.createLinkButton("Support", "https://discord.gg/un87saPuCT"),
+                this.instance.buttonManager.createLinkButton("Feedback", "https://www.riniya.uk/feedback")
+              ]
+            }
+          ],
+          embeds: [
+            new MessageEmbed()
+              .setTitle("Riniya - Latency")
+              .setDescription("This ping are the gateway latency.")
+              .addField("Version", this.instance.version, true)
+              .addField("Latency", `${this.instance.ws.ping}`, true)
+              .setColor("#36393f")
+          ]
         });
     }
 }

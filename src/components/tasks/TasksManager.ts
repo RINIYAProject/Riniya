@@ -3,6 +3,7 @@ import BaseTask from "@riniya.ts/components/BaseTask";
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import SessionTask from "./api/SessionTask";
 import KeepAlive from "./api/KeepAlive";
+import VerificationTask from "./api/VerificationTask";
 
 export default class TasksManager {
     private TASKS: OptionMap<string, BaseTask>
@@ -14,6 +15,7 @@ export default class TasksManager {
     public registerAll(): void {
         this.register(new SessionTask())
         this.register(new KeepAlive())
+        this.register(new VerificationTask())
     }
 
     private register(task: BaseTask): void {

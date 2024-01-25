@@ -12,102 +12,102 @@ import moment from "moment";
 export default class AuthRoutes extends AbstractRoutes {
     public register() {
        this.router.post("/security/login", async (req, res) => {
-            var username: string = req.body.username
-            var password: string = req.body.password
+         const username: string = req.body.username
+         const password: string = req.body.password
 
-            if (isNull(username) || isNull(password)) {
-                return res.status(403).json({
-                    status: false,
-                    error: "INVALID_PASSWORD_OR_USERNAME",
-                    message: "The password or username is not valid."
-                })
-            }
+         if (isNull(username) || isNull(password)) {
+           return res.status(403).json({
+             status: false,
+             error: "INVALID_PASSWORD_OR_USERNAME",
+             message: "The password or username is not valid."
+           })
+         }
 
-            const database = await User.findOne({
-                username: username,
-                password: password
-            })
+         const database = await User.findOne({
+           username: username,
+           password: password
+         })
 
-            if (isNull(database.username) && isNull(database.password) && isNull(database.discordId)) {
-                return res.status(403).json({
-                    status: false,
-                    error: "INVALID_PASSWORD_OR_USERNAME",
-                    message: "The password or username is not valid."
-                })
-            }
+         if (isNull(database.username) && isNull(database.password) && isNull(database.discordId)) {
+           return res.status(403).json({
+             status: false,
+             error: "INVALID_PASSWORD_OR_USERNAME",
+             message: "The password or username is not valid."
+           })
+         }
 
-            if (!isNull(database.banned) && !isNull(database.banned.issuer)) {
-                return res.status(403).json({
-                    status: false,
-                    error: "ACCOUNT_BANNED",
-                    message: "This account has been banned.",
-                    data: database.banned
-                })
-            }
+         if (!isNull(database.banned) && !isNull(database.banned.issuer)) {
+           return res.status(403).json({
+             status: false,
+             error: "ACCOUNT_BANNED",
+             message: "This account has been banned.",
+             data: database.banned
+           })
+         }
 
-            if (isNull(database.metadata?.permissions["admin:auth"])) {
-                return res.status(403).json({
-                    status: false,
-                    error: "INSUFFICIENT_PERMISSION"
-                })
-            }
+         if (isNull(database.metadata?.permissions["admin:auth"])) {
+           return res.status(403).json({
+             status: false,
+             error: "INSUFFICIENT_PERMISSION"
+           })
+         }
 
-            const authenticated = await Session.findOne({
-                userId: database._id,
-                sessionExpired: false
-            })
+         const authenticated = await Session.findOne({
+           userId: database._id,
+           sessionExpired: false
+         })
 
-            if (!isNull(authenticated) && !isNull(authenticated.accessToken)) {
-                return res.status(200).json({
-                    status: true,
-                    data: {
-                        metadata: {
-                            requestId: v4(),
-                            requestDate: Date.now()
-                        },
-                        session: authenticated
-                    }
-                })
-            }
+         if (!isNull(authenticated) && !isNull(authenticated.accessToken)) {
+           return res.status(200).json({
+             status: true,
+             data: {
+               metadata: {
+                 requestId: v4(),
+                 requestDate: Date.now()
+               },
+               session: authenticated
+             }
+           })
+         }
 
-            const accessToken: string = v4();
-            const clientToken: string = v4();
+         const accessToken: string = v4();
+         const clientToken: string = v4();
 
-            const session = await new Session({
-                userId: database._id,
-                accessToken: accessToken,
-                clientToken: clientToken,
-                sessionExpiry: 300,
-                sessionExpired: false
-            }).save()
+         const session = await new Session({
+           userId: database._id,
+           accessToken: accessToken,
+           clientToken: clientToken,
+           sessionExpiry: 300,
+           sessionExpired: false
+         }).save()
 
-            Riniya.instance.users.cache.get(database.discordId).send({
-                embeds: [
-                    new MessageEmbed()
-                        .setTitle("API Login detected")
-                        .setColor("RED")
-                        .setDescription(`New login at ${moment(Date.now())}. If this action has been made on your behalf. Please terminate this session.`)
-                ],
-                components: [
-                    {
-                        type: 1,
-                        components: [
-                            Riniya.instance.buttonManager.createLinkButton("Terminate", "https://api.riniya.uk/api/security/invalidate/" + accessToken)
-                        ]
-                    }
-                ]
-            })
+         await Riniya.instance.users.cache.get(database.discordId).send({
+           embeds: [
+             new MessageEmbed()
+               .setTitle("API Login detected")
+               .setColor("RED")
+               .setDescription(`New login at ${moment(Date.now())}. If this action has been made on your behalf. Please terminate this session.`)
+           ],
+           components: [
+             {
+               type: 1,
+               components: [
+                 Riniya.instance.buttonManager.createLinkButton("Terminate", "https://api.riniya.uk/api/security/invalidate/" + accessToken)
+               ]
+             }
+           ]
+         })
 
-            return res.status(200).json({
-                status: true,
-                data: {
-                    metadata: {
-                        requestId: v4(),
-                        requestDate: Date.now()
-                    },
-                    session: session
-                }
-            })
+         return res.status(200).json({
+           status: true,
+           data: {
+             metadata: {
+               requestId: v4(),
+               requestDate: Date.now()
+             },
+             session: session
+           }
+         })
        })
 
        this.router.get("/security/invalidate/:accessToken", async (req, res) => {
@@ -118,8 +118,8 @@ export default class AuthRoutes extends AbstractRoutes {
                 })
             }
 
-            const session = await Session.findOne({ 
-                accessToken: req.params.accessToken 
+            const session = await Session.findOne({
+                accessToken: req.params.accessToken
             })
 
             if (isNull(session.clientToken) && isNull(session._id)) {
@@ -157,7 +157,7 @@ export default class AuthRoutes extends AbstractRoutes {
                     error: "This session cannot be terminated twice."
                 })
             }
-            
+
             return res.status(200).json({
                 status: true,
                 data: {

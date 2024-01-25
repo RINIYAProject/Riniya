@@ -101,7 +101,7 @@ export default class ServerManager {
 
     public initServers(): void {
         this.routes.getAll().forEach((route) => {
-            app.use('/api', route.routing())
+            app.use('/api', new Authentication().handle ,route.routing())
         })
         this.server.listen(3443)
         this.gateway.listen(8443)

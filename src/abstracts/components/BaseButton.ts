@@ -18,7 +18,7 @@ export default abstract class BaseButton<T, V> extends Base {
     public readonly customId: string;
     public readonly setting: OptionMap<string, unknown>;
 
-    public constructor(name: string, label: string, setting?: OptionMap<string, unknown>) {
+    protected constructor(name: string, label: string, setting?: OptionMap<string, unknown>) {
         super(name, label, "BUTTON");
         this.customId = this.name;
         this.setting = setting || new OptionMap<string, unknown>();

@@ -21,12 +21,12 @@ export default class CommandAbout extends BaseCommand {
         );
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
+    async handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const message: MessageEmbed = new MessageEmbed()
             .setTitle("Riniya - About")
             .setDescription("Thank you for paying attention to Riniya, there you will find all the information and link of the service")
             .addField("Version", this.instance.version, true)
-            .addField("Author", "Vakea#0365", true)
+            .addField("Author", "NebraskyTheWolf", true)
             .setColor("#36393f");
 
         const website: MessageButton = new MessageButton()
@@ -54,20 +54,20 @@ export default class CommandAbout extends BaseCommand {
             .setLabel("Repository")
             .setStyle("LINK");
 
-        inter.reply({
-            "components": [
-                {
-                    "type": 1,
-                    "components": [
-                        website,
-                        dashboard,
-                        documentation,
-                        report,
-                        github
-                    ]
-                }
-            ],
-            embeds: [message]
+        await inter.reply({
+          "components": [
+            {
+              "type": 1,
+              "components": [
+                website,
+                dashboard,
+                documentation,
+                report,
+                github
+              ]
+            }
+          ],
+          embeds: [message]
         });
     }
 }

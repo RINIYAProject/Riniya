@@ -99,7 +99,7 @@ export default class ButtonManager {
         this.BUTTONS.getMap().clear();
         this.logger.warn("Button registry cleared.");
         this.registerButtons();
-        this.logger.info("Button regitry reloaded.");
+        this.logger.info("Button registry reloaded.");
     }
 
     public toMap(): Collection<String, BaseButton<unknown, unknown>> {

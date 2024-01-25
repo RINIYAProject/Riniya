@@ -14,18 +14,18 @@ export default class BlacklistRoutes extends AbstractRoutes {
                 return res.status(403).json({
                     status: false,
                     error: `User type is invalid.`
-                }).end() 
-            
+                }).end()
+
             new Blacklist(user).save().catch(err => {
                 if (err) return res.status(404).json({
                     status: false,
                     error: `Could not save the user data.`
-                }).end() 
+                }).end()
             })
 
-            blacklist(Riniya.instance.users.cache.get(user.issuedBy), 
-                Riniya.instance.users.cache.get(user.userId), 
-                user.reason)
+            await blacklist(Riniya.instance.users.cache.get(user.issuedBy),
+              Riniya.instance.users.cache.get(user.userId),
+              user.reason)
 
             return res.status(200).json({
                 status: true,
@@ -36,7 +36,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     },
                     result: user
                 }
-            }).end() 
+            }).end()
         })
 
         this.router.patch('/blacklist/edit-user', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
@@ -46,8 +46,8 @@ export default class BlacklistRoutes extends AbstractRoutes {
                 return res.status(404).json({
                     status: false,
                     error: `User type if invalid.`
-                }).end() 
-            
+                }).end()
+
             const result = await Blacklist.updateOne({
                  userId: user.userId,
                  caseId: user.caseId }, user, {
@@ -58,8 +58,8 @@ export default class BlacklistRoutes extends AbstractRoutes {
                 return res.status(500).json({
                     status: false,
                     error: `The update failed.`
-                }).end() 
-            
+                }).end()
+
             return res.status(200).json({
                 status: true,
                 data: {
@@ -70,7 +70,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     },
                     result: user
                 }
-            }).end() 
+            }).end()
         })
 
         this.router.delete('/blacklist/remove-user', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
@@ -79,7 +79,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     status: false,
                     error: `You must specify the 'user_id'.`
                 }).end()
-            
+
             const user = await Blacklist.deleteOne({ userId: req.body.user })
 
             if (isNull(user) && !user.acknowledged)
@@ -87,7 +87,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     status: false,
                      error: `This user is not blacklisted.`
                 }).end()
-                
+
             return res.status(200).json({
                 status: true,
                 data: {
@@ -97,7 +97,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     },
                     result: user
                 }
-            }).end() 
+            }).end()
         })
 
         this.router.get('/blacklist/get-user/:user', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
@@ -114,7 +114,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     status: false,
                     error: `This user is not blacklisted.`
                 }).end()
-            
+
             return res.status(200).json({
                 status: true,
                 data: {
@@ -124,7 +124,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     },
                     result: user
                 }
-            }).end() 
+            }).end()
         })
 
         this.router.get('/blacklist/get-users', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
@@ -135,7 +135,7 @@ export default class BlacklistRoutes extends AbstractRoutes {
                     status: false,
                     error: `No users has been blacklisted.`
                 }).end()
-            
+
             return res.status(200).json({
                 status: true,
                 data: {

@@ -36,9 +36,9 @@ export default class SelectRoleSubmit extends BaseButton<MessageSelectMenu, void
             }
         })
 
-        interaction.reply({
-            embeds: [embed],
-            ephemeral: true
+        await interaction.reply({
+          embeds: [embed],
+          ephemeral: true
         })
     }
 

@@ -8,10 +8,10 @@ export default abstract class BaseManager<T> {
     private readonly objectName: string
     private readonly resetTime: number
     private readonly cache: CacheManager
-    
+
     protected readonly timeoutCache: Tuple<NodeJS.Timeout>
 
-    public constructor(name: string, prefix: string, resetTime: number, objectName: string) {
+    protected constructor(name: string, prefix: string, resetTime: number, objectName: string) {
         this.name = name
         this.objectName = objectName
         this.resetTime = resetTime;

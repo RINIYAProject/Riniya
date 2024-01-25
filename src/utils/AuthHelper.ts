@@ -43,18 +43,18 @@ export default class AuthHelper {
                 message: "The client or access token is invalid."
             })
         } else {
-            new History({
-                userId: SessionData.userId,
-                accessToken: SessionData.accessToken,
-                clientToken: SessionData.clientToken,
-                createdAt: Date.now()
+            await new History({
+              userId: SessionData.userId,
+              accessToken: SessionData.accessToken,
+              clientToken: SessionData.clientToken,
+              createdAt: Date.now()
             }).save();
 
             const invalidated = await Invalidated.findOne({
                 accessToken: accessToken,
                 clientToken: clientToken
             })
-    
+
             if (!isNull(invalidated.userId)) {
                 return callback({
                     status: false,

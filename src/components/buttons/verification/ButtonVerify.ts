@@ -31,40 +31,40 @@ export default class ButtonVerify extends BaseButton<MessageButton, void> {
     public async handler(inter: ButtonInteraction<"cached">): Promise<void> {
         const GuildData = await GuildModel.findOne({ guildId: inter.guildId });
         if (GuildData.verification) {
-            new ModalHelper(
-                "row_verification_submit",
-                "Member manual verification."
+            await new ModalHelper(
+              "row_verification_submit",
+              "Member manual verification."
             ).addTextInput(
-                new TextInputComponent()
-                    .setCustomId("row_verification_answer_find")
-                    .setStyle("LONG")
-                    .setLabel("HOW DID YOU FIND US?")
-                    .setMinLength(8)
-                    .setMaxLength(100)
-                    .setPlaceholder("Please be specific, answers like 'google' or 'website' will be declined")
-                    .setRequired(true)
+              new TextInputComponent()
+                .setCustomId("row_verification_answer_find")
+                .setStyle("LONG")
+                .setLabel("HOW DID YOU FIND US?")
+                .setMinLength(8)
+                .setMaxLength(100)
+                .setPlaceholder("Please be specific, answers like 'google' or 'website' will be declined")
+                .setRequired(true)
             ).addTextInput(
-                new TextInputComponent()
-                    .setCustomId("row_verification_answer_age")
-                    .setStyle("SHORT")
-                    .setLabel("HOW OLD ARE YOU")
-                    .setMinLength(2)
-                    .setMaxLength(3)
-                    .setPlaceholder("Do not round up, and do not give us your \"sona's\" age.")
-                    .setRequired(true)
+              new TextInputComponent()
+                .setCustomId("row_verification_answer_age")
+                .setStyle("SHORT")
+                .setLabel("HOW OLD ARE YOU")
+                .setMinLength(2)
+                .setMaxLength(3)
+                .setPlaceholder("Do not round up, and do not give us your \"sona's\" age.")
+                .setRequired(true)
             ).addTextInput(
-                new TextInputComponent()
-                    .setCustomId("row_verification_answer_sona")
-                    .setStyle("LONG")
-                    .setLabel("DO YOU HAVE A FURSONA?")
-                    .setMinLength(30)
-                    .setMaxLength(260)
-                    .setPlaceholder("If so, could you describe them?")
-                    .setRequired(true)
+              new TextInputComponent()
+                .setCustomId("row_verification_answer_sona")
+                .setStyle("LONG")
+                .setLabel("DO YOU HAVE A FURSONA?")
+                .setMinLength(30)
+                .setMaxLength(260)
+                .setPlaceholder("If so, could you describe them?")
+                .setRequired(true)
             ).generate(inter);
         } else {
             return inter.reply({
-                content: "This server is not configurated, Please contact a administrator.",
+                content: "This server is not ready yet, Please contact a administrator.",
                 ephemeral: true
             });
         }

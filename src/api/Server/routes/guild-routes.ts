@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import AbstractRoutes from "../../Server/AbstractRoutes";
-import Riniya from "@riniya.ts";
-import Message from "@riniya.ts/database/Common/Message";
-import Verification from "@riniya.ts/database/Guild/Verification";
-import Sanction from "@riniya.ts/database/Moderation/Sanction";
-import Activity from "@riniya.ts/database/Guild/Activity";
-import { isNull } from "@riniya.ts/types";
+import AbstractRoutes, { ErrorType } from '../../Server/AbstractRoutes'
+import Riniya from '@riniya.ts'
+import Message from '@riniya.ts/database/Common/Message'
+import Verification from '@riniya.ts/database/Guild/Verification'
+import Sanction from '@riniya.ts/database/Moderation/Sanction'
+import Activity from '@riniya.ts/database/Guild/Activity'
+import { isNull } from '@riniya.ts/types'
 
 export declare type Activity = {
     guildId: string;
@@ -97,7 +97,7 @@ export default class GuildRoutes extends AbstractRoutes {
 
             const member = this.instance.guilds.cache.get(req.params.guildId).members.cache.get(req.params.memberId)
 
-            if (isNull(member)) 
+            if (isNull(member))
                 return res.status(403).json({
                     status: false,
                     error: `The member is not in the database.`
@@ -112,7 +112,7 @@ export default class GuildRoutes extends AbstractRoutes {
         // TODO: Later usage
         // -> -> -> -> -> -> -> ->
         // Level system for servers
-        // Member profile 
+        // Member profile
         //
         // this.router.get('/servers/:guildId/members/:memberId/level', async (req, res) => { })
         // this.router.get('/servers/:guildId/members/:memberId/profile', async (req, res) => { })
@@ -134,7 +134,7 @@ export default class GuildRoutes extends AbstractRoutes {
                     status: false,
                     error: `This member does not have any sanction in this server.`
                 }).end()
-            
+
             return res.status(200).json({
                 status: true,
                 data: sanctions
@@ -157,7 +157,7 @@ export default class GuildRoutes extends AbstractRoutes {
                     status: false,
                     error: `This server does not have any verifications.`
                 }).end()
-            
+
             return res.status(200).json({
                 status: true,
                 data: verifications
@@ -209,14 +209,14 @@ export default class GuildRoutes extends AbstractRoutes {
                     status: false,
                     error: `The activities can't be found.`
                 }).end()
-            
+
             return res.status(200).json({
                 status: true,
                 data: activities
             }).end()
         })
 
-        this.router.get('/servers/:guildId/activity/:id', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => { 
+        this.router.get('/servers/:guildId/activity/:id', (req, res, next) => this.auth.handle(req, res, next), async (req, res) => {
             if (isNull(req.params.id))
                 return res.status(403).json({
                     status: false,
@@ -232,7 +232,7 @@ export default class GuildRoutes extends AbstractRoutes {
                     status: false,
                     error: `The activity can't be found.`
                 }).end()
-            
+
             return res.status(200).json({
                 status: true,
                 data: activities
@@ -249,7 +249,7 @@ export default class GuildRoutes extends AbstractRoutes {
                 }).end()
 
             new Activity(data.data).save().catch(err => {
-                if (err) return this.error(res, 500)
+                if (err) return this.error(res, ErrorType.INTERNAL)
             })
 
             return res.status(200).json({
@@ -270,7 +270,7 @@ export default class GuildRoutes extends AbstractRoutes {
 
             const messages = await Message.find({ guildId: req.params.guildId })
 
-            if (isNull(messages)) 
+            if (isNull(messages))
                 return res.status(403).json({
                     status: false,
                     error: `No messages found in this server.`
@@ -291,7 +291,7 @@ export default class GuildRoutes extends AbstractRoutes {
 
             const messages = await Message.find({ guildId: req.params.guildId, memberId: req.params.memberId })
 
-            if (isNull(messages)) 
+            if (isNull(messages))
                 return res.status(403).json({
                     status: false,
                     error: `No messages found for this server/member.`

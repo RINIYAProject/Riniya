@@ -10,60 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import Logger from "@riniya.ts/logger";
-import BaseCommand from "@riniya.ts/components/BaseCommand";
-import OptionMap from "@riniya.ts/utils/OptionMap";
-import { deleteCommand } from "@riniya.ts/utils/registerCommand";
-import { Collection } from "discord.js";
+import Logger from '@riniya.ts/logger'
+import BaseCommand from '@riniya.ts/components/BaseCommand'
+import OptionMap from '@riniya.ts/utils/OptionMap'
+import { deleteCommand } from '@riniya.ts/utils/registerCommand'
+import { Collection } from 'discord.js'
 
-import CommandBan from "./administrator/CommandBan";
-import CommandKick from "./administrator/CommandKick";
-import CommandMute from "./administrator/CommandMute";
-import CommandWarn from "./administrator/CommandWarn";
+import CommandBan from './administrator/CommandBan'
+import CommandKick from './administrator/CommandKick'
+import CommandMute from './administrator/CommandMute'
+import CommandWarn from './administrator/CommandWarn'
 
-import CommandBalance from "./economy/CommandBalance";
-import CommandInventory from "./economy/CommandInventory";
-import CommandWork from "./economy/CommandWork";
+import CommandBalance from './economy/CommandBalance'
+import CommandInventory from './economy/CommandInventory'
+import CommandWork from './economy/CommandWork'
 
-import CommandFox from "./fun/CommandFox";
-import CommandCat from "./fun/CommandCat";
-import CommandDog from "./fun/CommandDog";
-import CommandMeme from "./fun/CommandMeme";
+import CommandFox from './fun/CommandFox'
+import CommandCat from './fun/CommandCat'
+import CommandDog from './fun/CommandDog'
+import CommandMeme from './fun/CommandMeme'
 
-import CommandLeaderboard from "./level/CommandLeaderboard";
-import CommandProfile from "./level/CommandProfile";
-import CommandRewards from "./level/CommandRewards";
+import CommandLeaderboard from './level/CommandLeaderboard'
+import CommandProfile from './level/CommandProfile'
+import CommandRewards from './level/CommandRewards'
 
-import CommandAbout from "./misc/CommandAbout";
-import CommandHelp from "./misc/CommandHelp";
-import CommandPing from "./misc/CommandPing";
+import CommandAbout from './misc/CommandAbout'
+import CommandHelp from './misc/CommandHelp'
+import CommandPing from './misc/CommandPing'
 
-import CommandPause from "./music/CommandPause";
-import CommandPlay from "./music/CommandPlay";
-import CommandQueue from "./music/CommandQueue";
-import CommandStop from "./music/CommandStop";
+import CommandPause from './music/CommandPause'
+import CommandPlay from './music/CommandPlay'
+import CommandQueue from './music/CommandQueue'
+import CommandStop from './music/CommandStop'
 
-import CommandCuddles from "./nsfw/CommandCuddles";
-import CommandE621 from "./nsfw/CommandE621";
-import CommandFuck from "./nsfw/CommandFuck";
-import CommandKiss from "./nsfw/CommandKiss";
-import CommandSuck from "./nsfw/CommandSuck";
-import CommandYiff from "./nsfw/CommandYiff";
+import CommandCuddles from './nsfw/CommandCuddles'
+import CommandE621 from './nsfw/CommandE621'
+import CommandFuck from './nsfw/CommandFuck'
+import CommandKiss from './nsfw/CommandKiss'
+import CommandSuck from './nsfw/CommandSuck'
+import CommandYiff from './nsfw/CommandYiff'
 
-import CommandAnnounce from "./owner/CommandAnnounce";
-import CommandBlacklist from "./owner/CommandBlacklist";
-import CommandDeveloper from "./owner/CommandDeveloper";
-import CommandEval from "./owner/CommandEval";
-import CommandReload from "./owner/CommandReload";
+import CommandAnnounce from './owner/CommandAnnounce'
+import CommandBlacklist from './owner/CommandBlacklist'
+import CommandDeveloper from './owner/CommandDeveloper'
+import CommandEval from './owner/CommandEval'
+import CommandReload from './owner/CommandReload'
 
-import CommandCreate from "./sona/CommandCreate";
-import CommandShow from "./sona/CommandShow";
-import CommandUpdate from "./sona/CommandUpdate";
-import CommandSpawnButton from "./owner/CommandSpawnButton";
-import CommandDonate from "./misc/CommandDonate";
-import CommandRole from "./administrator/CommandRole";
-import CommandInvite from "./owner/CommandInvite";
-import CommandTargetInvite from "./owner/CommandTargetInvite";
+import CommandCreate from './sona/CommandCreate'
+import CommandShow from './sona/CommandShow'
+import CommandUpdate from './sona/CommandUpdate'
+import CommandSpawnButton from './owner/CommandSpawnButton'
+import CommandDonate from './misc/CommandDonate'
+import CommandRole from './administrator/CommandRole'
+import CommandInvite from './owner/CommandInvite'
+import CommandTargetInvite from './owner/CommandTargetInvite'
 
 export default class CommandManager {
     private REGISTRY: OptionMap<String, BaseCommand>;
@@ -183,16 +183,14 @@ export default class CommandManager {
     }
 
     public toList() {
-        const commandMap = this.REGISTRY.getMap().map((value: BaseCommand) => {
-            return {
-                name: value.name,
-                description: value.description || '',
-                category: value.getCategory(),
-                type: value.type,
-                options: value.getArgs() || []
-            }
+      return this.REGISTRY.getMap().map((value: BaseCommand) => {
+          return {
+            name: value.name,
+            description: value.description || '',
+            category: value.getCategory(),
+            type: value.type,
+            options: value.getArgs() || []
+          }
         })
-
-        return commandMap
     }
 }

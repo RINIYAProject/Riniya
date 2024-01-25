@@ -13,7 +13,7 @@
 import Base from "../Base";
 
 export default abstract class BaseEvent extends Base {
-    public constructor(name: string, listener: Function) {
+    protected constructor(name: string, listener: Function) {
         super(name, "", "EVENT");
 
         this.instance.on(this.name, listener.bind(this.instance));

@@ -12,11 +12,12 @@
 
 import { SlashCommandStringOption, SlashCommandSubcommandBuilder, SlashCommandUserOption } from "@discordjs/builders";
 import BaseCommand from "@riniya.ts/components/BaseCommand";
-import { fetchBlacklist, sanction } from "@riniya.ts/types";
+import { blacklist, fetchBlacklist, sanction } from '@riniya.ts/types'
 import OptionMap from "@riniya.ts/utils/OptionMap";
 import { GuildMember, Guild, CommandInteraction, User, MessageEmbed } from "discord.js";
+import Riniya from '@riniya.ts'
 
-// DEPRECATED 
+// DEPRECATED
 // This command will be deleted soon.
 
 export default class CommandBlacklist extends BaseCommand {
@@ -71,7 +72,7 @@ export default class CommandBlacklist extends BaseCommand {
 
     async handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const command = inter.options.getSubcommand(true);
-        const user: GuildMember = guild.members.cache.get(inter.options.getUser("target", true).id);
+        const user: User = Riniya.instance.users.cache.get(inter.options.getUser("target", true).id);
         const reason: string = inter.options.getString("reason") || "No reason provided.";
 
         const message: MessageEmbed = new MessageEmbed();
@@ -80,17 +81,18 @@ export default class CommandBlacklist extends BaseCommand {
 
         switch (command) {
             case "add": {
-                message.setAuthor("1 user has been added.")
-                message.setDescription("You blacklisted " + user.user.username + " for " + reason)
+                message.setAuthor(user.username + " is now blacklisted.")
+                message.setDescription("You blacklisted " + user.username + " for " + reason)
                 message.setTimestamp(new Date())
-                user.send(sanction(guild, member, user, reason, "blacklist"))
+
+              await blacklist(member.user, user, reason)
             }
             break;
             case "check": {
                 const data = await fetchBlacklist(user.id)
                 if (data) {
                     message.setColor("RED")
-                    message.setAuthor("1 case found on " + user.user.username)
+                    message.setAuthor("1 case found on " + user.username)
                     message.setDescription("This user has been blacklisted.")
                     message.addField("Issued By", data.issuedBy, true)
                     message.addField("Case Id", data.caseId, true)
@@ -111,9 +113,9 @@ export default class CommandBlacklist extends BaseCommand {
             break;
         }
 
-        inter.reply({
-            embeds: [message],
-            ephemeral: true
+        await inter.reply({
+          embeds: [message],
+          ephemeral: true
         })
 
         this.instance.serverManager.websocket.sendPacket("RTC_BLACKLIST_ACK", {

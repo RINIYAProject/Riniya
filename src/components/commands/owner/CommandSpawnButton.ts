@@ -32,29 +32,29 @@ export default class CommandSpawnButton extends BaseCommand {
         );
     }
 
-    handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
+    async handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
         const buttonId: string = inter.options.getString("buttonid") || null;
         const handler: BaseButton<unknown, unknown> = this.instance.buttonManager.getButton(buttonId);
         if (!(handler instanceof BaseButton<MessageButton, unknown>))
-            inter.reply({
-                content: 'Failed to summon ' + buttonId + ', Because it\'s not a button.',
-                ephemeral: true
+            await inter.reply({
+              content: 'Failed to summon ' + buttonId + ', Because it\'s not a button.',
+              ephemeral: true
             });
 
         if (!handler) {
-            inter.reply({
-                content: 'Failed to summon ' + buttonId,
-                ephemeral: true
+            await inter.reply({
+              content: 'Failed to summon ' + buttonId,
+              ephemeral: true
             });
         } else {
-            inter.reply({
-                "components": [
-                    {
-                        "type": 1,
-                        "components": [handler.generate() as MessageButton]
-                    }
-                ],
-                embeds: [handler.message()]
+            await inter.reply({
+              "components": [
+                {
+                  "type": 1,
+                  "components": [handler.generate() as MessageButton]
+                }
+              ],
+              embeds: [handler.message()]
             });
         }
     }

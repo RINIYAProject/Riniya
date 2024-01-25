@@ -87,7 +87,7 @@ export default class CommandDeveloper extends BaseCommand {
                     });
             }
             case "add": {
-                new Developer({ userId: user.id }).save();
+                await new Developer({ userId: user.id }).save();
                 return inter.reply({
                     embeds: [
                         new MessageEmbed()

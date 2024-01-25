@@ -35,7 +35,7 @@ export default class CommandHelp extends BaseCommand {
 
     handler(inter: CommandInteraction, member: GuildMember, guild: Guild) {
 
-        // COMMAND GROUPS PROCESSOR 
+        // COMMAND GROUPS PROCESSOR
         this.instance.manager.toList().map(x => {
             this.groups.add(x.category, {
                 name: x.name,
@@ -46,13 +46,13 @@ export default class CommandHelp extends BaseCommand {
         })
 
         const categories = this.instance.manager.groups.getMap().map(x => {
-            var unrecognised = x.replace(" ", "")
-                                    .replace("&", "_")
-                                    .toLowerCase()
-            return {
+          const unrecognised = x.replace(' ', '')
+            .replace('&', '_')
+            .toLowerCase()
+          return {
                 type: 1,
                 components: [
-                    this.instance.buttonManager.createButton(`${x}`, unrecognised) 
+                    this.instance.buttonManager.createButton(`${x}`, unrecognised)
                 ]
             }
         })

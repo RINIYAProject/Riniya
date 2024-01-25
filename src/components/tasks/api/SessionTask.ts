@@ -7,15 +7,17 @@ export default class SessionTask extends BaseTask {
             async () => {
                 this.instance.guilds.cache.forEach(result => {
                     result.members.cache.forEach(async member => {
-                        await Member.deleteOne({ guildId: result.id, memberId: member.id })
-                        new Member({
+                        await Member.updateOne({
                             guildId: result.id,
-                            memberId: member.id,
-                            username: member.user.username,
-                            identifier: member.user.discriminator,
-                            avatar: member.avatarURL(),
-                            hexColor: member.user.accentColor
-                        }).save()
+                            memberId: member.id
+                        }, {
+                            $set: {
+                                username: member.user.username,
+                                identifier: member.user.discriminator,
+                                avatar: member.avatarURL(),
+                                hexColor: member.user.accentColor
+                            }
+                        });
                     })
                 })
                 this.instance.serverManager.websocket.sendPacket("RTC_MEMBERS_ACK", {  }, "*")

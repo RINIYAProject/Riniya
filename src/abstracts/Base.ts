@@ -23,7 +23,7 @@ export default abstract class Base {
     public readonly type: ComponentType;
     public options?: OptionMap<string, boolean>;
 
-    public constructor(name: string,
+    protected constructor(name: string,
         description?: string,
         type?: ComponentType) {
         this.name = name;

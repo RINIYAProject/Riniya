@@ -25,7 +25,7 @@ export default class VerificationManager extends BaseManager<CacheSlot[]> {
         super("VerificationManager", "verification", 280, "users-list")
     }
 
-    public init() {
+    public async init() {
         this.users.getMap().clear()
 
         this.has().then(result => {
@@ -61,7 +61,7 @@ export default class VerificationManager extends BaseManager<CacheSlot[]> {
                 status: x.status,
                 registeredAt: x.registeredAt,
                 updatedAt: x.updatedAt,
-                expireAt: x.expireAt  
+                expireAt: x.expireAt
             }
         })
 
@@ -80,64 +80,66 @@ export default class VerificationManager extends BaseManager<CacheSlot[]> {
         this.getObject().then(result => {
             Riniya.instance.logger.info("[VerificationManager] : Processing objects in " + result.objectId)
             result.data.forEach(x => {
-                var inter = setInterval(async () => {
-                    const uniqueId = inter
-                    var countDown = x.expireAt -= 1
-                    await this.updateTime(x.memberId, countDown)
-    
-                    if (countDown === 43200) {
-                        this.sendNotification(x.memberId, x.guildId, countDown)
-                    } else if (countDown === 21600) {
-                        this.sendNotification(x.memberId, x.guildId, countDown)
-                    } else if (countDown === 11600) {
-                        this.sendNotification(x.memberId, x.guildId, countDown)
-                    } else if (countDown === 60 * 2) {
-                        this.sendNotification(x.memberId, x.guildId, countDown)
-                    } else if (countDown === 0) {
-                        clearInterval(uniqueId)
-                    }
-                }, 1000)
-                this.timeoutCache.add(inter)
+              const inter = setInterval(async () => {
+                const uniqueId = inter
+                const countDown = x.expireAt -= 1
+                await this.updateTime(x.memberId, countDown)
+
+                if (countDown === 43200) {
+                  await this.sendNotification(x.memberId, x.guildId, countDown)
+                } else if (countDown === 21600) {
+                  await this.sendNotification(x.memberId, x.guildId, countDown)
+                } else if (countDown === 11600) {
+                  await this.sendNotification(x.memberId, x.guildId, countDown)
+                } else if (countDown === 60 * 2) {
+                  await this.sendNotification(x.memberId, x.guildId, countDown)
+                } else if (countDown <= 0) {
+                  clearInterval(uniqueId)
+                }
+              }, 1000)
+              this.timeoutCache.add(inter)
             })
         })
     }
 
-    protected sendNotification(userId: Snowflake, guildId: Snowflake, time: number): void {
+    protected async sendNotification(userId: Snowflake, guildId: Snowflake, time: number) {
         let guild: Guild = Riniya.instance.guilds.cache.get(guildId)
         let member: GuildMember = guild.members.cache.get(userId);
 
         if (time === 0) {
-            member.send({
-                content: "You have been kicked due to verification inactivity."
+            await member.send({
+              content: "You have been kicked due to verification inactivity."
             })
-            member.kick("Verification timed out.")
+            await member.kick("Verification timed out.")
         }
-        
-        member.send({
-            embeds: [
-                new MessageEmbed()
-                    .setAuthor("Please don't forget to verify your account.")
-                    .setDescription(`Hello ${member.user.username}, 
+
+        await member.send({
+          embeds: [
+            new MessageEmbed()
+              .setAuthor("Please don't forget to verify your account.")
+              .setDescription(`Hello ${member.user.username},
                         You have joined '${guild.name}' but forgot to verify your account.
 
                         Please verify your account so that you are not locked out of the server.
-                        
+
                         You must do this before the time limit indicated below`
-                    )
-                    .setColor("ORANGE")
-                    .addField("Expire in", `${new Date(time * 1000).getHours()} hours.`)
-            ]
+              )
+              .setColor("ORANGE")
+              .addField("Expire in", `${new Date(time * 1000).getHours()} hours.`)
+          ]
         })
     }
 
     protected async updateTime(id: string, time: number): Promise<Boolean> {
         let ok: Boolean = false
-        let expired: Boolean = (time === 0 ? true : false)
+        let expired: Boolean = (time === 0)
         await Verification.updateOne({
             memberId: id
         }, {
-            expireAt: time,
-            status: (expired ? "timedout" : "pending")
+            $set: {
+                expireAt: time,
+                status: (expired ? "timedout" : "pending")
+            }
         }).then(document => {
             ok = document.acknowledged
         })

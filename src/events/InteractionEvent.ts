@@ -96,7 +96,7 @@ export default class InteractionEvent extends BaseEvent {
             } catch (err) {
                 this.instance.logger.error(`InteractionEvent:(${interaction.id}) | ${err}`);
                 return ((interaction) as CommandInteraction<"cached">).reply({
-                    content: 'Error occured while executing interaction.',
+                    content: 'Error occurred while executing interaction.',
                     ephemeral: true
                 });
             }

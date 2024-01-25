@@ -34,36 +34,36 @@ export default class AcceptRules extends BaseButton<MessageButton, void> {
         if (guild.roleEnabled) {
             const ruleRole: Role = interaction.guild.roles.cache.get(guild.roleRule);
             if (interaction.member.roles.cache.has(ruleRole.id)) {
-                interaction.reply({
-                    embeds: [
-                        new MessageEmbed()
-                            .setTitle("Riniya - Error")
-                            .setDescription("You already agreed with our rules.")
-                            .setColor("#36393f")
-                    ],
-                    ephemeral: true
+                await interaction.reply({
+                  embeds: [
+                    new MessageEmbed()
+                      .setTitle("Riniya - Error")
+                      .setDescription("You already agreed with our rules.")
+                      .setColor("#36393f")
+                  ],
+                  ephemeral: true
                 });
             } else {
-                interaction.member.roles.add(ruleRole);
-                interaction.reply({
-                    embeds: [
-                        new MessageEmbed()
-                            .setTitle("Riniya - Rules")
-                            .setDescription("You agreed with our rules.")
-                            .setColor("#36393f")
-                    ],
-                    ephemeral: true
+                await interaction.member.roles.add(ruleRole);
+                await interaction.reply({
+                  embeds: [
+                    new MessageEmbed()
+                      .setTitle("Riniya - Rules")
+                      .setDescription("You agreed with our rules.")
+                      .setColor("#36393f")
+                  ],
+                  ephemeral: true
                 });
             }
         } else {
-            interaction.reply({
-                embeds: [
-                    new MessageEmbed()
-                        .setTitle("Riniya - Error")
-                        .setDescription("This server is not configurated.")
-                        .setColor("#36393f")
-                ],
-                ephemeral: true
+            await interaction.reply({
+              embeds: [
+                new MessageEmbed()
+                  .setTitle("Riniya - Error")
+                  .setDescription("This server is not configurated.")
+                  .setColor("#36393f")
+              ],
+              ephemeral: true
             });
         }
     }

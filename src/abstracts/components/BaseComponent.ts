@@ -15,7 +15,7 @@ import Base from "../Base";
 
 export default abstract class BaseComponent<T extends Interaction<"cached">, V> extends Base {
 
-    public constructor(customId: string) {
+    protected constructor(customId: string) {
         super(customId, "", "COMPONENT");
     }
 

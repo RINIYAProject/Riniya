@@ -21,7 +21,7 @@ import { isNull } from "@riniya.ts/types";
 export default class GuildAddEvent extends BaseEvent {
     public constructor() {
         super("guildCreate", async (guild: Guild) => {
-            // TODO: Better system for the server registration =:) 
+            // TODO: Better system for the server registration =:)
 
             const data = await GuildModel.findOne({
                 guildId: guild.id
@@ -41,11 +41,11 @@ export default class GuildAddEvent extends BaseEvent {
                 })
             }
 
-            registerCommands(
-                this.instance,
-                guild.id,
-                guild.name,
-                this.instance.manager
+            await registerCommands(
+              this.instance,
+              guild.id,
+              guild.name,
+              this.instance.manager
             );
         });
     }

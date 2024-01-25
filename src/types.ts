@@ -27,20 +27,22 @@ export function getLogger(): Logger {
 }
 
 export async function fetchBlacklist(userId: Snowflake) {
-    return await Blacklist.findOne({ userId: userId }, null, { sort: {
-        'registeredAt': -1 
-    }})
+    return Blacklist.findOne({ userId: userId }, null, {
+        sort: {
+          'registeredAt': -1
+        }
+    })
 }
 
 export async function fetchGuild(guildId: string) {
-    return await GuildModel.findOne({ guildId: guildId })
+    return GuildModel.findOne({ guildId: guildId })
 }
 
 export async function fetchMember(guildId: string, memberId: string): Promise<GuildMember> {
     return Riniya.instance.guilds.cache.get(guildId).members.cache.get(memberId);
 }
 
-export declare type GuildMentionnable = GuildMember | User;
+export declare type GuildMentionable = GuildMember | User;
 
 export function sanction(
     guild: Guild,
@@ -51,49 +53,49 @@ export function sanction(
     fetchGuild(guild.id).then(async (result) => {
         if (result.logging) {
             const channel: TextChannel = guild.channels.cache.get(result.loggingModeration) as TextChannel;
-            channel.send({
-                components: [
+            await channel.send({
+              components: [
+                {
+                  type: 1,
+                  components: [
+                    Riniya.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.uk/servers/${guild.id}/profiles/${target.id}`),
+                    Riniya.instance.buttonManager.createLinkButton("Dashboard", "https://dashboard.riniya.uk/servers/" + guild.id)
+                  ]
+                }
+              ],
+              embeds: [
+                new MessageEmbed({
+                  "title": "",
+                  "description": "A sanction has been issued on the server.",
+                  "color": 0xff3a20,
+                  "fields": [
                     {
-                        type: 1,
-                        components: [
-                            Riniya.instance.buttonManager.createLinkButton("Profile", `https://www.riniya.uk/servers/${guild.id}/profiles/${target.id}`),
-                            Riniya.instance.buttonManager.createLinkButton("Dashboard", "https://dashboard.riniya.uk/servers/" + guild.id)
-                        ]
+                      "name": `Type`,
+                      "value": `${type.toUpperCase()}`,
+                      "inline": true
+                    },
+                    {
+                      "name": `Reason`,
+                      "value": `${reason}`,
+                      "inline": true
+                    },
+                    {
+                      "name": `Issued By`,
+                      "value": `${staff.user.username}`,
+                      "inline": true
+                    },
+                    {
+                      "name": `Target`,
+                      "value": `${target.user.username}`,
+                      "inline": true
                     }
-                ],
-                embeds: [
-                    new MessageEmbed({
-                        "title": "",
-                        "description": "A sanction has been issued on the server.",
-                        "color": 0xff3a20,
-                        "fields": [
-                            {
-                                "name": `Type`,
-                                "value": `${type.toUpperCase()}`,
-                                "inline": true
-                            },
-                            {
-                                "name": `Reason`,
-                                "value": `${reason}`,
-                                "inline": true
-                            },
-                            {
-                                "name": `Issued By`,
-                                "value": `${staff.user.username}`,
-                                "inline": true
-                            },
-                            {
-                                "name": `Target`,
-                                "value": `${target.user.username}`,
-                                "inline": true
-                            }
-                        ],
-                        "author": {
-                            "name": `Sanction information`,
-                            "icon_url": `https://cdn.discordapp.com/attachments/1060741322358661191/1060745256636796948/a6d05968d7706183143518d96c9f066e.png`
-                        }
-                    })
-                ]
+                  ],
+                  "author": {
+                    "name": `Sanction information`,
+                    "icon_url": `https://cdn.discordapp.com/attachments/1060741322358661191/1060745256636796948/a6d05968d7706183143518d96c9f066e.png`
+                  }
+                })
+              ]
             });
         }
     })
@@ -109,7 +111,7 @@ export function sanction(
     else if (type === "kick")
         target.kick(reason);
     else if (type === "mute")
-        target.disableCommunicationUntil(1000, reason);
+        target.disableCommunicationUntil(1000, reason).then(r =>  r.isCommunicationDisabled() == true);
     else if (type === "blacklist")
         new Blacklist({
             userId: target.id,
@@ -139,52 +141,56 @@ export function sanction(
     }
 }
 
-export function blacklist(
+export async function blacklist(
     staff: User,
     target: User,
     reason: string) {
-        target.send({
-            embeds: [
-                new MessageEmbed({
-                    "title": "",
-                    "description": "You have been blacklisted from Riniya.",
-                    "color": 0xff3a20,
-                    "fields": [
-                        {
-                            "name": `Reason`,
-                            "value": `${reason}`,
-                            "inline": true
-                        },
-                        {
-                            "name": `Issued By`,
-                            "value": `${staff.username}`,
-                            "inline": true
-                        },
-                        {
-                            "name": `Target`,
-                            "value": `${target.username}`,
-                            "inline": true
-                        }
-                    ],
-                    "author": {
-                        "name": `Blacklist information`,
-                        "icon_url": `https://cdn.discordapp.com/attachments/1060741322358661191/1060745256636796948/a6d05968d7706183143518d96c9f066e.png`
-                    }
-                })
-            ]
-        });
+        await new Blacklist({
+          userId: target.id,
+          caseId: v4(),
+          reason: reason,
+          issuedBy: staff.id,
+          registeredAt: new Date()
+        }).save()
+        await target.send({
+          embeds: [
+            new MessageEmbed({
+              "title": "",
+              "description": "You have been blacklisted from Riniya.",
+              "color": 0xff3a20,
+              "fields": [
+                {
+                  "name": `Reason`,
+                  "value": `${reason}`,
+                  "inline": true
+                },
+                {
+                  "name": `Issued By`,
+                  "value": `${staff.username}`,
+                  "inline": true
+                },
+                {
+                  "name": `Target`,
+                  "value": `${target.username}`,
+                  "inline": true
+                }
+              ],
+              "author": {
+                "name": `Blacklist information`,
+                "icon_url": `https://cdn.discordapp.com/attachments/1060741322358661191/1060745256636796948/a6d05968d7706183143518d96c9f066e.png`
+              }
+            })
+          ]
+        }).then(r => setTimeout(r.delete, 3000));
 }
 
 export function isNull(object: unknown): Boolean {
-    if (object === null || object === undefined)
-        return true
-    return false
+    return object === null || object === undefined;
+
 }
 
 export function isTypeNull<T>(object: unknown): Boolean {
-    if (object === null || object === undefined || !(object as T))
-        return true
-    return false
+     return object === null || object === undefined || !(object as T);
 }
 
 export declare type AuthenticationSession<USER> = {

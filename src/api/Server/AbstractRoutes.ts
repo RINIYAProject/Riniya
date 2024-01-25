@@ -23,7 +23,8 @@ export declare enum ErrorType {
     MISSING_SIGNATURE = 401,
     INSUFICIENT_PERMISSION = 402,
     FORBIDDEN = 403,
-    RATELIMITED = 429
+    RATELIMITED = 429,
+    INTERNAL = 500
 }
 
 export default abstract class AbstractRoutes extends Base {
@@ -46,7 +47,7 @@ export default abstract class AbstractRoutes extends Base {
     protected error(res: Response, type: ErrorType): void {
         res.status(type.valueOf()).json({
             status: false,
-            error: type.toString()
+            error: type.valueOf()
         }).end()
     }
 

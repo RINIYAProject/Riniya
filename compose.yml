@@ -1,0 +1,37 @@
+version: '3.8'
+
+volumes:
+  db-store:
+
+services:
+  discord:
+    build:
+      dockerfile: Dockerfile
+    container_name: Riniya
+    env_file: .env
+    restart: on-failure
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    ports:
+      - '3443:3443'
+      - '8443:8443'
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+  database:
+    image: mongo
+    container_name: database
+    restart: on-failure
+    env_file: .env
+    volumes:
+      - ./data/db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME:-owo}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-owo}
+      - ME_CONFIG_MONGODB_URL=${MONGODB_URI:-owo}
+
+

@@ -14,7 +14,7 @@ import Base from "../Base";
 import { ModalSubmitInteraction } from "discord-modals";
 
 export default abstract class BaseModal extends Base {
-    public constructor(name: string, description?: string) {
+    protected constructor(name: string, description?: string) {
         super(name, description, "MODAL");
     }
 

@@ -37,27 +37,27 @@ export default class ModalVerificationSubmit extends BaseModal {
                 .addField("ID", `${interaction.user.id}`, true)
                 .setThumbnail(`https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.jpeg`);
 
-            new Verification({
-                guildId: GuildModel.id,
-                memberId: memberId,
-                memberName: interaction.user.username,
-                registeredAt: new Date().getTime(),
-                updatedAt: new Date().getTime(),
-                expireAt: 86400,
-                answers: [
-                    {
-                        title: "How did you find us?",
-                        content: find
-                    },
-                    {
-                        title: "How old are you?",
-                        content: age
-                    },
-                    {
-                        title: "Do you have a fursona?",
-                        content: sona
-                    }
-                ]
+            await new Verification({
+              guildId: GuildModel.id,
+              memberId: memberId,
+              memberName: interaction.user.username,
+              registeredAt: new Date().getTime(),
+              updatedAt: new Date().getTime(),
+              expireAt: 86400,
+              answers: [
+                {
+                  title: "How did you find us?",
+                  content: find
+                },
+                {
+                  title: "How old are you?",
+                  content: age
+                },
+                {
+                  title: "Do you have a fursona?",
+                  content: sona
+                }
+              ]
             }).save();
 
             // Useless
@@ -77,7 +77,7 @@ export default class ModalVerificationSubmit extends BaseModal {
                                 max_values: 1,
                                 options: [
                                     { label: 'Accept.', value: `accepted:${memberId}`, emoji: { name: 'foxuwu', id: '1059684731366670336' } },
-                                    { label: 'Refuse', value: `refused:${memberId}`, emoji: { name: 'bongoHearts', id: '996984352313446470', animated: true } },
+                                    { label: 'Refuse', value: `refused:${memberId}`, emoji: { name: 'foxBlanket', id: '1108033370329448458' } },
                                     { label: 'Ban', value: `banned:${memberId}`, emoji: { name: 'bongoban', id: '643488110612840485', animated: true } },
                                 ],
                                 type: 3
