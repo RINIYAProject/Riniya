@@ -6,6 +6,7 @@ volumes:
 services:
   discord:
     build:
+      context: .
       dockerfile: Dockerfile
     container_name: Riniya
     env_file: .env
