@@ -16,7 +16,7 @@ import Member from '@riniya.ts/database/Guild/Member'
 
 export default class ApiRoutes extends AbstractRoutes {
     public register() {
-        this.router.get('/commands', async (req, res) => {
+        this.router.get('/cmd', async (req, res) => {
             return res.status(200).json({
                 status: true,
                 data: Riniya.instance.manager.toList()
