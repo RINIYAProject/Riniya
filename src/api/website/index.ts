@@ -44,10 +44,6 @@ export default class WebsiteServer {
       next();
     });
 
-    app.use(function(req, res, next) {
-      next(createError(404));
-    });
-
     this.server = http.createServer(app)
     app.use(parser.json())
 
