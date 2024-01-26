@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && node build/index.js",
     "dev": "npm run build && ts-node src/index.ts",
-    "build": "tsc",
+    "copy-files": "copyfiles -u 1 src/**/*.pug src/**/*.css build/",
+    "build": "tsc && copy-files",
     "import": "npm run build && ts-node src/importers/import.ts",
     "lint": "eslint .",
     "test": "jest src/tests/ --runInBand",

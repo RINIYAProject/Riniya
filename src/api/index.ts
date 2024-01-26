@@ -121,7 +121,7 @@ export default class ServerManager {
                 app.use('/api', route.routing())
             }
         })
-        this.server.listen(3443)
+         this.server.listen(3443)
         this.gateway.listen(8443)
         this.website.initServer()
     }

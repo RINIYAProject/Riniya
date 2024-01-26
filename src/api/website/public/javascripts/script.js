@@ -1,5 +1,4 @@
 // tippy.js
-import Riniya from '@riniya.ts'
 
 tippy("[data-tippy-content]");
 
@@ -72,14 +71,16 @@ btn.on("click", function (e) {
 // copyright year
 document.getElementById("cp-year").innerHTML = new Date().getFullYear()
 
-function urls() {
-  const url = `https://discord.com/api/oauth2/authorize?client_id=${Riniya.instance.application.id}&permissions=8&scope=bot`
+await fetch("https://api.riniya.uk/api/invite").then(r => r.json()).then(data => {
+  const url = JSON.parse(JSON.stringify(data)).data.invite_url
   document.getElementById('getstarted').setAttribute("href", url)
   document.getElementById('invite').setAttribute("href", url)
-}
+})
 
-function commands() {
-  const commands = Riniya.instance.manager.toList()
+await fetch("https://api.riniya.uk/api/commands").then(r => r.json()).then(data => {
+  const commands = JSON.parse(JSON.stringify(data)).data
+
+  console.log(commands)
 
   for (let command in commands) {
     let cmd = commands[command]
@@ -97,14 +98,4 @@ function commands() {
 
     $('#commands-list').append(`<tr><td>${cmd.category}</td> <td>${cmd.name}</td><td>${cmd.description}</td><td>${options}</td></tr>`);
   }
-}
-
-function refresh() {
-  $('#servers').text(Riniya.instance.guilds.cache.size)
-  $('#users').text(Riniya.instance.users.cache.size)
-  $('#commands').text(Riniya.instance.manager.toList().length)
-}
-
-urls()
-commands()
-refresh()
+})
