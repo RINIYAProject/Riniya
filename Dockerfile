@@ -11,6 +11,10 @@ RUN <<EOF
    npm install @types/mongoose
    npm install mongoose
    npm install discord-modals
+   npm install pug
+   npm uninstall tsc
+   npm install -D typescript
+   mkdir logs
 EOF
 
 COPY . /workspace

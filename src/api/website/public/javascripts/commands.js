@@ -7,7 +7,8 @@ fetch("https://api.riniya.uk/api/cmd").then(r => r.json()).then(data => {
     let options = "";
     for (let option in cmd.options) {
       let opt = cmd.options[option]
-      options.concat(`<${opt.name}>`);
+      options = ''
+      options.concat(options, `<${opt.name}>`);
     }
 
     if (cmd.options.length <= 0) {
@@ -18,7 +19,9 @@ fetch("https://api.riniya.uk/api/cmd").then(r => r.json()).then(data => {
 
     setTimeout(() => {
       $('#loading-commands').remove()
-      $('#commands-list').removeAttribute('hidden')
+      $('#commands-list').removeAttribute('hidden').show().css({
+        'display': 'initial'
+      })
     }, 3000)
   }
 })
