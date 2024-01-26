@@ -8,7 +8,7 @@ export default class Index extends AbstractRoutes {
         })
     });
 
-    this.router.post('/bot/commands', function (req, res) {
+    this.router.get('/commands', function (req, res) {
         res.render('commands', {
           title: 'RINIYA - Commands',
         });
