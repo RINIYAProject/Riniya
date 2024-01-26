@@ -71,13 +71,13 @@ btn.on("click", function (e) {
 // copyright year
 document.getElementById("cp-year").innerHTML = new Date().getFullYear()
 
-await fetch("https://api.riniya.uk/api/invite").then(r => r.json()).then(data => {
+fetch("https://api.riniya.uk/api/invite").then(r => r.json()).then(data => {
   const url = JSON.parse(JSON.stringify(data)).data.invite_url
   document.getElementById('getstarted').setAttribute("href", url)
   document.getElementById('invite').setAttribute("href", url)
 })
 
-await fetch("https://api.riniya.uk/api/commands").then(r => r.json()).then(data => {
+fetch("https://api.riniya.uk/api/commands").then(r => r.json()).then(data => {
   const commands = JSON.parse(JSON.stringify(data)).data
 
   for (let command in commands) {
@@ -97,10 +97,16 @@ await fetch("https://api.riniya.uk/api/commands").then(r => r.json()).then(data 
   }
 })
 
-await fetch("https://api.riniya.uk/api/stats").then(r => r.json()).then(data => {
+fetch("https://api.riniya.uk/api/stats").then(r => r.json()).then(data => {
   const stats = JSON.parse(JSON.stringify(data)).data;
 
-  document.getElementById('users').setAttribute("href", stats.users)
-  document.getElementById('servers').setAttribute("href", stats.guilds)
-  document.getElementById('commands').setAttribute("href", stats.commands)
+  $(document).ready(function() {
+      $('#users').text(stats.users)
+      $('#servers').text(stats.guilds)
+      $('#commands').text(stats.commands)
+
+      $('#users-load').remove()
+      $('#servers-load').remove()
+      $('#commands-load').remove()
+  });
 });
