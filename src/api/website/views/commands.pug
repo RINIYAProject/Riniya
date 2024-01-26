@@ -1,0 +1,33 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf8')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        title=title
+        link(rel='stylesheet' href='https://dashboard.rsiniya.uk/css/loader.css')
+        link(rel='stylesheet' href='/stylesheets/bulma.min.css')
+        link(rel='stylesheet' href='/stylesheets/style.css')
+        link(rel='stylesheet' href='/semantic/semantic.min.css')
+
+        link(rel='stylesheet' href='https://unpkg.com/aos@2.3.1/dist/aos.css')
+        link(rel='stylesheet' href='https://unpkg.com/tippy.js@6/animations/scale.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' integrity='sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==' crossorigin='anonymous' referrerpolicy='no-referrer')
+        script(src='/javascripts/jquery-3.6.0.js')
+        script(src='https://unpkg.com/aos@2.3.1/dist/aos.js')
+        script(src='https://unpkg.com/@popperjs/core@2')
+        script(src='https://unpkg.com/tippy.js@6')
+
+    body
+        div
+            include layouts/navbar
+
+    include hero/invite
+
+    include features/commands
+
+    include layouts/footer
+
+    script(src='/javascripts/script.js')
+    script(src='/semantic/semantic.min.js')
+    script(src='https://unpkg.com/htmx.org@1.3.1')
+    script(src='https://unpkg.com/hyperscript.org@0.0.5')

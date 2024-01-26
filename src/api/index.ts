@@ -34,6 +34,7 @@ import RateLimit from "express-rate-limit"
 import cors from 'cors';
 import AuthRoutes from "./Server/routes/auth-routes";
 import BlacklistRoutes from "./Server/routes/blacklist-routes";
+import WebsiteServer from './website'
 
 const app = express();
 const limiter = RateLimit({
@@ -55,9 +56,12 @@ export default class ServerManager {
 
     public websocket: Websocket
 
+    public website: WebsiteServer
+
     public constructor() {
         this.routes = new Tuple<AbstractRoutes>()
         this.fileHelper = new FileHelper()
+        this.website = new WebsiteServer()
 
         // DEBUG
         app.set('trust proxy', 1) // trust first proxy
@@ -119,6 +123,7 @@ export default class ServerManager {
         })
         this.server.listen(3443)
         this.gateway.listen(8443)
+        this.website.initServer()
     }
 
     public registerServers(): void {

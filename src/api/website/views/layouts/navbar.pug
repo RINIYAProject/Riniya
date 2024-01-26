@@ -1,0 +1,32 @@
+a#backtotop(data-tippy-content='Back To Top.')
+    i.fa-solid.fa-angle-up.has-text-white.fa-2xl.mt-5
+
+nav.navbar.is-fixed-top(role='navigation' aria-label='main navigation')
+    .navbar-brand.mt-2.mb-2
+        a.navbar-item(href='#')
+            strong RINIYA
+        a.navbar-burger.has-text-white(role='button' data-target='navMenu' aria-label='menu' aria-expanded='false')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+            span(aria-hidden='true')
+    #navbarBasicExample.navbar-menu
+        .navbar-start
+            a.navbar-item.is-tab(href='https://www.riniya.uk/')
+                | Home
+            a.navbar-item.is-tab(href='https://www.riniya.uk/#features')
+                | Features
+            a.navbar-item.is-tab(href='https://www.riniya.uk/#stats')
+                | Stats
+            a.navbar-item.is-tab(href='https://www.riniya.uk/docs')
+                | Docs
+        .navbar-end
+            a.navbar-item.is-tab(href='https://discord.gg/tnu9B47Tqx' target='_blank')
+                i.fa-brands.fa-discord
+            a.navbar-item.is-tab(href='https://github.com/RINIYAProject/Riniya' target='_blank')
+                i.fa-brands.fa-github
+            .navbar-item
+                .buttons
+                    a.button.is-blurple(href='https://www.riniya.uk/user/login')
+                        strong
+                            i.fa-solid.fa-right-to-bracket.mr-2
+                            |                   Login
