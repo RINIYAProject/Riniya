@@ -31,6 +31,17 @@ export default class ApiRoutes extends AbstractRoutes {
             }).end()
         })
 
+        this.router.get('/stats', async (req, res) => {
+          return res.status(200).json({
+            status: true,
+            data: {
+              guilds: Riniya.instance.guilds.cache.size,
+              users: Riniya.instance.users.cache.size,
+              commands: Riniya.instance.manager.toList().length
+            }
+          }).end()
+        })
+
         this.router.get('/legal/:type', async (req, res) => {
             return res.status(200).json({
                 status: true,

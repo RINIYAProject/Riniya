@@ -80,15 +80,12 @@ await fetch("https://api.riniya.uk/api/invite").then(r => r.json()).then(data =>
 await fetch("https://api.riniya.uk/api/commands").then(r => r.json()).then(data => {
   const commands = JSON.parse(JSON.stringify(data)).data
 
-  console.log(commands)
-
   for (let command in commands) {
     let cmd = commands[command]
 
     let options = "";
     for (let option in cmd.options) {
       let opt = cmd.options[option]
-      console.log(opt)
       options.concat(`<${opt.name}>`);
     }
 
@@ -99,3 +96,11 @@ await fetch("https://api.riniya.uk/api/commands").then(r => r.json()).then(data 
     $('#commands-list').append(`<tr><td>${cmd.category}</td> <td>${cmd.name}</td><td>${cmd.description}</td><td>${options}</td></tr>`);
   }
 })
+
+await fetch("https://api.riniya.uk/api/stats").then(r => r.json()).then(data => {
+  const stats = JSON.parse(JSON.stringify(data)).data;
+
+  document.getElementById('users').setAttribute("href", stats.users)
+  document.getElementById('servers').setAttribute("href", stats.guilds)
+  document.getElementById('commands').setAttribute("href", stats.commands)
+});
