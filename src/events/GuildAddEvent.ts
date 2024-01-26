@@ -37,7 +37,7 @@ export default class GuildAddEvent extends BaseEvent {
                         ownerId: guild.ownerId,
                         requestId: result._id
                     }, "*")
-                    this.instance.logger.info(`Guild ${result.guildId} registered.`)
+                    this.instance.logger.info(`Guild ${result.guildId} registered for the first time.`)
                 })
             }
 

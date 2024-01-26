@@ -14,6 +14,12 @@ import Riniya from "@riniya.ts";
 import AbstractRoutes from "../../Server/AbstractRoutes";
 import Member from '@riniya.ts/database/Guild/Member'
 
+export interface Statistics {
+    guilds: number;
+    users: number;
+    commands: number;
+}
+
 export default class ApiRoutes extends AbstractRoutes {
     public register() {
         this.router.get('/cmd', async (req, res) => {
@@ -33,14 +39,39 @@ export default class ApiRoutes extends AbstractRoutes {
         })
 
         this.router.get('/stats', async (req, res) => {
-          return res.status(200).json({
-            status: true,
-            data: {
-              guilds: Riniya.instance.guilds.cache.size,
-              users: await Member.countDocuments(),
-              commands: Riniya.instance.manager.toList().length
-            }
-          }).end()
+          this.cache.exists("statistics").then(exists => {
+              if (exists) {
+                this.cache.getObject<Statistics>("statistics").then(data => {
+                  return res.status(200).json({
+                    status: true,
+                    data: {
+                      metadata: {
+                         objectId: data.objectId,
+                         cachedAt: data.cachedAt
+                      },
+                      data: data.data
+                    }
+                  }).end()
+                })
+              } else {
+                Member.countDocuments().then(r => {
+                  this.cache.addObject<Statistics>("statistics", {
+                    guilds: Riniya.instance.guilds.cache.size,
+                    users: r,
+                    commands: Riniya.instance.manager.toList().length
+                  }, 300).then(result => {
+                    return res.status(200).json({
+                      status: true,
+                      data: {
+                        guilds: result.guilds,
+                        users: result.users,
+                        commands: result.commands
+                      }
+                    }).end()
+                  })
+                })
+              }
+          })
         })
 
         this.router.get('/legal/:type', async (req, res) => {

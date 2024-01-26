@@ -1,4 +1,5 @@
 import AbstractRoutes from '../../Server/AbstractRoutes'
+import { CustomRequest } from '../index'
 
 export default class Index extends AbstractRoutes {
   async register () {
@@ -8,9 +9,10 @@ export default class Index extends AbstractRoutes {
         })
     });
 
-    this.router.get('/commands', function (req, res) {
+    this.router.get('/commands', function (req: CustomRequest, res) {
         res.render('commands', {
           title: 'RINIYA - Commands',
+          isLogged: (req.internal !== null)
         });
     });
   }

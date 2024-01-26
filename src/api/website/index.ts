@@ -1,5 +1,4 @@
-import createError from 'http-errors'
-import express from 'express'
+import express, { Request } from 'express'
 import Tuple from '@riniya.ts/utils/Tuple'
 import AbstractRoutes from '../Server/AbstractRoutes'
 import http from 'http'
@@ -11,8 +10,15 @@ import path from 'path'
 import Auth from './routes/Auth'
 import Index from './routes/index'
 import Dashboard from './routes/Dashboard'
+import { DiscordAccount } from '@riniya.ts/database/Social/DiscordAccount'
 
 const app = express();
+
+
+export interface CustomRequest extends Request {
+  internal: string;
+  token?: DiscordAccount;
+}
 
 export default class WebsiteServer {
   private routes: Tuple<AbstractRoutes>

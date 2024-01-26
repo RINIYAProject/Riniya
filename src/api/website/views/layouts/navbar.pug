@@ -17,7 +17,7 @@ nav.navbar.is-fixed-top(role='navigation' aria-label='main navigation')
                 | Features
             a.navbar-item.is-tab(href='https://www.riniya.uk/#stats')
                 | Stats
-            a.navbar-item.is-tab(href='https://www.riniya.uk/docs')
+            a.navbar-item.is-tab(href='https://docs.riniya.uk')
                 | Docs
         .navbar-end
             a.navbar-item.is-tab(href='https://discord.gg/tnu9B47Tqx' target='_blank')
@@ -25,8 +25,15 @@ nav.navbar.is-fixed-top(role='navigation' aria-label='main navigation')
             a.navbar-item.is-tab(href='https://github.com/RINIYAProject/Riniya' target='_blank')
                 i.fa-brands.fa-github
             .navbar-item
-                .buttons
+               if (isLogged)
+                 .buttons
+                   a.button.is-blurple(href='https://www.riniya.uk/dashboard')
+                     strong
+                       i.fa-solid.fa-right-to-bracket.mr-2
+                       |                   My Account
+               else
+                  .buttons
                     a.button.is-blurple(href='https://www.riniya.uk/user/login')
-                        strong
-                            i.fa-solid.fa-right-to-bracket.mr-2
-                            |                   Login
+                      strong
+                        i.fa-solid.fa-right-to-bracket.mr-2
+                        |                   Login

@@ -7,22 +7,22 @@ export default class MemberUpdateEvent extends BaseEvent {
             if (oldMember.premiumSince !== newMember.premiumSince) {
                 const handle: DGuild = this.instance.guilds.cache.get("1052173534299947008")
                 const channel: TextChannel = handle.channels.cache.get("1052173988756992050") as TextChannel
-                channel.send({
-                    embeds: [
-                        new MessageEmbed()
-                            .setAuthor(newMember.user.username + " boosted this serber.")
-                            .setDescription(`Thank you <@${newMember.id}> for boosting this server X3`)
-                            .setColor("DARK_VIVID_PINK")
-                    ],
-                    components: [
-                        {
-                            type: 1,
-                            components: [
-                                this.instance.buttonManager.createLinkButton("Profile", "https://www.riniya.uk/profile/" + handle.id + "/" + newMember.id),
-                                this.instance.buttonManager.createLinkButton("Website", "https://www.riniya.uk")
-                            ]
-                        }
-                    ]
+                await channel.send({
+                  embeds: [
+                    new MessageEmbed()
+                      .setAuthor(newMember.user.username + " boosted this server.")
+                      .setDescription(`Thank you <@${newMember.id}> for boosting this server X3`)
+                      .setColor("DARK_VIVID_PINK")
+                  ],
+                  components: [
+                    {
+                      type: 1,
+                      components: [
+                        this.instance.buttonManager.createLinkButton("Profile", "https://www.riniya.uk/profile/" + handle.id + "/" + newMember.id),
+                        this.instance.buttonManager.createLinkButton("Website", "https://www.riniya.uk")
+                      ]
+                    }
+                  ]
                 })
             }
         });
