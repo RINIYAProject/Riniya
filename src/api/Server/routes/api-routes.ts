@@ -12,6 +12,7 @@
 
 import Riniya from "@riniya.ts";
 import AbstractRoutes from "../../Server/AbstractRoutes";
+import Member from '@riniya.ts/database/Guild/Member'
 
 export default class ApiRoutes extends AbstractRoutes {
     public register() {
@@ -36,7 +37,7 @@ export default class ApiRoutes extends AbstractRoutes {
             status: true,
             data: {
               guilds: Riniya.instance.guilds.cache.size,
-              users: Riniya.instance.users.cache.size,
+              users: await Member.countDocuments(),
               commands: Riniya.instance.manager.toList().length
             }
           }).end()

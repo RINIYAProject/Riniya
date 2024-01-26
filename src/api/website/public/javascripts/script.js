@@ -101,9 +101,9 @@ fetch("https://api.riniya.uk/api/stats").then(r => r.json()).then(data => {
   const stats = JSON.parse(JSON.stringify(data)).data;
 
   $(document).ready(function() {
-      $('#users').text(stats.users)
-      $('#servers').text(stats.guilds)
-      $('#commands').text(stats.commands)
+      $('#users').text(stats.users + "+")
+      $('#servers').text(stats.guilds + "+")
+      $('#commands').text(stats.commands + "+")
 
       $('#users-load').remove()
       $('#servers-load').remove()
