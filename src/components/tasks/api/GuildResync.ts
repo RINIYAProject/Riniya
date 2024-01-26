@@ -10,11 +10,11 @@ export default class GuildResync extends BaseTask {
         this.instance.guilds.cache.forEach(async result => {
           const guild = await Guild.exists({ guildId: result.id })
 
-          if (isNull(guild)) {
+          if (isNull(guild._id) ) {
             new Guild({
               guildId: result.id,
               ownerId: result.ownerId
-            }).save().catch(err => console.error('Failed to save ' + result.id + ' guild'))
+            }).save().catch(err => console.error('Failed to save ' + result.id + ' guild : \n' + err))
           }
         })
 

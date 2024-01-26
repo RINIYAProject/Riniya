@@ -11,6 +11,7 @@ import Auth from './routes/Auth'
 import Index from './routes/index'
 import Dashboard from './routes/Dashboard'
 import { DiscordAccount } from '@riniya.ts/database/Social/DiscordAccount'
+import cookieParser from 'cookie-parser'
 
 const app = express();
 
@@ -40,6 +41,10 @@ export default class WebsiteServer {
       saveUninitialized: true,
       cookie: { secure: true }
     }))
+
+    // Rotating secret
+    // Since we don't need a static secret.
+    app.use(cookieParser(v4()))
 
     app.use(function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');
