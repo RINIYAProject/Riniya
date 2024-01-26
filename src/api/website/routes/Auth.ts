@@ -19,7 +19,7 @@ export default class Auth extends AbstractRoutes {
         res.redirect(oauthURL.url.toString())
       })
 
-      this.router.post('/user/callback', async function (req: CustomRequest, res) {
+      this.router.get('/user/callback', async function (req: CustomRequest, res) {
         const code = String(req.query.code);
         const discordState = String(req.query.state);
         // make sure the state parameter exists
