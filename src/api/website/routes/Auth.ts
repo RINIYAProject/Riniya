@@ -8,11 +8,14 @@ import { CustomRequest } from '../index'
 export default class Auth extends AbstractRoutes {
     async register () {
       this.router.get('/user/login', async function (req: CustomRequest, res) {
+
+        let clientState = v4()
+
         const oauthURL = await Discord.getOAuthUrl({
-          userUUID: v4()
+          userUUID: clientState
         })
 
-        res.cookie('clientState', oauthURL.state, {
+        res.cookie('clientState', clientState, {
           maxAge: 1000 * 60 * 5,
           signed: true
         });

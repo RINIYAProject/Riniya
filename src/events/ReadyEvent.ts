@@ -26,9 +26,10 @@ export default class Ready extends BaseEvent {
 
             this.activities.add(`Lurk at ${this.instance.users.cache.size} cuties UwU`)
             this.activities.add(`Handling ${this.instance.guilds.cache.size} servers :D`)
-            this.activities.add(`RINIYA Is still in developement.`)
+            this.activities.add(`RINIYA Is still in development.`)
             this.activities.add(`Thank you for supporting us :D`)
-            this.activities.add(`/help for more informations`)
+            this.activities.add(`https://www.riniya.uk`)
+            this.activities.add(`/help for more information`)
 
             setInterval(() => {
                 this.instance.user.setActivity({
