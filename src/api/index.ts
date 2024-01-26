@@ -31,6 +31,7 @@ import OsintRoutes from "./Server/routes/osint-routes";
 import * as parser from "body-parser"
 
 import RateLimit from "express-rate-limit"
+import cors from 'cors';
 import AuthRoutes from "./Server/routes/auth-routes";
 import BlacklistRoutes from "./Server/routes/blacklist-routes";
 
@@ -45,11 +46,16 @@ const limiter = RateLimit({
     }
 })
 app.use(limiter)
+app.use(cors({
+  origin: ['*'],
+  credentials: true,
+  methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT']
+}));
 
 export default class ServerManager {
     private routes: Tuple<AbstractRoutes>
     private server: http.Server
-    private gateway: http.Server
+    private readonly gateway: http.Server
     private fileHelper: FileHelper
 
     public websocket: Websocket
@@ -66,6 +72,8 @@ export default class ServerManager {
             saveUninitialized: true,
             cookie: { secure: true }
         }))
+
+        app.use()
 
         this.server = http.createServer(app)
         this.gateway = http.createServer()

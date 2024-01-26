@@ -19,7 +19,7 @@ import { Collection } from "discord.js";
  */
 
 export default class OptionMap<T, V> {
-    private map: Collection<T, V>;
+    private readonly map: Collection<T, V>;
 
     public constructor() {
         this.map = new Collection();

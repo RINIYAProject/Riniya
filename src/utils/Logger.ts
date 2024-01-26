@@ -14,8 +14,8 @@ import fs from "fs"
 import moment from "moment";
 
 export default class Logger {
-    private prefix: string;
-    private date: Date;
+    private readonly prefix: string;
+    private readonly date: Date;
 
     public constructor(prefix: string) {
         this.prefix = prefix;
