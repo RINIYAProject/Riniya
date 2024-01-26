@@ -11,12 +11,13 @@ export default class CAuthMiddleware extends BaseMiddleware {
     }
 
     public async handle(request: CustomRequest, response: Response, next) {
-        if (isNull(request.token)) {
+        let session = request.cookies['session'];
+        if (isNull(session)) {
             return response.redirect("https://www.riniya.uk/user/login")
         } else {
-            const account = await DiscordAccount.findOne({ _id: request.internal })
+            const account = await DiscordAccount.findOne({ _id: session.internal })
             if (isNull(account)) {
-                return response.redirect("https://www.riniya.uk/user/login/failed")
+                return response.redirect("https://www.riniya.uk")
             }
 
             next()

@@ -55,21 +55,55 @@ export default class Auth extends AbstractRoutes {
             }
             const userId = user.user.id;
 
-            await new DiscordAccount({
-              userId: userId,
-              email: user.user.email,
-              username: user.user.username,
-              tokens: {
-                access_token: result.access_token,
-                refresh_token: result.refresh_token,
-                expires_in: result.expires_in,
-                expires_at: Date.now() + result.expires_in * 1000
-              },
-              uuid: discordState
-            }).save().then(r => {
-                req.token = r
-                req.internal = r._id
-            })
+            const account = await DiscordAccount.findOne({ userId: userId }, { tokens: -1, __v: -1})
+
+            if (isNull(account._id)) {
+              await new DiscordAccount({
+                userId: userId,
+                email: user.user.email,
+                username: user.user.username,
+                tokens: {
+                  access_token: result.access_token,
+                  refresh_token: result.refresh_token,
+                  expires_in: result.expires_in,
+                  expires_at: Date.now() + result.expires_in * 1000
+                },
+                uuid: discordState
+              }).save().then(r => {
+                res.cookie('session', {
+                  user: r,
+                  internal: r._id
+                }, {
+                  maxAge: 1000 * 60 * 5,
+                  signed: true
+                });
+              })
+            } else {
+              await DiscordAccount.updateOne({
+                 userId: userId
+              }, {
+                $set: {
+                  userId: userId,
+                  email: user.user.email,
+                  username: user.user.username,
+                  tokens: {
+                    access_token: result.access_token,
+                    refresh_token: result.refresh_token,
+                    expires_in: result.expires_in,
+                    expires_at: Date.now() + result.expires_in * 1000
+                  },
+                  uuid: discordState
+                }
+              })
+
+              res.cookie('session', {
+                user: account,
+                internal: account._id
+              }, {
+                maxAge: 1000 * 60 * 5,
+                signed: true
+              });
+            }
 
             res.status(200).redirect("https://www.riniya.uk/dashboard")
           })
