@@ -8,6 +8,7 @@ import { v4 } from "uuid";
 import AbstractRoutes from "../AbstractRoutes";
 
 import moment from "moment";
+import DiscordAccount from '@riniya.ts/database/Social/DiscordAccount'
 
 export default class AuthRoutes extends AbstractRoutes {
     public register() {
@@ -111,27 +112,7 @@ export default class AuthRoutes extends AbstractRoutes {
                 })
             }
 
-            const session = await Session.findOne({
-                accessToken: req.params.accessToken
-            })
-
-            if (isNull(session.clientToken) && isNull(session._id)) {
-                return res.status(403).json({
-                    status: false,
-                    error: "This session is not found."
-                })
-            } else if (session.sessionExpired) {
-                return res.status(403).json({
-                    status: false,
-                    error: "This session is already expired."
-                })
-            }
-
-            await Session.updateOne({ _id: session._id }, {
-               $set: {
-                  sessionExpired: true
-               }
-            })
+            await DiscordAccount.deleteOne({ _id: req.params.accessToken })
 
             return res.status(200).json({
                 status: true,

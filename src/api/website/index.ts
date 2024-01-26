@@ -42,9 +42,8 @@ export default class WebsiteServer {
       cookie: { secure: true }
     }))
 
-    // Rotating secret
-    // Since we don't need a static secret.
-    app.use(cookieParser(v4()))
+    // Rotating secret if there is no secret set
+    app.use(cookieParser(process.env.COOKIE_SECRET || v4()))
 
     app.use(function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');
