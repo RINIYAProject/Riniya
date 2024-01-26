@@ -2,10 +2,19 @@ section#commands.section.mt-6
     .has-text-centered
         h1.title.lined Commands
 
-    table#commands-list.ui.inverted.table
-        thead
-            tr
-                th Category
-                th Name
-                th Descriptions
-                th Arguments
+    div#loading-commands
+      .ui.icon.message
+        i.notched.circle.loading.icon
+        .content
+          .header
+            | Just one second
+          p We&apos;re fetching that content for you.
+
+
+    table#commands-list.ui.inverted.table(hidden=true)
+            thead
+                tr
+                    th Category
+                    th Name
+                    th Descriptions
+                    th Arguments

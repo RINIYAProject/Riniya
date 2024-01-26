@@ -15,5 +15,10 @@ fetch("https://api.riniya.uk/api/cmd").then(r => r.json()).then(data => {
     }
 
     $('#commands-list').append(`<tr><td>${cmd.category}</td> <td>${cmd.name}</td><td>${cmd.description}</td><td>${options}</td></tr>`);
+
+    setTimeout(() => {
+      $('#loading-commands').remove()
+      $('#commands-list').removeAttribute('hidden')
+    }, 3000)
   }
 })

@@ -11,7 +11,7 @@ export default class CAuthMiddleware extends BaseMiddleware {
     }
 
     public async handle(request: CustomRequest, response: Response, next) {
-        let session = request.cookies['session'];
+        let session = request.signedCookies['session'];
         if (isNull(session)) {
             return response.redirect("https://www.riniya.uk/user/login")
         } else {

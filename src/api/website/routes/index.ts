@@ -6,14 +6,15 @@ export default class Index extends AbstractRoutes {
   async register () {
     this.router.get('/', function (req, res) {
         res.render('index', {
-            title: 'RINIYA'
+            title: 'RINIYA',
+            isLogged: (!isNull(req.signedCookies['session']))
         })
     });
 
     this.router.get('/commands', function (req: CustomRequest, res) {
         res.render('commands', {
           title: 'RINIYA - Commands',
-          isLogged: (!isNull(req.internal))
+          isLogged: (!isNull(req.signedCookies['session']))
         });
     });
   }
