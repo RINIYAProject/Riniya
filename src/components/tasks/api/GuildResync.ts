@@ -10,7 +10,7 @@ export default class GuildResync extends BaseTask {
         this.instance.guilds.cache.forEach(async result => {
           const guild = await Guild.exists({ guildId: result.id })
 
-          if (isNull(guild._id) ) {
+          if (isNull(guild) ) {
             new Guild({
               guildId: result.id,
               ownerId: result.ownerId

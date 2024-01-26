@@ -6,11 +6,16 @@ fetch("https://api.riniya.uk/api/invite").then(r => r.json()).then(data => {
 
 fetch("https://api.riniya.uk/api/stats").then(r => r.json()).then(data => {
   const stats = JSON.parse(JSON.stringify(data)).data;
-
   $(document).ready(function() {
-    $('#users').text(stats.users + "+")
-    $('#servers').text(stats.guilds + "+")
-    $('#commands').text(stats.commands + "+")
+    if (stats.users === undefined) {
+      $('#users').text(stats.data.users + "+")
+      $('#servers').text(stats.data.guilds + "+")
+      $('#commands').text(stats.data.commands + "+")
+    } else {
+      $('#users').text(stats.users + "+")
+      $('#servers').text(stats.guilds + "+")
+      $('#commands').text(stats.commands + "+")
+    }
 
     $('#users-load').remove()
     $('#servers-load').remove()
