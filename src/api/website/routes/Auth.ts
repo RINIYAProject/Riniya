@@ -3,6 +3,9 @@ import passport from 'passport'
 
 export default class Auth extends AbstractRoutes {
     async register () {
+
+      this.prefix = 'auth'
+
       this.router.get('/user/login', passport.authenticate("discord"));
       this.router.get('/user/logout', function (req, res) {
           req.logout(req.user, () => {

@@ -77,17 +77,16 @@ export default class WebsiteServer {
     this.routes.add(new Auth())
     this.routes.add(new Profile())
     this.routes.add(new Server())
+    this.routes.add(new Dashboard())
+    this.routes.add(new Shop())
+    this.routes.add(new Admin())
 
     Riniya.instance.logger.info('The website is operational.')
   }
 
   public initServer() {
-    app.use('/dashboard/', new CAuthMiddleware().handle, new Dashboard().routing())
-    app.use('/shop/', new Shop().routing())
-    app.use('/admin/', new Admin().routing())
-
     this.routes.getAll().forEach((route) => {
-      app.use('/', route.routing())
+        app.use(`/${route.prefix}`, route.routing())
     })
 
     this.server.listen(2443)

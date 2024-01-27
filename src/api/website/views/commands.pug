@@ -16,6 +16,7 @@ html(lang='en')
         script(src='https://unpkg.com/aos@2.3.1/dist/aos.js')
         script(src='https://unpkg.com/@popperjs/core@2')
         script(src='https://unpkg.com/tippy.js@6')
+        script(src='https://cdn.jsdelivr.net/npm/mesa-js-client@latest/dist/browser/client.js')
 
     body
         div
@@ -24,14 +25,19 @@ html(lang='en')
     section.hero.bg-base.is-fullheight
       .hero-body
         div#particles-js(style='position: relative;')
-          include features/commands
+          .columns
+            .column.mr-6.mt-12(data-aos='fade-up')
+              p.title.has-text-white.has-text-weight-bold
+                | The commands
+        include features/commands
       .has-text-centered(data-tippy-content='Scroll Down')
-        a(href='#features')
+        a(href='#footer')
           i.fa-solid.fa-circle-chevron-down.fa-lg.vert-move2.has-text-white
 
     include layouts/footer
 
     script(src='/javascripts/commands.js')
+    script(src='/javascripts/socket.js')
     script(src='/semantic/semantic.min.js')
     script(src='https://unpkg.com/htmx.org@1.3.1')
     script(src='https://unpkg.com/hyperscript.org@0.0.5')

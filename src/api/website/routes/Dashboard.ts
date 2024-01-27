@@ -5,12 +5,15 @@ import pug from "pug"
 import Guild from '@riniya.ts/database/Guild/Guild'
 import { isNull } from '@riniya.ts/types'
 import Riniya from '@riniya.ts'
+import CAuthMiddleware from '../middleware/CAuthMiddleware'
 
 export default class Dashboard extends AbstractRoutes {
   async register () {
     this.isProtected = true;
 
-    this.router.get('/onboard/setup/:guild/:step', async function (req: Request, res) {
+    this.prefix = 'dashboard'
+
+    this.router.get('/onboard/setup/:guild/:step', new CAuthMiddleware().handle, async function (req: Request, res) {
       const user = req.user as IUser
       res.render('dashboard/views/onboard', {
         title: 'Setting up RINIYA',
@@ -21,7 +24,7 @@ export default class Dashboard extends AbstractRoutes {
         isFirst: true
       })
     })
-    this.router.get('/onboard', async function (req: Request, res) {
+    this.router.get('/onboard', new CAuthMiddleware().handle, async function (req: Request, res) {
       const user = req.user as IUser
       const userGuilds = user.guilds.map(async x => {
         const dGuild = Riniya.instance.guilds.cache.get(x.id);
@@ -52,7 +55,7 @@ export default class Dashboard extends AbstractRoutes {
     })
 
     // Dynamic router
-    this.router.get('/:guildId/:slug?/:route?/:operation?/:id?', async function (req: Request, res) {
+    this.router.get('/:guildId/:slug?/:route?/:operation?/:id?', new CAuthMiddleware().handle, async function (req: Request, res) {
       // User and guilds data
       const user = req.user as IUser
 

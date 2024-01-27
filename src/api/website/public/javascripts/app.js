@@ -6,3 +6,4 @@ if (($('body.front').length))
         $('.ui.checkbox').checkbox()
     })
 }
+

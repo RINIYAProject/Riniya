@@ -7,5 +7,6 @@
     <orderEntry type="library" name="particles" level="application" />
     <orderEntry type="library" name="line-awesome" level="application" />
     <orderEntry type="library" name="@tabler/core" level="application" />
+    <orderEntry type="library" name="mesa-js-client" level="application" />
   </component>
 </module>
