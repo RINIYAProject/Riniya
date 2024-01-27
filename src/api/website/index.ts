@@ -61,15 +61,6 @@ export default class WebsiteServer {
     // Rotating secret if there is no secret set
     app.use(cookieParser(process.env.COOKIE_SECRET))
 
-    app.use(function (req, res, next) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-      // @ts-ignore
-      res.setHeader('Access-Control-Allow-Credentials', true);
-      next();
-    });
-
     this.server = http.createServer(app)
     app.use(parser.json())
 

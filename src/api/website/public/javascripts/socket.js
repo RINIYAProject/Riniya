@@ -1,4 +1,4 @@
-var client = new MesaClient('wss://websocket.riniya.uk', { autoConnect: false })
+var client = new MesaClient('wss://gateway.riniya.uk', { autoConnect: true })
 
 client.onConnected = function() {
   console.log("Connected to Mesa server")
@@ -18,5 +18,3 @@ client.onDisconnected = function(code, reason) {
 client.onError = function(error) {
   console.log("Error", error)
 }
-
-client.connect()
