@@ -56,6 +56,15 @@ export default class WebsiteServer {
       cookie: { secure: true }
     }))
 
+    app.use(function (req, res, next) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      // @ts-ignore
+      res.setHeader('Access-Control-Allow-Credentials', true);
+      next();
+    });
+
     this.passport.init(app)
 
     // Rotating secret if there is no secret set
@@ -71,15 +80,6 @@ export default class WebsiteServer {
     app.use(`/dashboard`, new Dashboard().routing())
     app.use(`/shop`, new Shop().routing())
     app.use(`/admin`, new Admin().routing())
-
-    app.use(function (req, res, next) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-      // @ts-ignore
-      res.setHeader('Access-Control-Allow-Credentials', true);
-      next();
-    });
 
     Riniya.instance.logger.info('The website is operational.')
   }
