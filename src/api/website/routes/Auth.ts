@@ -24,7 +24,7 @@ export default class Auth extends AbstractRoutes {
       })
 
       this.router.get('/user/callback', async function (req: CustomRequest, res: CustomResponse) {
-        res.clearCookie("session")
+        req.session.destroy(err => {})
         const code = String(req.query.code);
         const discordState = String(req.query.state);
         // make sure the state parameter exists
@@ -72,13 +72,9 @@ export default class Auth extends AbstractRoutes {
                 },
                 uuid: discordState
               }).save().then(r => {
-                res.cookie("session", JSONCookie(JSON.stringify({
-                  user: r,
-                  internal: r._id
-                })), {
-                  maxAge: 1000 * 60 * 5,
-                  signed: true
-                })
+                req.session['user'] = r
+                req.session['internal'] = r._id
+                req.session.save()
               })
             } else {
               await DiscordAccount.updateOne({
@@ -98,16 +94,12 @@ export default class Auth extends AbstractRoutes {
                 }
               })
 
-              res.cookie("session", JSONCookie(JSON.stringify({
-                user: account,
-                internal: account._id
-              })), {
-                maxAge: 1000 * 60 * 5,
-                signed: true
-              })
+              req.session['user'] = account
+              req.session['internal'] = account._id
+              req.session.save()
             }
 
-            res.internal = "blah"
+
 
             res.status(200).redirect("https://www.riniya.uk/dashboard")
           })
