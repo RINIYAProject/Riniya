@@ -15,9 +15,9 @@ export default class CAuthMiddleware extends BaseMiddleware {
     }
 
     public async handle(request: CustomRequest, response: CustomResponse, next) {
-        console.log(request.session['internal'])
+        console.log(request.session.internal)
 
-        let session = request.session['internal']
+        let session = request.session
 
         if (isNull(session.internal)) {
             return response.redirect("https://www.riniya.uk/user/login")

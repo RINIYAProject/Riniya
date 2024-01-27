@@ -98,7 +98,7 @@ export default class ServerManager {
                 services: {
                     websocket: {
                         clients: this.websocket.clients.length,
-                        environement: (this.websocket.wss.address() === "45.147.98.210" ? "production" : "debug")
+                        environement: (this.websocket.wss.address() === "85.215.202.21" ? "production" : "debug")
                     }
                 }
             })
