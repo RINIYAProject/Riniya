@@ -3,7 +3,8 @@ import Discord from '../utils/Discord'
 import { v4 } from 'uuid'
 import { isNull } from '@riniya.ts/types'
 import DiscordAccount from '@riniya.ts/database/Social/DiscordAccount'
-import { CustomRequest } from '../index'
+import { CustomRequest, CustomResponse } from '../index'
+import { JSONCookie } from 'cookie-parser'
 
 export default class Auth extends AbstractRoutes {
     async register () {
@@ -22,7 +23,8 @@ export default class Auth extends AbstractRoutes {
         res.redirect(oauthURL.url.toString())
       })
 
-      this.router.get('/user/callback', async function (req: CustomRequest, res) {
+      this.router.get('/user/callback', async function (req: CustomRequest, res: CustomResponse) {
+        res.clearCookie("session")
         const code = String(req.query.code);
         const discordState = String(req.query.state);
         // make sure the state parameter exists
@@ -70,16 +72,13 @@ export default class Auth extends AbstractRoutes {
                 },
                 uuid: discordState
               }).save().then(r => {
-                res.cookie('session', {
+                res.cookie("session", JSONCookie(JSON.stringify({
                   user: r,
-                  internal: r._id,
-                  logged: true
-                }, {
+                  internal: r._id
+                })), {
                   maxAge: 1000 * 60 * 5,
                   signed: true
-                });
-                req.internal = r._id
-                req.token = r
+                })
               })
             } else {
               await DiscordAccount.updateOne({
@@ -99,18 +98,16 @@ export default class Auth extends AbstractRoutes {
                 }
               })
 
-              res.cookie('session', {
+              res.cookie("session", JSONCookie(JSON.stringify({
                 user: account,
-                internal: account._id,
-                logged: true
-              }, {
+                internal: account._id
+              })), {
                 maxAge: 1000 * 60 * 5,
                 signed: true
-              });
-
-              req.internal = account._id
-              req.token = account
+              })
             }
+
+            res.internal = "blah"
 
             res.status(200).redirect("https://www.riniya.uk/dashboard")
           })

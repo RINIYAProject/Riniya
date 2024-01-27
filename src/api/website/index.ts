@@ -1,4 +1,4 @@
-import express, { Request } from 'express'
+import express, { Request, Response } from 'express'
 import Tuple from '@riniya.ts/utils/Tuple'
 import AbstractRoutes from '../Server/AbstractRoutes'
 import http from 'http'
@@ -19,6 +19,11 @@ const app = express();
 
 export interface CustomRequest extends Request {
   internal: string;
+  token?: DiscordAccount;
+}
+
+export interface CustomResponse extends Response {
+  internal?: string;
   token?: DiscordAccount;
 }
 
@@ -44,7 +49,7 @@ export default class WebsiteServer {
     }))
 
     // Rotating secret if there is no secret set
-    app.use(cookieParser(process.env.COOKIE_SECRET || v4()))
+    app.use(cookieParser(process.env.COOKIE_SECRET))
 
     app.use(function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');

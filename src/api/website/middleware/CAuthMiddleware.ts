@@ -1,7 +1,7 @@
 import BaseMiddleware from "../../Server/BaseMiddleware";
 import { Response } from "express";
 import { isNull } from "@riniya.ts/types";
-import { CustomRequest } from '../index'
+import { CustomRequest, CustomResponse } from '../index'
 import DiscordAccount from '@riniya.ts/database/Social/DiscordAccount'
 import Discord from '../utils/Discord'
 import Riniya from '@riniya.ts'
@@ -14,12 +14,16 @@ export default class CAuthMiddleware extends BaseMiddleware {
         super("ClientAuthentication", "Authentication middleware for the website")
     }
 
-    public async handle(request: CustomRequest, response: Response, next) {
-      console.log(request.internal)
-        if (isNull(request.internal)) {
+    public async handle(request: CustomRequest, response: CustomResponse, next) {
+      console.log(request.signedCookies['session'])
+      console.log(JSON.parse(request.signedCookies['session']))
+      console.log(response.internal)
+
+        let session = request.signedCookies['session']
+        if (isNull(session.internal)) {
             return response.redirect("https://www.riniya.uk/user/login")
         } else {
-          const account = await DiscordAccount.findOne({ _id: request.internal })
+          const account = await DiscordAccount.findOne({ _id: session.internal })
           if (isNull(account)) {
             return response.redirect("https://www.riniya.uk")
           }
