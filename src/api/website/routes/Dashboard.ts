@@ -3,8 +3,8 @@ import { IUser } from '../passport'
 import Guild from '@riniya.ts/database/Guild/Guild'
 import { isNull } from '@riniya.ts/types'
 import Riniya from '@riniya.ts'
-import CAuthMiddleware from '../middleware/CAuthMiddleware'
 import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
+import { isUserLogged } from '../utils/Middleware'
 
 export default class Dashboard extends AbstractWebRoutes {
   async register () {
@@ -12,7 +12,7 @@ export default class Dashboard extends AbstractWebRoutes {
 
     this.prefix = 'dashboard'
 
-    this.router.get('/onboard/setup/:guild/:step', new CAuthMiddleware().handle, async function (req: Request, res) {
+    this.router.get('/onboard/setup/:guild/:step', isUserLogged, async function (req: Request, res) {
       const user = req.user as IUser
       res.render('dashboard/views/onboard', {
         title: 'Setting up RINIYA',
@@ -23,7 +23,7 @@ export default class Dashboard extends AbstractWebRoutes {
         isFirst: true
       })
     })
-    this.router.get('/onboard', new CAuthMiddleware().handle, async function (req: Request, res) {
+    this.router.get('/onboard', isUserLogged, async function (req: Request, res) {
       const user = req.user as IUser
       const userGuilds = user.guilds.map(async x => {
         const dGuild = Riniya.instance.guilds.cache.get(x.id);
@@ -54,7 +54,7 @@ export default class Dashboard extends AbstractWebRoutes {
     })
 
     // Dynamic router
-    this.router.get('/:guildId/:slug?/:route?/:operation?/:id?', new CAuthMiddleware().handle, async function (req: Request, res) {
+    this.router.get('/:guildId/:slug?/:route?/:operation?/:id?', isUserLogged, async function (req: Request, res) {
       // User and guilds data
       const user = req.user as IUser
 
