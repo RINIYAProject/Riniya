@@ -39,6 +39,14 @@ import InitChecker from '@riniya.ts/utils/InitChecker';
 import { createClient, RedisClientType } from "redis";
 
 import CacheController from "./database/CacheController";
+import { DiscordAccount } from './database/Models/Social/DiscordAccount'
+
+declare module 'express-session' {
+  interface SessionData {
+    account?: DiscordAccount
+    accountId?: string;
+  }
+}
 
 export default class Riniya extends Client {
     public static instance: Riniya

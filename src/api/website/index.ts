@@ -13,6 +13,7 @@ import Dashboard from './routes/Dashboard'
 import { DiscordAccount } from '@riniya.ts/database/Social/DiscordAccount'
 import cookieParser from 'cookie-parser'
 import Shop from './routes/Shop'
+import Passport from './passport'
 
 const app = express();
 
@@ -27,19 +28,15 @@ export interface CustomResponse extends Response {
   token?: DiscordAccount;
 }
 
-declare module 'express-session' {
-  interface SessionData {
-      account?: DiscordAccount
-      accountId?: string;
-  }
-}
-
 export default class WebsiteServer {
   private routes: Tuple<AbstractRoutes>
   private server: http.Server
+  private passport: Passport
 
   public constructor() {
     this.routes = new Tuple<AbstractRoutes>()
+    this.passport = new Passport()
+
     app.set('trust proxy', 1) // trust first proxy
 
     app.set('views', path.join(__dirname, 'views'));

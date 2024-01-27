@@ -1,11 +1,12 @@
 import AbstractRoutes from '../../Server/AbstractRoutes'
-import { CustomRequest } from '../index'
+import { Request } from "express"
+import { IUser } from '../passport'
 
 export default class Shop extends AbstractRoutes {
   async register () {
-    this.router.get('/', function (req: CustomRequest, res) {
+    this.router.get('/', function (req: Request, res) {
       res.render('shop', {
-        user: req.token
+        user: (req.user as IUser)
       })
     })
   }
