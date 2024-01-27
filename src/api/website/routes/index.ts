@@ -1,5 +1,4 @@
 import { CustomRequest } from '../index'
-import { isNull } from '@riniya.ts/types'
 import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
 
 export default class Index extends AbstractWebRoutes {
@@ -15,14 +14,14 @@ export default class Index extends AbstractWebRoutes {
 
         res.render('index', {
             title: 'RINIYA',
-            isLogged: (!isNull(req.signedCookies['session']))
+            isLogged: req.isAuthenticated()
         })
     });
 
     this.router.get('/commands', function (req: CustomRequest, res) {
         res.render('commands', {
           title: 'RINIYA - Commands',
-          isLogged: (!isNull(req.signedCookies['session']))
+          isLogged: req.isAuthenticated()
         });
     });
   }
