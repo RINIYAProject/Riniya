@@ -52,6 +52,8 @@ export default class WebsiteServer {
 
     app.use(cookieParser(v4()))
 
+    this.passport.init(app)
+
     app.use(function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
