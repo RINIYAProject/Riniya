@@ -15,8 +15,7 @@ export default class CAuthMiddleware extends BaseMiddleware {
     }
 
     public async handle(request: CustomRequest, response: CustomResponse, next) {
-      console.log(request.signedCookies['session'])
-      console.log(JSON.parse(request.signedCookies['session']))
+      console.log(request.cookies['session'])
       console.log(response.internal)
 
         let session = request.signedCookies['session']
