@@ -52,6 +52,8 @@ export default class WebsiteServer {
       cookie: { secure: true }
     }))
 
+    this.passport.init(app)
+
     // Rotating secret if there is no secret set
     app.use(cookieParser(process.env.COOKIE_SECRET))
 
