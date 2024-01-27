@@ -10,29 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import Base from "../../abstracts/Base";
-import { Router, Response } from "express";
-import express from "express";
+import { Router, Response, Express } from "express";
 
-import CacheManager from "../../cache/CacheManager";
-import Authentication from "./middlewares/Authentication";
-
-export default abstract class AbstractWebRoutes extends Base {
-    protected router: Router
-    public isProtected: boolean;
-    public prefix: string
-
-    public constructor() {
-        super("routes", "", "SERVER")
-        this.router = router;
-
-        this.register(); // SELF REGISTERING.
+export default abstract class AbstractWebRoutes {
+    public constructor(app: Express) {
+        this.register(app); // SELF REGISTERING.
     }
 
-    public abstract register(): void
-    public routing(): Router {
-        return router;
-    }
+    public abstract register(app: Express): void
 }
-
-export var router = express.Router()

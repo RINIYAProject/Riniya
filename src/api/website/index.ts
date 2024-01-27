@@ -65,13 +65,13 @@ export default class WebsiteServer {
 
     this.server = http.createServer(app)
 
-    app.use(`/`, new Index().routing())
-    app.use(`/profile`, new Profile().routing())
-    app.use(`/servers`, new Server().routing())
-    app.use(`/admin`, new Admin().routing())
-    app.use(`/dashboard`, new Dashboard().routing())
-    app.use(`/shop`, new Shop().routing())
-    app.use(`/auth`, new Auth().routing())
+    new Index(app)
+    new Profile(app)
+    new Server(app)
+    new Admin(app)
+    new Dashboard(app)
+    new Shop(app)
+    new Auth(app)
 
     Riniya.instance.logger.info('The website is operational.')
   }

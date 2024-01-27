@@ -1,9 +1,10 @@
 import { CustomRequest } from '../index'
 import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
+import { Express } from 'express'
 
 export default class Index extends AbstractWebRoutes {
-  async register () {
-    this.router.get('/', function (req, res) {
+  async register (app: Express) {
+    app.get('/', function (req, res) {
 
         res.cookie('session', {
           logged: false
@@ -18,7 +19,7 @@ export default class Index extends AbstractWebRoutes {
         })
     });
 
-    this.router.get('/commands', function (req: CustomRequest, res) {
+    app.get('/commands', function (req: CustomRequest, res) {
         res.render('commands', {
           title: 'RINIYA - Commands',
           isLogged: req.isAuthenticated()
