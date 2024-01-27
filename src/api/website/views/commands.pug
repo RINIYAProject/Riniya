@@ -21,9 +21,13 @@ html(lang='en')
         div
             include layouts/navbar
 
-    include hero/invite
-
-    include features/commands
+    section.hero.bg-base.is-fullheight
+      .hero-body
+        div#particles-js(style='position: relative;')
+          include features/commands
+      .has-text-centered(data-tippy-content='Scroll Down')
+        a(href='#features')
+          i.fa-solid.fa-circle-chevron-down.fa-lg.vert-move2.has-text-white
 
     include layouts/footer
 

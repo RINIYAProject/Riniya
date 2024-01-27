@@ -6,7 +6,7 @@ export default class CAuthMiddleware extends BaseMiddleware {
         super("ClientAuthentication", "Authentication middleware for the website")
     }
     public async handle(request: CustomRequest, response: CustomResponse, next) {
-      if (request.isAuthenticated()) {
+      if (request.user) {
         next()
       } else {
         return response.redirect("https://www.riniya.uk/user/login")

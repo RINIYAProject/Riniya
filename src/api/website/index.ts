@@ -83,15 +83,11 @@ export default class WebsiteServer {
 
   public initServer() {
     app.use('/dashboard/', new CAuthMiddleware().handle, new Dashboard().routing())
-    app.use('/shop/', new CAuthMiddleware().handle, new Shop().routing())
+    app.use('/shop/', new Shop().routing())
     app.use('/admin/', new Admin().routing())
 
     this.routes.getAll().forEach((route) => {
       app.use('/', route.routing())
-    })
-
-    app.use(function (req, res, next) {
-        res.status(404).render('dashboard/views/errors/404')
     })
 
     this.server.listen(2443)
