@@ -188,8 +188,9 @@ export async function blacklist(
 }
 
 export function isNull(object: unknown): Boolean {
-    return object === null || object === undefined;
-
+  if (object === null || object === undefined)
+    return true
+  return false
 }
 
 export function isTypeNull<T>(object: unknown): Boolean {

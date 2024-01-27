@@ -16,7 +16,7 @@ export default class CAuthMiddleware extends BaseMiddleware {
 
     public async handle(request: CustomRequest, response: Response, next) {
         let session = request.signedCookies['session'];
-        if (isNull(session.internal)) {
+        if (isNull(session.internal) || session.internal == undefined) {
             return response.redirect("https://www.riniya.uk/user/login")
         } else {
           const account = await DiscordAccount.findOne({ _id: session.internal })
