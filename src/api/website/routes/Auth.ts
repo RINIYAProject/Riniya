@@ -72,7 +72,8 @@ export default class Auth extends AbstractRoutes {
               }).save().then(r => {
                 res.cookie('session', {
                   user: r,
-                  internal: r._id
+                  internal: r._id,
+                  logged: true
                 }, {
                   maxAge: 1000 * 60 * 5,
                   signed: true
@@ -98,7 +99,8 @@ export default class Auth extends AbstractRoutes {
 
               res.cookie('session', {
                 user: account,
-                internal: account._id
+                internal: account._id,
+                logged: true
               }, {
                 maxAge: 1000 * 60 * 5,
                 signed: true
