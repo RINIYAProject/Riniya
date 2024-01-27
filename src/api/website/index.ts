@@ -64,7 +64,8 @@ export default class WebsiteServer {
     this.server = http.createServer(app)
     app.use(parser.json())
 
-    this.routes.add(new Index())
+    app.use(`/`, new Index().routing())
+
     this.routes.add(new Auth())
     this.routes.add(new Profile())
     this.routes.add(new Server())
