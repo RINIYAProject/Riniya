@@ -1,0 +1,13 @@
+fieldset.form-fieldset
+  form#login-form(method='POST', action='https://www.riniya.uk/admin/login/callback')
+    .mb-3
+      label.form-label Email
+      input.form-control.is-invalid.is-invalid-lite(type='email' name='login-email' placeholder='Email')
+    .mb-3
+      label.form-label Password
+      input.form-control.is-invalid.is-invalid-lite(type='password' name='login-password' placeholder='**********')
+
+  div.hr-text OR
+    a.btn.btn-square(href='https://www.riniya.uk/admin/password-recovery') Reset your password
+
+script(src='../../../../javascripts/login-validation.js')

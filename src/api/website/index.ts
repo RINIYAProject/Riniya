@@ -15,6 +15,9 @@ import cookieParser from 'cookie-parser'
 import Shop from './routes/Shop'
 import Passport from './passport'
 import Riniya from '@riniya.ts'
+import Admin from './routes/Admin'
+import Profile from './routes/Profile'
+import Server from './routes/Server'
 
 const app = express();
 
@@ -72,6 +75,8 @@ export default class WebsiteServer {
 
     this.routes.add(new Index())
     this.routes.add(new Auth())
+    this.routes.add(new Profile())
+    this.routes.add(new Server())
 
     Riniya.instance.logger.info('The website is operational.')
   }
@@ -79,6 +84,7 @@ export default class WebsiteServer {
   public initServer() {
     app.use('/dashboard/', new CAuthMiddleware().handle, new Dashboard().routing())
     app.use('/shop/', new CAuthMiddleware().handle, new Shop().routing())
+    app.use('/admin/', new Admin().routing())
 
     this.routes.getAll().forEach((route) => {
       app.use('/', route.routing())

@@ -1,4 +1,70 @@
 include ../dashboard/views/base/head
 
-section#shop
+div#steps
+  .steps
+    a.step-item(id='shop-offer' data-bs-toggle='tooltip' title='Step 1 Select your offer')
+      | Offer
+    a.step-item(id='shop-server' data-bs-toggle='tooltip' title='Step 2 Select your server')
+      | Server
+    a.step-item(id='shop-payment' data-bs-toggle='tooltip' title='Step 3 Set your payment information')
+      | Payment
+    span.step-item(id='shop-confirm' data-bs-toggle='tooltip' title='Step 4 Confirm your order')
+      | Confirm
 
+div#offers
+  .card.d-flex.flex-column
+    a(href='#')
+      img.card-img-top(src='../../public/images/premium.png' alt='Premium')
+    .card-body.d-flex.flex-column
+      h3.card-title
+        a(href='#') Premium
+      .text-secondary
+        | ✅ Premium support
+        | ✅ 10 Custom commands
+        | ✅ 3 Custom verification fields
+        | ✅ Special donator badge
+      div.hr-text-left Not included
+      .text-secondary
+        | ❌ Custom server link
+        | ❌ Advanced music player
+        | ❌ Direct invite
+        | ❌ Early-access feature
+      .d-flex.align-items-center.pt-4.mt-auto
+        .ms-3
+          a.text-body Price
+          .text-secondary#price 3.99€/Month
+        .ms-auto
+          a.btn.btn-pink#premium Select
+
+  .card.d-flex.flex-column
+    a(href='#')
+      img.card-img-top(src='../../public/images/premiumplus.png' alt='Premium+')
+    .card-body.d-flex.flex-column
+      h3.card-title
+        a(href='#') Premium+
+      .text-secondary
+        | ✅ Premium support
+        | ✅ 10 Custom commands
+        | ✅ 3 Custom verification fields
+        | ✅ Special donator badge
+      div.hr-text-left Extra
+      .text-secondary
+        | ✅ Custom server link
+        | ✅ Advanced music player
+        | ✅ Direct invite
+        | ✅ Early-access feature
+      .d-flex.align-items-center.pt-4.mt-auto
+        .ms-3
+          a.text-body Price
+          .text-secondary#price-plus 6.99€/Month
+        .ms-auto
+          a.btn.btn-pink#premiumplus Select
+
+
+div#servers(hidden="")
+
+
+div#payment(hidden="")
+
+
+div#confirm(hidden="")
