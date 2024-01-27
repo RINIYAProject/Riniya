@@ -72,9 +72,7 @@ export default class Auth extends AbstractRoutes {
                 },
                 uuid: discordState
               }).save().then(r => {
-                req.session.user = r
-                req.session.internal = r._id
-                req.session.save()
+
               })
             } else {
               await DiscordAccount.updateOne({
@@ -94,9 +92,7 @@ export default class Auth extends AbstractRoutes {
                 }
               })
 
-              req.session.user = account
-              req.session.internal = account._id
-              req.session.save()
+
             }
 
             res.status(200).redirect("https://www.riniya.uk/dashboard")
