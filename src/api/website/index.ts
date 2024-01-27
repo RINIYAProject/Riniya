@@ -2,19 +2,18 @@ import express, { Request, Response } from 'express'
 import http from 'http'
 import session from 'express-session'
 import { v4 } from 'uuid'
-import * as parser from 'body-parser'
 import path from 'path'
 import Auth from './routes/Auth'
 import Index from './routes/index'
 import Dashboard from './routes/Dashboard'
 import { DiscordAccount } from '@riniya.ts/database/Social/DiscordAccount'
-import cookieParser from 'cookie-parser'
 import Shop from './routes/Shop'
 import Passport from './passport'
 import Riniya from '@riniya.ts'
 import Admin from './routes/Admin'
 import Profile from './routes/Profile'
 import Server from './routes/Server'
+import cookieParser from 'cookie-parser'
 
 const app = express();
 
@@ -51,9 +50,11 @@ export default class WebsiteServer {
       cookie: { secure: true }
     }))
 
+    app.use(cookieParser(v4()))
+
     app.use(function (req, res, next) {
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
       res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
       // @ts-ignore
       res.setHeader('Access-Control-Allow-Credentials', true);
