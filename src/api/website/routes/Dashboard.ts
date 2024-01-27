@@ -10,10 +10,10 @@ export default class Dashboard extends AbstractRoutes {
   async register () {
     this.isProtected = true;
 
-    this.router.get('/onboard/setup/:guild', async function (req: Request, res) {
+    this.router.get('/onboard/setup/:guild/:step', async function (req: Request, res) {
       const user = req.user as IUser
       res.render('dashboard/views/onboard', {
-        title: 'Select your server.',
+        title: 'Setting up RINIYA',
         url: `https://www.riniya.uk/profile/${user.user.userId}`,
         avatar: `background-image: url(${user.avatar});`,
         username: user.user.username,

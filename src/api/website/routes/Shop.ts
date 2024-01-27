@@ -5,7 +5,7 @@ import { IUser } from '../passport'
 export default class Shop extends AbstractRoutes {
   async register () {
     this.router.get('/', function (req: Request, res) {
-      res.render('shop', {
+      res.render('shop/index', {
         user: (req.user as IUser)
       })
     })

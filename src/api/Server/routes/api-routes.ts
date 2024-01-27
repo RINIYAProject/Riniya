@@ -33,7 +33,7 @@ export default class ApiRoutes extends AbstractRoutes {
             return res.status(200).json({
                 status: true,
                 data: {
-                    invite_url: `https://discord.com/api/oauth2/authorize?client_id=${Riniya.instance.application.id}&permissions=8&scope=bot`
+                    invite_url: `https://discord.com/api/oauth2/authorize?client_id=${Riniya.instance.application.id}&permissions=23427300781831&scope=bot`
                 }
             }).end()
         })
