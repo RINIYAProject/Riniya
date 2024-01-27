@@ -85,13 +85,7 @@ export default class WebsiteServer {
     })
 
     app.use(function (req, res, next) {
-      if (req.statusCode === 404) {
-        return res.render('dashboard/views/errors/404')
-      } else if (req.statusCode === 403)  {
-        return res.render('dashboard/views/errors/403')
-      } else {
-        next()
-      }
+        res.status(404).render('dashboard/views/errors/404')
     })
 
     this.server.listen(2443)
