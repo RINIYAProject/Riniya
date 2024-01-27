@@ -88,9 +88,9 @@ export default class Passport {
 
     passport.serializeUser((user: IUser, done) => done(null, user));
     passport.deserializeUser(async function(user: IUser, done) {
-      await DiscordAccount.findById(user.user.internal, function(err, user) {
-        done(err, user);
-      });
+      await DiscordAccount.findById(user.user.internal).then(r => {
+          done(null, r);
+      }).catch(err => done(err))
     });
 
     passport.use(discordStrategy)
