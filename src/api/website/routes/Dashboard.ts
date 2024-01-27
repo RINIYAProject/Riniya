@@ -5,9 +5,12 @@ export default class Dashboard extends AbstractRoutes {
   async register () {
     this.isProtected = true;
 
-    this.router.get('/dashboard', function (req: CustomRequest, res) {
+    this.router.get('/', function (req: CustomRequest, res) {
+        // @ts-ignore
+        const user = req.session.user
+
         res.render('dashboard', {
-            user: req.signedCookies['session']
+              user: user
         })
     })
   }

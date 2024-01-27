@@ -12,6 +12,7 @@ import Index from './routes/index'
 import Dashboard from './routes/Dashboard'
 import { DiscordAccount } from '@riniya.ts/database/Social/DiscordAccount'
 import cookieParser from 'cookie-parser'
+import Shop from './routes/Shop'
 
 const app = express();
 
@@ -59,18 +60,16 @@ export default class WebsiteServer {
 
     this.routes.add(new Index())
     this.routes.add(new Auth())
-    this.routes.add(new Dashboard())
 
     console.log('The website is operational.')
   }
 
   public initServer() {
+    app.use('/dashboard/', new CAuthMiddleware().handle, new Dashboard().routing())
+    app.use('/shop/', new CAuthMiddleware().handle, new Shop().routing())
+
     this.routes.getAll().forEach((route) => {
-      if (route.isProtected) {
-        app.use('/', new CAuthMiddleware().handle, route.routing())
-      } else {
-        app.use('/', route.routing())
-      }
+      app.use('/', route.routing())
     })
     this.server.listen(2443)
   }

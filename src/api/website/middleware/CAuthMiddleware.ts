@@ -16,37 +16,42 @@ export default class CAuthMiddleware extends BaseMiddleware {
 
     public async handle(request: CustomRequest, response: Response, next) {
         let session = request.signedCookies['session'];
-        if (isNull(session)) {
+        if (isNull(session.internal)) {
             return response.redirect("https://www.riniya.uk/user/login")
         } else {
-            const account = await DiscordAccount.findOne({ _id: session.internal })
-            if (isNull(account)) {
-                return response.redirect("https://www.riniya.uk")
-            }
-            const tokens = await Discord.getAccessToken(account.userId, account.tokens)
-            if (isNull(tokens)) {
-                // Deleting the account because the refresh token is invalidated.
-                await DiscordAccount.deleteOne({ _id: account._id })
-            }
+          const account = await DiscordAccount.findOne({ _id: session.internal })
+          if (isNull(account._id)) {
+            return response.redirect("https://www.riniya.uk")
+          }
+          const tokens = await Discord.getAccessToken(account.userId, account.tokens)
+          if (isNull(tokens.access_token)) {
+            // Deleting the account because the refresh token is invalidated.
+            await DiscordAccount.deleteOne({ _id: account._id })
+          }
 
-            await Riniya.instance.users.send(account.userId, {
-                embeds: [
-                  new MessageEmbed()
-                    .setTitle("Dashboard Login detected.")
-                    .setColor("RED")
-                    .setDescription(`New login at ${moment(Date.now())}. If this action has been made on your behalf. Please terminate this session.`)
-                ],
-                components: [
-                  {
-                    type: 1,
-                    components: [
-                      Riniya.instance.buttonManager.createLinkButton("Terminate", "https://api.riniya.uk/api/security/invalidate/" + account._id)
-                    ]
-                  }
-                ]
+          await Riniya.instance.users.fetch(account.userId).then(user => {
+            user.send({
+              embeds: [
+                new MessageEmbed()
+                  .setTitle("Dashboard Login detected.")
+                  .setColor("RED")
+                  .setDescription(`New login at ${moment(Date.now())}. If this action has been made on your behalf. Please terminate this session.`)
+              ],
+              components: [
+                {
+                  type: 1,
+                  components: [
+                    Riniya.instance.buttonManager.createLinkButton("Terminate", "https://api.riniya.uk/api/security/invalidate/" + account._id)
+                  ]
+                }
+              ]
             })
+          })
 
-            next()
+          // @ts-ignore
+          request.session.user = account
+
+          next()
         }
     }
 }
