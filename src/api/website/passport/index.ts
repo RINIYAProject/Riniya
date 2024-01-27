@@ -23,7 +23,6 @@ export interface IUser {
 export default class Passport {
   public init(app: Express) {
     app.use(passport.initialize())
-    app.use(passport.authenticate('session'))
 
     const discordStrategy = new DiscordPassport.Strategy({
       clientID: process.env["DISCORD_CLIENT_ID"],
