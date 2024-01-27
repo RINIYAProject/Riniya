@@ -1,10 +1,9 @@
-import { Express, NextFunction } from 'express'
+import { Express } from 'express'
 import DiscordPassport from "passport-discord";
 import Refresh from "passport-oauth2-refresh";
 import passport from "passport";
-import DiscordAccount ,{ DiscordAccount as DAccount } from '@riniya.ts/database/Social/DiscordAccount'
+import DiscordAccount from '@riniya.ts/database/Social/DiscordAccount'
 import { isNull } from '@riniya.ts/types'
-import Discord from '../utils/Discord'
 
 const scopes = ['identify', 'email', 'guilds', 'guilds.join']
 
@@ -32,7 +31,8 @@ export default class Passport {
       callbackURL: process.env["DISCORD_REDIRECT_URI"],
       scope: scopes
     },async function(accessToken, refreshToken, profile, cb) {
-        const account = await DiscordAccount?.exists({ userId: profile.id })
+        console.log(profile.username)
+        const account = await DiscordAccount.exists({ userId: profile.id })
         if (isNull(account)) {
             new DiscordAccount({
                 userId: profile.id,
@@ -85,6 +85,13 @@ export default class Passport {
           });
         }
     })
+
+    passport.serializeUser((user: IUser, done) => done(null, user));
+    passport.deserializeUser(async function(user: IUser, done) {
+      await DiscordAccount.findById(user.user.internal, function(err, user) {
+        done(err, user);
+      });
+    });
 
     passport.use(discordStrategy)
     Refresh.use(discordStrategy)
