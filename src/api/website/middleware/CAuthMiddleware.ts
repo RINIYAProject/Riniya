@@ -15,6 +15,7 @@ export default class CAuthMiddleware extends BaseMiddleware {
     }
 
     public async handle(request: CustomRequest, response: Response, next) {
+      console.log(request.internal)
         if (isNull(request.internal)) {
             return response.redirect("https://www.riniya.uk/user/login")
         } else {
@@ -46,9 +47,6 @@ export default class CAuthMiddleware extends BaseMiddleware {
               ]
             })
           })
-
-          // @ts-ignore
-          request.session.user = account
 
           next()
         }
