@@ -14,6 +14,7 @@ import { DiscordAccount } from '@riniya.ts/database/Social/DiscordAccount'
 import cookieParser from 'cookie-parser'
 import Shop from './routes/Shop'
 import Passport from './passport'
+import Riniya from '@riniya.ts'
 
 const app = express();
 
@@ -72,7 +73,17 @@ export default class WebsiteServer {
     this.routes.add(new Index())
     this.routes.add(new Auth())
 
-    console.log('The website is operational.')
+    app.use(function (req, res, next) {
+      res.status(404)
+      res.render('dashboard/views/errors/404')
+    })
+
+    app.use(function (req, res, next) {
+      res.status(403)
+      res.render('dashboard/views/errors/403')
+    })
+
+    Riniya.instance.logger.info('The website is operational.')
   }
 
   public initServer() {

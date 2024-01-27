@@ -1,0 +1,17 @@
+- var isFirst = false
+- var guilds = []
+
+div#server-list
+  include layouts/layout_onboard
+
+  if isFirst
+    include ../partials/partialSteps
+  else
+    .page-wrapper
+      .page-body
+        .container-xl
+          .row.row-deck.row-cards
+            each guild in guilds
+              .col-4
+                .card
+                  .card-body(style='height: 10rem')

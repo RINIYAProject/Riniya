@@ -6,10 +6,7 @@ export default class Auth extends AbstractRoutes {
       this.router.get('/user/login', passport.authenticate("discord"));
       this.router.get('/user/callback',  passport.authenticate('discord', {
         failureRedirect: '/',
-      }), function(req, res) {
-        res.render('dashboard', {
-            user: req.user
-        })
-      })
+        successRedirect: '/dashboard/onboard'
+      }))
     }
 }
