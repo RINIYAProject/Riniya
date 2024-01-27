@@ -65,22 +65,26 @@ export default class WebsiteServer {
     app.use(parser.json())
 
     app.use(`/`, new Index().routing())
+    app.use(`/auth`, new Auth().routing())
+    app.use(`/profile`, new Profile().routing())
+    app.use(`/servers`, new Server().routing())
+    app.use(`/dashboard`, new Dashboard().routing())
+    app.use(`/shop`, new Shop().routing())
+    app.use(`/admin`, new Admin().routing())
 
-    this.routes.add(new Auth())
-    this.routes.add(new Profile())
-    this.routes.add(new Server())
-    this.routes.add(new Dashboard())
-    this.routes.add(new Shop())
-    this.routes.add(new Admin())
+    app.use(function (req, res, next) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      // @ts-ignore
+      res.setHeader('Access-Control-Allow-Credentials', true);
+      next();
+    });
 
     Riniya.instance.logger.info('The website is operational.')
   }
 
   public initServer() {
-    this.routes.getAll().forEach((route) => {
-        app.use(`/${route.prefix}`, route.routing())
-    })
-
     this.server.listen(2443)
   }
 }
