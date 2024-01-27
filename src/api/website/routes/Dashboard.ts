@@ -6,11 +6,8 @@ export default class Dashboard extends AbstractRoutes {
     this.isProtected = true;
 
     this.router.get('/', function (req: CustomRequest, res) {
-        // @ts-ignore
-        const user = req.session.user
-
         res.render('dashboard', {
-              user: user
+              user: req.token
         })
     })
   }

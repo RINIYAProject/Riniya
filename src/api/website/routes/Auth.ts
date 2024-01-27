@@ -78,6 +78,8 @@ export default class Auth extends AbstractRoutes {
                   maxAge: 1000 * 60 * 5,
                   signed: true
                 });
+                req.internal = r._id
+                req.token = r
               })
             } else {
               await DiscordAccount.updateOne({
@@ -105,6 +107,9 @@ export default class Auth extends AbstractRoutes {
                 maxAge: 1000 * 60 * 5,
                 signed: true
               });
+
+              req.internal = account._id
+              req.token = account
             }
 
             res.status(200).redirect("https://www.riniya.uk/dashboard")
