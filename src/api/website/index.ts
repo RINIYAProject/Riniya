@@ -74,13 +74,18 @@ export default class WebsiteServer {
     this.routes.add(new Auth())
 
     app.use(function (req, res, next) {
-      res.status(404)
-      res.render('dashboard/views/errors/404')
+      if (req.statusCode === 404) {
+        return res.render('dashboard/views/errors/404')
+      } else if (req.statusCode === 403)  {
+        return res.render('dashboard/views/errors/403')
+      } else {
+        next()
+      }
     })
 
     app.use(function (req, res, next) {
       res.status(403)
-      res.render('dashboard/views/errors/403')
+      res.render('./dashboard/views/errors/403')
     })
 
     Riniya.instance.logger.info('The website is operational.')
