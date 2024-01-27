@@ -60,21 +60,15 @@ export default class WebsiteServer {
       next();
     });
 
-    this.passport.init(app)
-
-    // Rotating secret if there is no secret set
-    app.use(cookieParser(process.env.COOKIE_SECRET))
-
     this.server = http.createServer(app)
-    app.use(parser.json())
 
     app.use(`/`, new Index().routing())
-    app.use(`/auth`, new Auth().routing())
     app.use(`/profile`, new Profile().routing())
     app.use(`/servers`, new Server().routing())
+    app.use(`/admin`, new Admin().routing())
     app.use(`/dashboard`, new Dashboard().routing())
     app.use(`/shop`, new Shop().routing())
-    app.use(`/admin`, new Admin().routing())
+    app.use(`/auth`, new Auth().routing())
 
     Riniya.instance.logger.info('The website is operational.')
   }

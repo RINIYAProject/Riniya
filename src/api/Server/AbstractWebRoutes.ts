@@ -35,4 +35,4 @@ export default abstract class AbstractWebRoutes extends Base {
     }
 }
 
-export const router = express.Router()
+export var router = express.Router()

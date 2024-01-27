@@ -1,4 +1,4 @@
-import { Express } from 'express'
+import express, { Express } from 'express'
 import DiscordPassport from "passport-discord";
 import Refresh from "passport-oauth2-refresh";
 import passport from "passport";
@@ -23,6 +23,7 @@ export interface IUser {
 export default class Passport {
   public init(app: Express) {
     app.use(passport.initialize())
+    app.use(passport.session())
 
     const discordStrategy = new DiscordPassport.Strategy({
       clientID: process.env["DISCORD_CLIENT_ID"],
