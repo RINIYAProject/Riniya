@@ -27,6 +27,13 @@ export interface CustomResponse extends Response {
   token?: DiscordAccount;
 }
 
+declare module 'express-session' {
+  interface SessionData {
+      account?: DiscordAccount
+      accountId?: string;
+  }
+}
+
 export default class WebsiteServer {
   private routes: Tuple<AbstractRoutes>
   private server: http.Server

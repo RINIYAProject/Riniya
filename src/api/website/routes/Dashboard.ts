@@ -7,7 +7,7 @@ export default class Dashboard extends AbstractRoutes {
 
     this.router.get('/', function (req: CustomRequest, res) {
         res.render('dashboard', {
-              user: req.token
+              user: req.session.account
         })
     })
   }
