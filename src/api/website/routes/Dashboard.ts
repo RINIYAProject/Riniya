@@ -1,13 +1,12 @@
-import AbstractRoutes from '../../Server/AbstractRoutes'
 import { Request } from "express"
 import { IUser } from '../passport'
-import pug from "pug"
 import Guild from '@riniya.ts/database/Guild/Guild'
 import { isNull } from '@riniya.ts/types'
 import Riniya from '@riniya.ts'
 import CAuthMiddleware from '../middleware/CAuthMiddleware'
+import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
 
-export default class Dashboard extends AbstractRoutes {
+export default class Dashboard extends AbstractWebRoutes {
   async register () {
     this.isProtected = true;
 

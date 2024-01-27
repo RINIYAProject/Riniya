@@ -1,9 +1,8 @@
-import AbstractRoutes from '../../Server/AbstractRoutes'
 import { Request } from "express"
-import { IUser } from '../passport'
 import CAdminAuthentication from '../middleware/CAdminAuthentication'
+import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
 
-export default class Admin extends AbstractRoutes {
+export default class Admin extends AbstractWebRoutes {
   async register () {
     this.router.get('/', new CAdminAuthentication().handle, function (req: Request, res) {
 

@@ -1,8 +1,8 @@
-import AbstractRoutes from '../../Server/AbstractRoutes'
 import { CustomRequest } from '../index'
 import { isNull } from '@riniya.ts/types'
+import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
 
-export default class Index extends AbstractRoutes {
+export default class Index extends AbstractWebRoutes {
   async register () {
     this.router.get('/', function (req, res) {
 

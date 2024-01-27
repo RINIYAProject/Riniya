@@ -1,6 +1,6 @@
-import AbstractRoutes from '../../Server/AbstractRoutes'
+import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
 
-export default class Server extends AbstractRoutes {
+export default class Server extends AbstractWebRoutes {
   async register () {
     this.prefix = 'servers'
   }

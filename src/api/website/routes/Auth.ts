@@ -1,7 +1,7 @@
-import AbstractRoutes from '../../Server/AbstractRoutes'
 import passport from 'passport'
+import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
 
-export default class Auth extends AbstractRoutes {
+export default class Auth extends AbstractWebRoutes {
     async register () {
 
       this.prefix = 'auth'

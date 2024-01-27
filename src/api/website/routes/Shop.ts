@@ -1,9 +1,9 @@
-import AbstractRoutes from '../../Server/AbstractRoutes'
 import { Request } from "express"
 import { IUser } from '../passport'
 import CAuthMiddleware from '../middleware/CAuthMiddleware'
+import AbstractWebRoutes from '../../Server/AbstractWebRoutes'
 
-export default class Shop extends AbstractRoutes {
+export default class Shop extends AbstractWebRoutes {
   async register () {
     this.prefix = 'shop'
 

@@ -33,12 +33,10 @@ export interface CustomResponse extends Response {
 }
 
 export default class WebsiteServer {
-  private routes: Tuple<AbstractRoutes>
   private server: http.Server
   private passport: Passport
 
   public constructor() {
-    this.routes = new Tuple<AbstractRoutes>()
     this.passport = new Passport()
 
     app.set('trust proxy', 1) // trust first proxy
